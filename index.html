@@ -124,7 +124,7 @@
     <header class="sticky top-0 z-40 backdrop-blur-lg supports-[backdrop-filter]:bg-background/80 bg-background/90 border-b border-white/10">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 items-center justify-between">
-                <a href="#" onclick="fetchMovies(1)" class="group inline-flex items-center gap-3">
+                <a href="https://real-morpheus.github.io/portfolio" target="_blank" rel="noopener" class="group inline-flex items-center gap-3">
                     <span class="relative grid h-9 w-9 place-items-center rounded-lg bg-surface border border-white/10">
                         <svg class="h-7 w-7" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <defs>
@@ -142,7 +142,7 @@
 
                 <div class="flex items-center gap-2">
                     <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-secondary">
-                        <a class="hover:text-primary transition" href="#" onclick="fetchMovies(1)">Home</a>
+                        <a class="hover:text-primary transition" href="#" onclick="fetchMovies(1); event.preventDefault();">Home</a>
                         <a class="hover:text-primary transition" href="https://real-morpheus.github.io/portfolio" target="_blank" rel="noopener">About</a>
                     </nav>
                     <button id="mobile-search-button" class="md:hidden h-10 w-10 grid place-items-center rounded-full text-secondary hover:text-primary hover:bg-surface transition" aria-label="Open search">
@@ -251,7 +251,7 @@
         const elements = {
             movieList: qs('#movie-list'),
             movieDetailsSection: qs('#movie-details-section'),
-            results: qs('#results'), // <-- ERROR FIX: Added this line
+            results: qs('#results'), 
             backButton: null, // will be created dynamically
             resultMeta: qs('#resultMeta'),
             resultMetaContainer: qs('#resultMetaContainer'),
@@ -691,13 +691,26 @@
         }
 
         function initialize() {
-            // ERROR FIX: Removed service worker registration
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker Registered', reg))
+                    .catch(err => console.error('SW Error', err));
+            }
+
             const defaultChips = ['Inception', 'Breaking Bad', 'Oppenheimer', 'Stranger Things', 'Joker'];
             defaultChips.forEach(c => elements.quickChips.appendChild(createChip(c)));
             
             elements.searchButton.addEventListener('click', () => doSearch(elements.searchInput.value));
             elements.searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(elements.searchInput.value); });
             
+            elements.mobileSearchButton.addEventListener('click', () => {
+                elements.searchInput.focus();
+                window.scrollTo({
+                    top: elements.searchInput.getBoundingClientRect().top + window.scrollY - 80, // 80px offset
+                    behavior: 'smooth'
+                });
+            });
+
             elements.closeModalButton.addEventListener('click', () => elements.previewModal.classList.add('hidden'));
             elements.previewModal.addEventListener('click', (e) => {
                 if (e.target.id === 'previewModal') elements.previewModal.classList.add('hidden');
