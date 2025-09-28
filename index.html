@@ -1,941 +1,713 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SanchitFlix Hub</title>
-  <meta name="theme-color" content="#0b0f14" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SanchitFlix</title>
+    <meta name="theme-color" content="#111827" />
 
-  <!-- PROFESSIONAL SANCHITFLIX LOGO / FAVICON -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='gradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%234938e6;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ec4899;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='%230f1620'/%3E%3Ctext x='50' y='70' font-family='Poppins, sans-serif' font-size='60' fill='url(%23gradient)' text-anchor='middle' font-weight='700'%3ESF%3C/text%3E%3C/svg%3E" />
-  
-  <!-- PWA MANIFEST -->
-  <link rel="manifest" href="manifest.json">
+    <!-- NEW GEMINI-STYLE LOGO / FAVICON -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='geminiGradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2389f7fe'/%3E%3Cstop offset='50%25' stop-color='%2366a6ff'/%3E%3Cstop offset='100%25' stop-color='%23a382ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='%231f2937'/%3E%3Cpath fill='url(%23geminiGradient)' d='M50 10 L58 42 L90 50 L58 58 L50 90 L42 58 L10 50 L42 42 Z'/%3E%3C/svg%3E" />
+    
+    <!-- PWA MANIFEST -->
+    <link rel="manifest" href="manifest.json">
 
-
-  <!-- Tailwind CSS (with custom configuration) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ["Poppins", "ui-sans-serif", "system-ui"] },
-          colors: {
-            surface: {
-              900: "#0b0f14",
-              800: "#0f1620",
-              700: "#121a25",
+    <!-- Tailwind CSS (with custom configuration) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ["Poppins", "ui-sans-serif", "system-ui"] },
+                    colors: {
+                        // New, sleeker color palette
+                        background: '#111827', // dark gray-blue
+                        surface: '#1F2937',    // lighter gray-blue for cards
+                        primary: '#E5E7EB',     // light gray for primary text
+                        secondary: '#9CA3AF',   // medium gray for secondary text
+                        accent: {
+                            light: '#22d3ee', // light cyan
+                            DEFAULT: '#06b6d4', // cyan-500
+                            dark: '#0891b2',  // cyan-600
+                        },
+                    },
+                    boxShadow: {
+                        // Updated glow effects to use the new accent color
+                        glow: "0 10px 30px -10px rgba(0,0,0,0.5)",
+                        accentGlow: "0 0 0 2px rgba(6, 182, 212, 0.3), 0 5px 20px rgba(6, 182, 212, 0.2)",
+                    },
+                    keyframes: {
+                        shimmer: {
+                            "0%": { backgroundPosition: "-450px 0" },
+                            "100%": { backgroundPosition: "450px 0" },
+                        },
+                        fadeUp: {
+                            "0%": { opacity: 0, transform: "translateY(10px)" },
+                            "100%": { opacity: 1, transform: "translateY(0)" },
+                        },
+                    },
+                    animation: {
+                        shimmer: "shimmer 1.5s linear infinite",
+                        fadeUp: "fadeUp .5s ease-out forwards",
+                    },
+                    backgroundImage: {
+                        // A subtle background glow from the top
+                        'soft-glow': "radial-gradient(circle 1000px at 50% -30%, rgba(6, 182, 212, 0.1), transparent 60%)",
+                    },
+                },
             },
-            brand: {
-              500: "#6d5df6",
-              600: "#5a49f2",
-              700: "#4938e6",
-            },
-            // Custom colors for download buttons based on the video (similar to red/orange)
-            access: {
-                500: "#E50914",
-                600: "#B20710",
-            }
-          },
-          boxShadow: {
-            glow: "0 0 0 1px rgba(255,255,255,0.06), 0 15px 40px rgba(0,0,0,0.45)",
-            brandGlow: "0 0 0 1px rgba(109,93,246,0.3), 0 5px 20px rgba(109,93,246,0.45)",
-          },
-          keyframes: {
-            float: {
-              "0%, 100%": { transform: "translateY(0)" },
-              "50%": { transform: "translateY(-6px)" },
-            },
-            shimmer: {
-              "0%": { backgroundPosition: "-450px 0" },
-              "100%": { backgroundPosition: "450px 0" },
-            },
-            fadeUp: {
-              "0%": { opacity: 0, transform: "translateY(8px)" },
-              "100%": { opacity: 1, transform: "translateY(0)" },
-            },
-          },
-          animation: {
-            float: "float 6s ease-in-out infinite",
-            shimmer: "shimmer 1.6s linear infinite",
-            fadeUp: "fadeUp .4s ease-out both",
-          },
-          backgroundImage: {
-            gridGlow:
-              "radial-gradient(1200px 500px at 50% -10%, rgba(109,93,246,.18), transparent 60%), radial-gradient(800px 400px at 90% 10%, rgba(236,72,153,.16), transparent 60%), radial-gradient(900px 400px at 10% 10%, rgba(59,130,246,.16), transparent 60%)",
-          },
-        },
-      },
-    };
-  </script>
+        };
+    </script>
 
-  <!-- Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
 
-  <style>
-    :root {
-      color-scheme: dark;
-    }
-    body {
-      background: #0b0f14;
-      /* Enhanced glassy glow effect */
-      background-image: radial-gradient(1200px 600px at 20% -10%, rgba(59,130,246,.22), transparent 60%),
-                        radial-gradient(800px 500px at 80% -10%, rgba(236,72,153,.22), transparent 60%),
-                        radial-gradient(1000px 800px at 50% 120%, rgba(109,93,246,.25), transparent 60%);
-      min-height: 100vh;
-      /* CORRECTED: Prevent horizontal scrollbar on mobile */
-      overflow-x: hidden;
-    }
-    .glass {
-      background: rgba(255,255,255,.08); /* Slightly less transparent */
-      border: 1px solid rgba(255,255,255,.12); /* Brighter border */
-      backdrop-filter: blur(12px); /* Increased blur */
-    }
-    .ring-focus:focus { box-shadow: 0 0 0 4px rgba(93, 80, 255, .35); outline: none; }
-    .skeleton { background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.10) 37%, rgba(255,255,255,.06) 63%); background-size: 450px 100%; }
-    .clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    <style>
+        :root {
+            color-scheme: dark;
+        }
+        body {
+            background-color: #111827;
+            background-image: radial-gradient(circle 1000px at 50% -30%, rgba(6, 182, 212, 0.1), transparent 60%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            color: #E5E7EB;
+        }
+        /* Removed .glass, using solid surfaces now */
+        .ring-focus:focus { box-shadow: 0 0 0 3px rgba(6, 182, 212, .4); outline: none; }
+        .skeleton { background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.10) 37%, rgba(255,255,255,.06) 63%); background-size: 450px 100%; }
+        .clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
-    /* Download/Access button style (using access colors) */
-    .access-btn {
-        background: linear-gradient(to right, #E50914, #B20710);
-        box-shadow: 0 4px 10px rgba(229, 9, 20, 0.4);
-    }
-    .access-btn:hover {
-        opacity: 0.95;
-        transform: scale(1.01);
-    }
+        /* New button styles */
+        .accent-btn {
+            background: linear-gradient(to right, #22d3ee, #06b6d4);
+            box-shadow: 0 4px 15px -5px rgba(6, 182, 212, 0.5);
+            transition: all 0.2s ease-in-out;
+        }
+        .accent-btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 6px 20px -5px rgba(6, 182, 212, 0.6);
+            transform: translateY(-1px);
+        }
 
-    /* Tabs Styling */
-    .tab-button {
-      transition: all 0.2s ease-in-out;
-      font-weight: 600;
-      border-bottom: 3px solid transparent;
-      color: #94a3b8; /* slate-400 */
-      background-color: transparent;
-      outline: none;
-    }
-    .tab-button.active {
-      background-color: #0b0f14; /* surface-900 */
-      color: #6d5df6; /* brand-500 */
-      border-bottom-color: #6d5df6; /* brand-500 */
-      box-shadow: inset 0 3px 6px rgba(0,0,0,0.2);
-    }
-
-    /* Modal styles (Simplified/Removed for direct redirect) */
-    .redirect-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 50;
-      backdrop-filter: blur(5px);
-    }
-    /* Image Preview Modal styles remain */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 50;
-      backdrop-filter: blur(5px);
-    }
-    .modal-content {
-      max-width: 90%;
-      max-height: 90%;
-      overflow: auto;
-      position: relative;
-    }
-    .modal-content img {
-      width: auto;
-      height: auto;
-      max-width: 100%;
-      max-height: 100%;
-      display: block;
-      margin: auto;
-    }
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      z-index: 60;
-    }
-  </style>
+        .tab-button {
+            transition: all 0.2s ease-in-out;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+            color: #9CA3AF; /* secondary text */
+            padding: 0.75rem 0.5rem;
+        }
+        .tab-button.active {
+            color: #06b6d4; /* accent */
+            border-bottom-color: #06b6d4;
+        }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(17, 24, 39, 0.8);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 50; backdrop-filter: blur(8px);
+        }
+        .modal-content img { border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem; z-index: 60;
+            background: rgba(31, 41, 55, 0.7); border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+    </style>
 </head>
-<body class="font-sans text-slate-200 selection:bg-brand-600/40">
-  <!-- NAVBAR -->
-  <header class="sticky top-0 z-40 backdrop-blur supports-[backdrop-filter]:bg-surface-900/70 bg-surface-900/80 border-b border-white/10">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 items-center justify-between">
-        <a href="#results" onclick="fetchMovies(1)" class="group inline-flex items-center gap-3">
-          <!-- Custom SanchitFlix Logo -->
-          <span class="relative grid h-8 w-8 place-items-center rounded-xl glass shadow-glow">
-            <!-- Inline SVG for SF Logo -->
-            <svg class="h-6 w-6" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <defs>
-                <linearGradient id="logo-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" style="stop-color:#4938e6;stop-opacity:1" />
-                  <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
-                </linearGradient>
-              </defs>
-              <text x="50" y="70" font-family="Poppins, sans-serif" font-size="60" fill="url(#logo-gradient)" text-anchor="middle" font-weight="700">SF</text>
-            </svg>
-            <span class="absolute inset-0 rounded-xl ring-1 ring-white/10"></span>
-          </span>
-          <span class="text-lg sm:text-xl font-bold tracking-tight">
-            <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-fuchsia-400 to-cyan-300">SanchitFlix&nbsp;Hub</span>
-          </span>
-        </a>
+<body class="font-sans selection:bg-accent/30 min-h-screen">
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-40 backdrop-blur-lg supports-[backdrop-filter]:bg-background/80 bg-background/90 border-b border-white/10">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="flex h-16 items-center justify-between">
+                <a href="#" onclick="fetchMovies(1)" class="group inline-flex items-center gap-3">
+                    <span class="relative grid h-9 w-9 place-items-center rounded-lg bg-surface border border-white/10">
+                        <svg class="h-7 w-7" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="geminiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#89f7fe" />
+                                    <stop offset="50%" stop-color="#66a6ff" />
+                                    <stop offset="100%" stop-color="#a382ff" />
+                                </linearGradient>
+                            </defs>
+                            <path fill="url(#geminiGradient)" d="M50 10 L58 42 L90 50 L58 58 L50 90 L42 58 L10 50 L42 42 Z"/>
+                        </svg>
+                    </span>
+                    <span class="text-lg sm:text-xl font-bold tracking-tight text-primary">SanchitFlix</span>
+                </a>
 
-        <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a class="hover:text-white/90 transition" href="#results" onclick="fetchMovies(1)">Home</a>
-          <a class="hover:text-white/90 transition" href="#about">About</a>
-        </nav>
-
-        <div class="flex items-center gap-2">
-          <!-- REPLACED: Visual Boost button replaced with a mobile-friendly search button -->
-          <button id="mobileSearchButton" class="glass h-10 w-10 grid place-items-center rounded-xl hover:scale-[1.02] active:scale-95 transition md:hidden" title="Search">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="relative overflow-hidden">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14">
-      <div class="grid lg:grid-cols-12 gap-8 items-center">
-        <div class="lg:col-span-12 space-y-6 text-center">
-          <!-- CORRECTED: Added break-words to prevent title overflow on small screens -->
-          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight break-words">
-            Discover. <span class="text-indigo-300">Search.</span> Download.
-          </h1>
-          <p class="text-slate-400 max-w-prose mx-auto">Access high-quality films and web series with elegant glass UI, designed for speed and usability.</p>
-
-          <!-- Search -->
-          <div class="glass rounded-2xl p-2 shadow-glow max-w-2xl mx-auto">
-            <div class="flex items-center gap-2">
-              <i class="fa-solid fa-magnifying-glass pl-3 text-slate-400"></i>
-              <input id="search-input" type="text" placeholder="Search movies or series..." class="flex-1 bg-transparent placeholder-slate-500 text-white h-12 px-3 ring-focus" />
-              <!-- CORRECTED: Search button made responsive for small screens -->
-              <button id="search-button" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-brand-600 to-fuchsia-600 h-12 w-12 min-[380px]:w-auto min-[380px]:px-5 rounded-xl font-semibold hover:opacity-95 active:scale-95 transition">
-                <span class="hidden min-[380px]:inline">Search</span>
-                <i class="fa-solid fa-arrow-right"></i>
-              </button>
-            </div>
-            <div id="search-hint" class="text-[12px] text-slate-400 px-12 py-1">Tip: Press Enter to search • Use exact titles for best results</div>
-          </div>
-
-          <!-- Quick chips -->
-          <div class="flex flex-wrap gap-2 pt-1 justify-center" id="quickChips"></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STATUS TOAST -->
-  <div id="toast" class="fixed top-24 left-1/2 -translate-x-1/2 z-50 hidden">
-    <div class="glass rounded-xl px-4 py-2 text-sm flex items-center gap-2 shadow-glow">
-      <i class="fa-solid fa-circle-info text-indigo-300"></i>
-      <span id="toastText">Loading…</span>
-    </div>
-  </div>
-
-  <!-- RESULTS SECTION -->
-  <main id="results" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-xl sm:text-2xl font-bold">Results</h2>
-      <div class="text-xs sm:text-sm text-slate-400" id="resultMeta">Showing popular — start a search</div>
-    </div>
-
-    <!-- GRID -->
-    <div id="movie-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-6"></div>
-
-    <!-- PAGINATION -->
-    <!-- CORRECTED: Added flex-wrap for better wrapping on small screens -->
-    <div id="pagination-container" class="mt-8 flex flex-wrap justify-center items-center gap-2"></div>
-
-    <!-- SKELETONS -->
-    <template id="card-skeleton">
-      <div class="group relative overflow-hidden rounded-2xl glass ring-1 ring-white/10">
-        <div class="aspect-[2/3] skeleton animate-shimmer"></div>
-        <div class="p-3">
-          <div class="h-4 w-3/4 skeleton animate-shimmer rounded"></div>
-          <div class="h-3 w-1/2 mt-2 skeleton animate-shimmer rounded"></div>
-        </div>
-      </div>
-    </template>
-
-    <!-- DETAILS -->
-    <section id="movie-details-section" class="hidden mt-10">
-      <button id="back-button" class="mb-6 inline-flex items-center gap-2 glass px-4 h-10 rounded-xl hover:scale-[1.02] active:scale-95 transition">
-        <i class="fa-solid fa-arrow-left"></i>
-        <span>Back to results</span>
-      </button>
-
-      <!-- CORRECTED: Added grid-cols-1 to ensure proper stacking and full width on mobile -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        <div class="lg:col-span-4">
-          <img id="detailsPoster" class="w-full h-auto rounded-2xl object-cover ring-1 ring-white/10 shadow-glow" alt="Poster" onerror="this.src='https://placehold.co/800x1200/0f172a/94a3b8?text=No+Image'"/>
-        </div>
-        <div class="lg:col-span-8 space-y-6">
-          <!-- CORRECTED: Adjusted title size for better mobile readability -->
-          <h3 id="detailsTitle" class="text-[22px] sm:text-3xl font-bold leading-tight"></h3>
-          <div class="flex flex-wrap items-center gap-2 text-sm">
-            <span id="detailsRating" class="inline-flex items-center gap-1.5 glass text-sm px-3 py-1.5 rounded-full"></span>
-          </div>
-          
-          <p id="detailsStory" class="text-slate-300"></p>
-
-          <!-- Dynamic Metadata Section -->
-          <!-- CORRECTED: Added horizontal gap for better spacing -->
-          <div id="metadata-wrap" class="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-4 pt-2">
-            <!-- Metadata items rendered here -->
-          </div>
-
-          <!-- Watch Online Button -->
-          <div>
-            <h4 class="font-semibold mb-2 text-indigo-300">Watch Online</h4>
-            <div id="watchOnlineWrap" class="flex flex-wrap gap-3"></div>
-          </div>
-
-          <!-- DOWNLOAD LINKS SECTION (Highly prioritized) -->
-          <div>
-            <h4 class="font-semibold mb-3 text-indigo-300">Download Links</h4>
-            
-            <!-- NEW TAB STRUCTURE -->
-            <div id="download-tabs-container" class="flex text-lg font-bold hidden">
-                <button id="tab-zippack" onclick="setActiveDownloadTab('zippack')" class="tab-button w-1/2 text-center py-2 rounded-t-xl transition hover:text-white/90">
-                    <i class="fa-solid fa-file-zipper fa-fw mr-2"></i> Zip/Pack
-                </button>
-                <button id="tab-singleeps" onclick="setActiveDownloadTab('singleeps')" class="tab-button w-1/2 text-center py-2 rounded-t-xl transition hover:text-white/90">
-                    <i class="fa-solid fa-download fa-fw mr-2"></i> Single EP's
-                </button>
-            </div>
-
-            <div id="downloadWrap" class="space-y-3 bg-surface-800 p-4 rounded-b-xl ring-1 ring-white/10">
-                <div id="download-spinner-container" class="text-center py-10 hidden">
-                    <i class="fa-solid fa-circle-notch fa-spin text-brand-500 text-3xl"></i>
-                    <p class="text-slate-400 mt-3">Preparing download sections...</p>
+                <div class="flex items-center gap-2">
+                    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-secondary">
+                        <a class="hover:text-primary transition" href="#" onclick="fetchMovies(1)">Home</a>
+                        <a class="hover:text-primary transition" href="https://real-morpheus.github.io/portfolio" target="_blank" rel="noopener">About</a>
+                    </nav>
+                    <button id="mobile-search-button" class="md:hidden h-10 w-10 grid place-items-center rounded-full text-secondary hover:text-primary hover:bg-surface transition" aria-label="Open search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
                 </div>
-                <!-- Links rendered here dynamically -->
             </div>
-          </div>
-
-          <!-- Screenshots -->
-          <div>
-            <h4 class="font-semibold mb-3 text-indigo-300">Screenshots</h4>
-            <div id="screensWrap" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
-          </div>
         </div>
-      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="relative py-12 sm:py-16 lg:py-20">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tighter text-primary">
+                    Your Portal to <span class="text-accent">Unlimited</span> Entertainment
+                </h1>
+                <p class="mt-4 text-base sm:text-lg text-secondary">Instantly find and download your favorite movies and series. Simple, fast, and elegant.</p>
+
+                <!-- Search -->
+                <div class="mt-8 max-w-2xl mx-auto">
+                    <div class="relative">
+                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-secondary"></i>
+                        <input id="search-input" type="text" placeholder="Search for 'The Matrix'..." class="w-full bg-surface border border-white/10 rounded-full h-14 pl-12 pr-36 text-base text-primary placeholder-secondary ring-focus" />
+                        <button id="search-button" class="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center gap-2 accent-btn text-gray-900 h-11 px-6 rounded-full font-semibold active:scale-95 transition">
+                            <span>Search</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quick chips -->
+                <div class="mt-5 flex flex-wrap gap-2 justify-center" id="quickChips"></div>
+            </div>
+        </div>
     </section>
-  </main>
 
-  <!-- FOOTER -->
-  <footer id="about" class="border-t border-white/10 mt-12">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10 text-center text-sm text-slate-400">
-      <p>2022–2025 © SanchitFlix Hub. UI built with accessibility, performance, and polish.</p>
-      <!-- CORRECTED: Added flex-wrap for better wrapping on small screens -->
-      <div class="mt-3 flex flex-wrap justify-center gap-4">
-        <a href="#" class="hover:text-white/90">DMCA</a>
-        <a href="#" class="hover:text-white/90">Disclaimer</a>
-        <a href="#" class="hover:text-white/90">Request</a>
-        <a href="#" class="hover:text-white/90">Contact</a>
-        <a href="#" class="hover:text-white/90">How to Download?</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- IMAGE PREVIEW MODAL -->
-  <div id="previewModal" class="modal-overlay hidden">
-    <div class="modal-content relative">
-      <button id="closeModal" class="modal-close glass h-10 w-10 grid place-items-center rounded-xl hover:scale-105 active:scale-95 transition">
-        <i class="fa-solid fa-xmark text-white/80 text-xl"></i>
-      </button>
-      <img id="previewImage" class="rounded-lg shadow-2xl" src="" alt="Full-size screenshot preview">
-    </div>
-  </div>
-
-  <!-- INLINE REDIRECT STATUS (Replacing old modal) -->
-  <div id="redirectStatus" class="redirect-overlay hidden">
-    <div class="p-6 rounded-xl border border-brand-500/50 bg-surface-800 shadow-brandGlow text-center">
-        <i class="fa-solid fa-cloud-arrow-down fa-spin text-brand-500 text-4xl"></i>
-        <h3 class="text-xl font-bold mt-4 text-white">Accessing Secure Link...</h3>
-        <p class="text-slate-400 mt-2">Redirecting you in a moment...</p>
-    </div>
-  </div>
-
-  <script>
-    const API_URL = 'https://4khdhub.fans/';
-    const PROXY_URL = 'https://api.allorigins.win/raw?url='; // CORS proxy
-    const DATA_API_URL = 'https://sanch1tx-flix.hf.space'; // Scraper API endpoint
-
-    // --- DOM Utility Functions ---
-    const qs = (sel, ctx = document) => ctx.querySelector(sel);
-    const qsa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-
-    // --- State and DOM Elements ---
-    const movieList = qs('#movie-list');
-    const movieDetailsSection = qs('#movie-details-section');
-    const backButton = qs('#back-button');
-    const resultMeta = qs('#resultMeta');
-    const toast = qs('#toast');
-    const toastText = qs('#toastText');
-    const paginationContainer = qs('#pagination-container');
-    const downloadWrap = qs('#downloadWrap');
-    const searchInput = qs('#search-input');
-    const searchButton = qs('#search-button');
-    const mobileSearchButton = qs('#mobileSearchButton'); // New element reference
-    const quickChips = qs('#quickChips');
-    const metadataWrap = qs('#metadata-wrap');
-    const redirectStatus = qs('#redirectStatus'); 
-    const tabZipPack = qs('#tab-zippack');
-    const tabSingleEps = qs('#tab-singleeps');
-    const downloadSpinnerContainer = qs('#download-spinner-container');
-    const downloadTabsContainer = qs('#download-tabs-container'); // Get the main tabs container
-    const previewModal = qs('#previewModal');
-    const previewImage = qs('#previewImage');
-    const closeModalButton = qs('#closeModal');
-
-    // State for pagination & search
-    let currentPage = 1;
-    const maxPages = 5; 
-    let isFetchingDetails = false;
-    let currentDetailsData = null; 
-    let activeDownloadTab = 'zippack'; 
-    let currentQuery = ''; 
-    
-    // --- Helper & Utility Functions (Defined first for hoisting/accessibility) ---
-
-    function showToast(text) {
-      toastText.textContent = text || 'Working…';
-      toast.classList.remove('hidden');
-      clearTimeout(showToast._t);
-      showToast._t = setTimeout(() => toast.classList.add('hidden'), 1800);
-    }
-
-    function showSkeletons(count = 12) {
-      movieList.innerHTML = '';
-      const tpl = qs('#card-skeleton');
-      for (let i = 0; i < count; i++) movieList.appendChild(tpl.content.cloneNode(true));
-    }
-    
-    function createChip(text) {
-      const btn = document.createElement('button');
-      btn.className = 'glass text-xs px-3 py-1.5 rounded-full hover:scale-[1.03] active:scale-95 transition';
-      btn.textContent = text;
-      btn.addEventListener('click', () => doSearch(text));
-      return btn;
-    }
-
-    function movieCard({ title, imageUrl, link, quality }, i) {
-      const a = document.createElement('a');
-      a.href = '#';
-      a.className = 'group relative overflow-hidden rounded-2xl glass ring-1 ring-white/10 shadow-glow hover:translate-y-[-2px] transition duration-300';
-      a.setAttribute('data-movie-url', link);
-
-      a.innerHTML = `
-        <div class="relative">
-          <span class="absolute right-2 top-2 z-10 text-[10px] font-semibold bg-gradient-to-r from-cyan-300 to-lime-300 text-black px-2 py-0.5 rounded-full">${quality || ''}</span>
-          <img data-src="${imageUrl}" alt="${title}" class="block w-full aspect-[2/3] object-cover rounded-b-none" onerror="this.src='https://placehold.co/400x600/0f1620/94a3b8?text=No+Poster'" />
-          <div class="absolute inset-0 bg-gradient-to-t from-surface-900/80 via-surface-900/10 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+    <!-- STATUS TOAST -->
+    <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 hidden max-w-[90vw]">
+        <div class="bg-surface border border-white/10 rounded-full px-4 py-3 text-sm flex items-center gap-3 shadow-lg">
+            <i class="fa-solid fa-circle-info text-accent"></i>
+            <span id="toastText" class="truncate"></span>
         </div>
-        <div class="p-3">
-          <h3 class="clamp-2 font-semibold">${title}</h3>
-          <div class="text-xs text-slate-400">Tap for details</div>
-        </div>`;
+    </div>
 
-      a.addEventListener('click', (e) => { e.preventDefault(); fetchMoviePage(link); });
+    <!-- RESULTS SECTION -->
+    <main id="results" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
+        <div id="resultMetaContainer" class="flex items-center justify-between mb-5">
+            <h2 class="text-2xl font-bold">Latest Releases</h2>
+            <div class="text-sm text-secondary" id="resultMeta"></div>
+        </div>
 
-      const img = a.querySelector('img');
-      lazyObserver.observe(img);
-      return a;
-    }
+        <!-- GRID -->
+        <div id="movie-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5"></div>
 
+        <!-- PAGINATION -->
+        <div id="pagination-container" class="mt-10 flex flex-wrap justify-center items-center gap-2"></div>
 
-    // Debounce function definition
-    const debounce = (fn, wait = 400) => {
-      let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
-    };
+        <!-- SKELETONS -->
+        <template id="card-skeleton">
+            <div class="bg-surface rounded-lg overflow-hidden border border-white/10">
+                <div class="aspect-[2/3] skeleton animate-shimmer"></div>
+                <div class="p-3">
+                    <div class="h-4 w-3/4 skeleton animate-shimmer rounded"></div>
+                    <div class="h-3 w-1/2 mt-2 skeleton animate-shimmer rounded"></div>
+                </div>
+            </div>
+        </template>
 
-    // Generic fetch logic
-    function abortableFetch(url, opts = {}, timeout = 15000) {
-      const ctrl = new AbortController();
-      const id = setTimeout(() => ctrl.abort(), timeout);
-      return fetch(url, { ...opts, signal: ctrl.signal }).finally(() => clearTimeout(id));
-    }
+        <!-- DETAILS -->
+        <section id="movie-details-section" class="hidden mt-6"></section>
+    </main>
 
-    async function getHTML(url) {
-      const res = await abortableFetch(`${PROXY_URL}${encodeURIComponent(url)}`);
-      if (!res.ok) throw new Error('Network error');
-      const text = await res.text();
-      const parser = new DOMParser();
-      return parser.parseFromString(text, 'text/html');
-    }
+    <!-- FOOTER -->
+    <footer id="about" class="border-t border-white/10 mt-12">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 text-center text-sm text-secondary">
+            <p>2022–2025 © SanchitFlix. Redesigned for a premium user experience.</p>
+        </div>
+    </footer>
 
-    function sanitizeUrl(u) {
-      if (!u) return '#';
-      if (/^https?:\/\//i.test(u)) return u;
-      return new URL(u, API_URL).href;
-    }
-    
-    const lazyObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const src = el.getAttribute('data-src');
-          if (src) { el.src = src; el.removeAttribute('data-src'); }
-          lazyObserver.unobserve(el);
-        }
-      });
-    }, { rootMargin: '200px' });
-    
-    // --- Download/Navigation Logic ---
+    <!-- MODALS -->
+    <div id="previewModal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <button id="closeModal" class="modal-close h-10 w-10 grid place-items-center rounded-full hover:bg-white/10 active:scale-95 transition">
+                <i class="fa-solid fa-xmark text-white/80 text-xl"></i>
+            </button>
+            <img id="previewImage" src="" alt="Full-size screenshot preview">
+        </div>
+    </div>
 
-    // Function to handle the final download link bypassing and immediate redirect
-    async function handleFinalDownload(url, button) {
-        if (button) {
-            button.disabled = true;
-            button.innerHTML = `<i class="fa-solid fa-spinner fa-spin fa-fw"></i> Bypassing...`;
-        }
-        
-        redirectStatus.classList.remove('hidden');
+    <div id="redirectStatus" class="modal-overlay hidden">
+        <div class="p-6 rounded-xl bg-surface border border-accent/30 shadow-accentGlow text-center max-w-xs mx-4">
+            <i class="fa-solid fa-cloud-arrow-down fa-spin text-accent text-4xl"></i>
+            <h3 class="text-xl font-bold mt-4 text-primary">Accessing Secure Link...</h3>
+            <p class="text-secondary mt-1 text-sm">Please wait a moment...</p>
+        </div>
+    </div>
 
-        try {
-            const response = await fetch(`${DATA_API_URL}/bypass?url=${encodeURIComponent(url)}`);
-            if (!response.ok) throw new Error(`Bypass API failed with status ${response.status}`);
-            const data = await response.json();
-            
-            if (data && data.final_url) {
-                showToast('Redirecting to download!');
-                setTimeout(() => {
-                    window.location.href = data.final_url;
-                }, 500); 
-            } else { 
-                throw new Error(data.error || 'Could not retrieve final access URL.'); 
-            }
-        } catch (error) {
-            showToast(`Error: ${error.message}`);
-        } finally {
-             redirectStatus.classList.add('hidden');
-             if (button) {
-                 button.disabled = false;
-                 // Reconstruct the button's original text, which is now stored in a data attribute
-                 const originalText = button.dataset.originaltext || "Download";
-                 const iconHtml = button.querySelector('i')?.outerHTML || '';
-                 button.innerHTML = `${iconHtml} ${originalText}`;
-             }
-        }
-    }
-    
-    // CORRECTED: Replaced the faulty two-step download logic with a direct, data-driven approach.
-    function renderDownloadItem(item, type) {
-        const linkItems = item.downloads || [];
+    <script>
+        const API_URL = 'https://4khdhub.fans/';
+        const DATA_API_URL = 'https://sanch1tx-flix.hf.space';
 
-        let linksToRender = [];
-        const fileLinks = linkItems.filter(l => !l.provider.toLowerCase().includes('zip') && !l.provider.toLowerCase().includes('batch'));
-        const batchLinks = linkItems.filter(l => l.provider.toLowerCase().includes('zip') || l.provider.toLowerCase().includes('batch'));
+        // DOM Element selectors
+        const qs = (sel, ctx = document) => ctx.querySelector(sel);
+        const qsa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
-        if (activeDownloadTab === 'singleeps') {
-            linksToRender = fileLinks;
-        } else { // 'zippack'
-            linksToRender = [...fileLinks, ...batchLinks];
-        }
+        const elements = {
+            movieList: qs('#movie-list'),
+            movieDetailsSection: qs('#movie-details-section'),
+            results: qs('#results'), // <-- ERROR FIX: Added this line
+            backButton: null, // will be created dynamically
+            resultMeta: qs('#resultMeta'),
+            resultMetaContainer: qs('#resultMetaContainer'),
+            toast: qs('#toast'),
+            toastText: qs('#toastText'),
+            paginationContainer: qs('#pagination-container'),
+            searchInput: qs('#search-input'),
+            searchButton: qs('#search-button'),
+            mobileSearchButton: qs('#mobile-search-button'),
+            quickChips: qs('#quickChips'),
+            redirectStatus: qs('#redirectStatus'),
+            previewModal: qs('#previewModal'),
+            previewImage: qs('#previewImage'),
+            closeModalButton: qs('#closeModal'),
+        };
 
-        // Filter out "Direct Link" provider as requested
-        linksToRender = linksToRender.filter(l => !l.provider.toLowerCase().includes('direct link'));
-
-        if (linksToRender.length === 0) return null;
-
-        const buttonsHtml = linksToRender.map(l => {
-            let icon = 'fa-solid fa-cloud-arrow-down';
-            let brand = 'fa-solid';
-            const lowerText = l.provider.toLowerCase();
-            
-            if (lowerText.includes('hubdrive') || lowerText.includes('g-drive')) { 
-                icon = 'fa-google-drive'; brand = 'fa-brands'; 
-            } else if (lowerText.includes('hubcloud') || lowerText.includes('cloud')) { 
-                icon = 'fa-cloud'; 
-            } else if (lowerText.includes('batch') || lowerText.includes('zip')) {
-                icon = 'fa-file-zipper';
-            }
-            
-            // CORRECTED: Added whitespace-nowrap to prevent button text from wrapping
-            return `<button data-url="${l.url}" data-originaltext="${l.provider}" class="download-action-btn final-link-btn inline-flex items-center gap-2 access-btn text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:opacity-95 active:scale-95 transition whitespace-nowrap">
-                        <i class="${brand} ${icon} fa-fw"></i> ${l.provider}
-                    </button>`;
-        }).join('');
-
-        if (!buttonsHtml) return null;
-
-        const card = document.createElement('div');
-        card.className = 'quality-link-card glass rounded-xl p-3 ring-1 ring-white/10';
-
-        let description = '';
-        if (item.full_filename) {
-            description = `<p class="text-xs text-slate-500 truncate mt-1">${item.full_filename}</p>`;
-        } else if (item.size) {
-            description = `<p class="text-xs text-slate-500 mt-1">Size: ${item.size}</p>`;
-        }
-
-        // CORRECTED: Added break-words to title to prevent overflow
-        card.innerHTML = `
-            <div class="text-base font-bold text-white mb-1 break-words">${item.quality_description || item.season_title || 'File Link'}</div>
-            ${description}
-            <div class="provider-buttons flex flex-wrap gap-x-2 gap-y-3 pt-3">
-                ${buttonsHtml}
-            </div>`;
-        
-        return card;
-    }
-
-    function renderDownloadTabs(details) {
-        downloadWrap.innerHTML = '';
-        const { movie_files, season_packs, individual_episodes } = details.download_options;
-
-        const renderDownloadGroup = (title, items, type) => {
-            if (items && items.length > 0) {
-                const titleEl = document.createElement('h4');
-                titleEl.className = 'font-semibold text-white mt-4 first:mt-0';
-                titleEl.textContent = title;
-                downloadWrap.appendChild(titleEl);
-
-                items.forEach(item => {
-                    const card = renderDownloadItem(item, type);
-                    if (card) downloadWrap.appendChild(card);
-                });
-            }
+        let state = {
+            currentPage: 1,
+            maxPages: 5,
+            isFetchingDetails: false,
+            currentDetailsData: null,
+            activeDownloadTab: 'zippack',
+            currentQuery: '',
         };
         
-        redirectStatus.classList.add('hidden');
+        // --- UI Functions ---
+        function showToast(text) {
+            elements.toastText.textContent = text || 'Working…';
+            elements.toast.classList.remove('hidden');
+            clearTimeout(showToast._t);
+            showToast._t = setTimeout(() => elements.toast.classList.add('hidden'), 2200);
+        }
 
-        if (activeDownloadTab === 'zippack') {
-            renderDownloadGroup('Movie Download Options', movie_files, 'movie');
-            
-            if (season_packs && season_packs.length > 0) {
-                season_packs.forEach(pack => {
-                    renderDownloadGroup(`Season Pack: ${pack.season_title || pack.quality_description}`, [pack], 'pack');
-                });
-            }
-            
-            if (downloadWrap.children.length === 0) {
-                 downloadWrap.innerHTML = '<div class="text-sm text-slate-400 p-4">No batch or full movie file downloads available.</div>';
-            }
-            
-        } else { // 'singleeps'
-            if (individual_episodes && individual_episodes.length > 0) {
-                 individual_episodes.forEach(season => {
-                     const seasonTitle = season.season_title || 'Individual Episodes';
-                     if (season.episodes && season.episodes.length > 0) {
-                         renderDownloadGroup(seasonTitle, season.episodes, 'episode');
-                     }
-                 });
-            }
-            
-            if (downloadWrap.children.length === 0) {
-                 downloadWrap.innerHTML = '<div class="text-sm text-slate-400 p-4">No individual episodes available.</div>';
+        function showSkeletons(count = 12) {
+            elements.movieList.innerHTML = '';
+            const tpl = qs('#card-skeleton').content;
+            for (let i = 0; i < count; i++) {
+                elements.movieList.appendChild(tpl.cloneNode(true));
             }
         }
-    }
-    
-    function setActiveDownloadTab(tabName) {
-        activeDownloadTab = tabName;
         
-        tabZipPack.classList.toggle('active', tabName === 'zippack');
-        tabSingleEps.classList.toggle('active', tabName === 'singleeps');
-        
-        downloadSpinnerContainer.classList.add('hidden');
-        
-        if (currentDetailsData) {
-            renderDownloadTabs(currentDetailsData);
+        function createChip(text) {
+            const btn = document.createElement('button');
+            btn.className = 'bg-surface border border-white/10 text-xs px-3 py-1.5 rounded-full hover:border-accent/80 hover:text-primary transition';
+            btn.textContent = text;
+            btn.addEventListener('click', () => doSearch(text));
+            return btn;
         }
-    }
 
-    function renderResults(movies, label) {
-      resultMeta.textContent = label || '';
-      movieList.innerHTML = '';
-      if (!movies.length) {
-        movieList.innerHTML = `<div class="col-span-full text-center text-slate-400 py-16">No results. Try a different search.</div>`;
-        return;
-      }
-      movies.forEach((m, i) => movieList.appendChild(movieCard(m, i)));
-      window.scrollTo({ top: qs('#results').offsetTop - 64, behavior: 'smooth' });
-    }
-    
-    // --- Core Data Fetching Functions ---
+        function movieCard({ title, imageUrl, link, quality }, i) {
+            const a = document.createElement('a');
+            a.href = '#';
+            a.className = 'group relative overflow-hidden rounded-lg bg-surface border border-white/10 shadow-lg hover:shadow-accent/20 hover:-translate-y-1 transition-all duration-300';
+            a.setAttribute('data-movie-url', link);
+            a.style.animationDelay = `${i * 40}ms`;
+            a.style.opacity = 0;
+            a.classList.add('animate-fadeUp');
 
-    // This function must be globally accessible for initial load and navigation
-    async function fetchMovies(page = 1, query = '') {
-      try {
-        movieDetailsSection.classList.add('hidden'); 
-        
-        // 1. Update/Persist state
-        currentQuery = query || currentQuery;
-        currentPage = page;
-        
-        const activeQuery = currentQuery.trim();
+            a.innerHTML = `
+                <div class="relative aspect-[2/3]">
+                    <img data-src="${imageUrl}" alt="${title}" class="block w-full h-full object-cover" onerror="this.src='https://placehold.co/400x600/1F2937/9CA3AF?text=No+Poster'" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                    ${quality ? `<span class="absolute top-2 right-2 text-xs font-bold bg-accent text-background px-2 py-0.5 rounded-full">${quality}</span>` : ''}
+                </div>
+                <div class="p-3">
+                    <h3 class="font-semibold text-sm text-primary group-hover:text-accent-light transition-colors clamp-2">${title}</h3>
+                </div>`;
 
-        showToast(activeQuery ? `Searching “${activeQuery}” Page ${page}…` : `Loading popular Page ${page}…`);
-        showSkeletons();
-        
-        // 2. Determine URL based on query persistence
-        let url;
-        if (activeQuery) {
-            // New search pagination endpoint
-            url = `${DATA_API_URL}/search?query=${encodeURIComponent(activeQuery)}&page=${page}`;
-        } else {
-            // Homepage pagination endpoint
-            url = `${DATA_API_URL}${page === 1 ? '/home' : `/page/${page}`}`;
+            a.addEventListener('click', (e) => { e.preventDefault(); fetchMoviePage(link); });
+
+            lazyObserver.observe(a.querySelector('img'));
+            return a;
+        }
+
+        const lazyObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    const src = img.dataset.src;
+                    if (src) {
+                        img.src = src;
+                        img.removeAttribute('data-src');
+                    }
+                    observer.unobserve(img);
+                }
+            });
+        }, { rootMargin: '200px' });
+
+        // --- API & Data Handling ---
+        async function fetchApi(endpoint, params = {}) {
+            const url = new URL(`${DATA_API_URL}${endpoint}`);
+            Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, value));
+            
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`API error: ${response.statusText}`);
+            return response.json();
+        }
+
+        async function fetchMovies(page = 1, query = '') {
+            try {
+                elements.movieDetailsSection.classList.add('hidden');
+                elements.movieList.classList.remove('hidden');
+                elements.paginationContainer.classList.remove('hidden');
+                
+                state.currentQuery = query;
+                state.currentPage = page;
+                
+                const activeQuery = state.currentQuery.trim();
+                const title = activeQuery ? `Results for "${activeQuery}"` : 'Latest Releases';
+                elements.resultMetaContainer.querySelector('h2').textContent = title;
+
+                showToast(activeQuery ? `Searching for “${activeQuery}”...` : `Loading page ${page}...`);
+                showSkeletons();
+                
+                let data;
+                if (activeQuery) {
+                    data = await fetchApi('/search', { query: activeQuery, page });
+                } else {
+                    data = await fetchApi(page === 1 ? '/home' : `/page/${page}`);
+                }
+                
+                const movies = data.results.map(item => ({
+                    title: item.title, imageUrl: item.poster, link: item.url, quality: item.quality
+                }));
+                
+                renderResults(movies);
+                renderPagination(state.currentPage, data.totalPages || state.maxPages, activeQuery);
+            } catch (e) {
+                console.error('fetchMovies Error:', e);
+                elements.movieList.innerHTML = `<div class="col-span-full text-center text-red-400 py-16">Failed to load content. Please try again later.</div>`;
+                elements.paginationContainer.innerHTML = '';
+            }
         }
         
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('API request failed');
-        const data = await response.json();
-        
-        const movies = data.results.map(item => ({
-            title: item.title,
-            imageUrl: item.poster,
-            link: item.url, 
-            quality: item.quality,
-        }));
-        
-        // 3. Render results using the active query for the label
-        renderResults(movies, activeQuery ? `Results for “${activeQuery}” (Page ${currentPage})` : `Popular picks (Page ${currentPage})`);
-        
-        // 4. Render pagination with the active query 
-        renderPagination(currentPage, maxPages, activeQuery); 
+        async function fetchMoviePage(relativeUrl) {
+            if (state.isFetchingDetails) return;
+            state.isFetchingDetails = true;
 
-      } catch (e) {
-        console.error('fetchMovies', e);
-        // Reset query state if fetching failed
-        currentQuery = ''; 
-        movieList.innerHTML = `<div class="col-span-full text-center text-red-300/90 py-16">Failed to load content. Please check the API.</div>`;
-        paginationContainer.innerHTML = '';
-      }
-    }
+            try {
+                showToast('Loading details…');
+                elements.movieList.classList.add('hidden');
+                elements.paginationContainer.classList.add('hidden');
+                elements.movieDetailsSection.innerHTML = '<div class="text-center py-20"><i class="fa-solid fa-spinner fa-spin text-4xl text-accent"></i></div>';
+                elements.movieDetailsSection.classList.remove('hidden');
 
-    async function fetchMoviePage(relativeUrl) {
-        if (isFetchingDetails) return;
-        isFetchingDetails = true;
-
-        try {
-            showToast('Fetching details…');
-            movieDetailsSection.classList.remove('hidden');
-            qsa('#detailsTitle, #detailsRating, #detailsStory, #watchOnlineWrap, #downloadWrap, #screensWrap, #metadata-wrap').forEach(el => el.innerHTML = '');
-            qs('#detailsPoster').src = 'https://placehold.co/800x1200/0f172a/94a3b8?text=Loading...';
-
-            const absoluteUrl = API_URL + relativeUrl;
-            const response = await fetch(`${DATA_API_URL}/details?url=${encodeURIComponent(absoluteUrl)}`);
-            if (!response.ok) throw new Error('Details API request failed');
-            const details = await response.json();
-            
-            currentDetailsData = details; 
-            
-            // --- Conditional Tab Visibility Check ---
-            const hasMovieFiles = details.download_options.movie_files.length > 0;
-            const hasSeasonPacks = details.download_options.season_packs.length > 0;
-            const hasIndividualEpisodes = details.download_options.individual_episodes.length > 0;
-            
-            const showZipPackTab = hasMovieFiles || hasSeasonPacks;
-            const showSingleEpsTab = hasIndividualEpisodes;
-
-            tabZipPack.classList.toggle('hidden', !showZipPackTab);
-            tabSingleEps.classList.toggle('hidden', !showSingleEpsTab);
-            downloadTabsContainer.classList.toggle('hidden', !showZipPackTab && !showSingleEpsTab);
-
-            let initialTab = 'zippack';
-            if (!showZipPackTab && showSingleEpsTab) {
-                initialTab = 'singleeps'; 
-            } else if (!showZipPackTab && !showSingleEpsTab) {
-                 downloadWrap.innerHTML = '<div class="text-sm text-slate-400 p-4">No download links found for this title.</div>';
+                const absoluteUrl = API_URL + relativeUrl;
+                const details = await fetchApi('/details', { url: absoluteUrl });
+                
+                state.currentDetailsData = details;
+                renderMovieDetails(details);
+                
+                window.scrollTo({ top: elements.results.offsetTop - 80, behavior: 'smooth' });
+            } catch (e) {
+                console.error('fetchMoviePage Error:', e);
+                showToast('Failed to load details');
+                elements.movieDetailsSection.innerHTML = `<div class="text-center text-red-400 py-16">Could not load details for this title.</div>`;
+            } finally {
+                state.isFetchingDetails = false;
             }
-
-            // --- Render Details ---
-            qs('#detailsTitle').textContent = details.title || 'Untitled';
-            qs('#detailsPoster').src = details.poster || 'https://placehold.co/800x1200/0f172a/94a3b8?text=No+Image';
-            qs('#detailsRating').innerHTML = `<i class="fa-solid fa-star text-yellow-300"></i> ${details.metadata.imdb || 'N/A'}`;
-            qs('#detailsStory').textContent = details.summary || 'Storyline not available.';
-            
-            const wo = qs('#watchOnlineWrap');
-            if (details.metadata.watch) {
-                const a = document.createElement('a');
-                a.href = details.metadata.watch;
-                a.target = '_blank';
-                a.rel = 'noopener';
-                a.className = 'inline-flex items-center gap-2 access-btn text-white px-4 py-2 rounded-lg font-semibold hover:opacity-95 active:scale-95 transition';
-                a.innerHTML = '<i class="fa-solid fa-play"></i><span>Watch Online</span>';
-                wo.appendChild(a);
-            } else {
-                wo.innerHTML = '<div class="text-sm text-slate-400">Not available</div>';
+        }
+        
+        async function handleFinalDownload(url, button) {
+            if (button) {
+                button.disabled = true;
+                button.dataset.originalHTML = button.innerHTML;
+                button.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
             }
+            elements.redirectStatus.classList.remove('hidden');
 
-            const metaHtml = Object.entries(details.metadata).map(([key, value]) => {
-                if (!value || key === 'imdb' || key === 'watch') return ''; 
-                const displayKey = key.charAt(0).toUpperCase() + key.slice(1).replace(/_/g, ' '); 
-                return `<div class="text-sm"><span class="text-slate-500">${displayKey}:</span> <span class="text-slate-300 font-medium">${value}</span></div>`;
-            }).join('');
-            metadataWrap.innerHTML = metaHtml;
+            try {
+                const data = await fetchApi('/bypass', { url });
+                if (data && data.final_url) {
+                    showToast('Redirecting to download!');
+                    setTimeout(() => window.location.href = data.final_url, 500);
+                } else {
+                    throw new Error(data.error || 'Could not get the final URL.');
+                }
+            } catch (error) {
+                console.error('Bypass error:', error);
+                showToast(`Error: ${error.message}`);
+            } finally {
+                elements.redirectStatus.classList.add('hidden');
+                if (button) {
+                    button.disabled = false;
+                    button.innerHTML = button.dataset.originalHTML;
+                }
+            }
+        }
 
-            // --- Render Download Links (Using Tabs) ---
-            setActiveDownloadTab(initialTab); 
+        // --- Render Functions ---
+        function renderResults(movies) {
+            elements.movieList.innerHTML = '';
+            if (!movies.length) {
+                elements.movieList.innerHTML = `<div class="col-span-full text-center text-secondary py-16">No results found. Try a different search.</div>`;
+                return;
+            }
+            movies.forEach((m, i) => elements.movieList.appendChild(movieCard(m, i)));
+        }
 
-            // Render Screenshots
-            const scWrap = qs('#screensWrap');
-            const screenshots = details.screenshots || [];
-
-            if (screenshots.length) {
-                screenshots.forEach(src => {
-                    const a = document.createElement('a');
-                    a.href = src;
-                    a.className = "block relative overflow-hidden rounded-xl ring-1 ring-white/10 cursor-pointer group";
-                    a.innerHTML = `
-                        <img src="${src}" alt="Screenshot" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300" />
-                        <div class="absolute inset-0 bg-black/40 grid place-items-center opacity-0 group-hover:opacity-100 transition-opacity">
-                            <i class="fa-solid fa-magnifying-glass-plus text-white text-2xl"></i>
+        function renderMovieDetails(details) {
+            // Main structure
+            const detailsHTML = `
+                <button id="back-button" class="mb-6 inline-flex items-center gap-2 bg-surface border border-white/10 px-4 h-11 rounded-full text-sm font-semibold hover:border-white/20 transition">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Back to results</span>
+                </button>
+                <div class="bg-surface/50 border border-white/10 rounded-2xl">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 p-4 sm:p-6 lg:p-8">
+                        <div class="md:col-span-1">
+                            <img src="${details.poster || 'https://placehold.co/800x1200/1F2937/9CA3AF?text=No+Image'}" class="w-full h-auto rounded-lg object-cover shadow-lg" alt="Poster for ${details.title}">
                         </div>
-                    `;
-                    scWrap.appendChild(a);
-                    a.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        previewImage.src = src;
-                        previewModal.classList.remove('hidden');
-                    });
-                });
+                        <div class="md:col-span-2 space-y-5">
+                            <div>
+                                <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">${details.title || 'Untitled'}</h3>
+                                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3 text-secondary text-sm">
+                                    ${details.metadata.imdb ? `<span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-star text-yellow-400"></i> ${details.metadata.imdb}</span>` : ''}
+                                    ${details.metadata.release ? `<span>${details.metadata.release}</span>` : ''}
+                                    ${details.metadata.runtime ? `<span>${details.metadata.runtime}</span>` : ''}
+                                </div>
+                            </div>
+                            <p class="text-secondary text-base leading-relaxed">${details.summary || 'No storyline available.'}</p>
+                            
+                            <!-- Key-Value Metadata -->
+                            <div id="metadata-wrap" class="grid grid-cols-2 gap-x-4 gap-y-2 pt-2 text-sm"></div>
+
+                            <!-- Watch Online -->
+                            <div id="watch-online-wrap"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Downloads & Screenshots in separate cards below -->
+                <div class="mt-6 space-y-6">
+                    <div id="downloads-container"></div>
+                    <div id="screenshots-container"></div>
+                </div>
+            `;
+            elements.movieDetailsSection.innerHTML = detailsHTML;
+            elements.backButton = qs('#back-button');
+            elements.backButton.addEventListener('click', backToResults);
+
+            // Populate metadata
+            const metadataWrap = qs('#metadata-wrap');
+            const metaToDisplay = { Genre: details.metadata.genre, Director: details.metadata.director, Cast: details.metadata.cast, Quality: details.metadata.quality };
+            metadataWrap.innerHTML = Object.entries(metaToDisplay).map(([key, value]) => {
+                return value ? `<div class="truncate"><span class="text-secondary">${key}:</span> <span class="text-primary font-medium">${value}</span></div>` : '';
+            }).join('');
+            
+            // Watch Online Button
+            const watchWrap = qs('#watch-online-wrap');
+            if (details.metadata.watch) {
+                watchWrap.innerHTML = `<a href="${details.metadata.watch}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 accent-btn text-background px-5 py-2.5 rounded-full font-bold transition">
+                    <i class="fa-solid fa-play"></i><span>Watch Trailer</span></a>`;
+            }
+
+            renderDownloadsSection(details.download_options);
+            renderScreenshotsSection(details.screenshots);
+        }
+
+        function renderDownloadsSection(download_options) {
+            const container = qs('#downloads-container');
+            const { movie_files, season_packs, individual_episodes } = download_options;
+            const hasMovieFiles = movie_files.length > 0;
+            const hasSeasonPacks = season_packs.length > 0;
+            const hasIndividualEpisodes = individual_episodes?.some(s => s.episodes?.length > 0);
+
+            if (!hasMovieFiles && !hasSeasonPacks && !hasIndividualEpisodes) return;
+
+            state.activeDownloadTab = (hasMovieFiles || hasSeasonPacks) ? 'zippack' : 'singleeps';
+            
+            let tabsHTML = '';
+            if (hasMovieFiles || hasSeasonPacks) {
+                tabsHTML += `<button data-tab="zippack" class="tab-button">Zip / Pack</button>`;
+            }
+            if (hasIndividualEpisodes) {
+                tabsHTML += `<button data-tab="singleeps" class="tab-button">Single Episodes</button>`;
+            }
+
+            container.innerHTML = `
+                <div class="bg-surface/50 border border-white/10 rounded-2xl p-4 sm:p-6">
+                    <h4 class="text-xl font-bold mb-4">Download Links</h4>
+                    <div class="border-b border-white/10 mb-4 flex gap-4">${tabsHTML}</div>
+                    <div id="downloadWrap" class="space-y-3"></div>
+                </div>`;
+            
+            qsa('.tab-button', container).forEach(btn => btn.addEventListener('click', (e) => {
+                setActiveDownloadTab(e.target.dataset.tab, container);
+            }));
+            
+            setActiveDownloadTab(state.activeDownloadTab, container);
+        }
+
+        function renderScreenshotsSection(screenshots) {
+            if (!screenshots || screenshots.length === 0) return;
+            const container = qs('#screenshots-container');
+            container.innerHTML = `
+                <div class="bg-surface/50 border border-white/10 rounded-2xl p-4 sm:p-6">
+                    <h4 class="text-xl font-bold mb-4">Screenshots</h4>
+                    <div id="screensWrap" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                        ${screenshots.map(src => `
+                            <a href="${src}" class="block relative overflow-hidden rounded-lg border border-white/10 cursor-pointer group aspect-video">
+                                <img src="${src}" alt="Screenshot" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                                <div class="absolute inset-0 bg-black/50 grid place-items-center opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <i class="fa-solid fa-magnifying-glass-plus text-white text-2xl"></i>
+                                </div>
+                            </a>`).join('')}
+                    </div>
+                </div>`;
+
+            qsa('#screensWrap a', container).forEach(a => a.addEventListener('click', (e) => {
+                e.preventDefault();
+                elements.previewImage.src = a.href;
+                elements.previewModal.classList.remove('hidden');
+            }));
+        }
+        
+        function renderDownloadLinks() {
+            const downloadWrap = qs('#downloadWrap');
+            if (!downloadWrap || !state.currentDetailsData) return;
+            
+            downloadWrap.innerHTML = '';
+            const { movie_files, season_packs, individual_episodes } = state.currentDetailsData.download_options;
+
+            const createLinkCard = (item, index) => {
+                const links = item.downloads?.filter(l => !l.provider.toLowerCase().includes('direct link')) || [];
+                if (links.length === 0) return '';
+                
+                let titleText = item.quality_description || item.season_title || item.episode_title || 'File';
+                // This condition now only runs when an index is explicitly passed (for single episodes)
+                if (typeof index === 'number') {
+                    titleText = `Episode ${index + 1}`;
+                }
+                
+                return `
+                    <div class="bg-background/40 p-3 rounded-lg border border-white/10">
+                        <div class="flex justify-between items-center">
+                            <span class="font-semibold text-primary text-base">${titleText}</span>
+                            <span class="text-xs text-secondary">${item.size || ''}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-2 pt-3">
+                            ${links.map(l => {
+                                const lower = l.provider.toLowerCase();
+                                let icon = 'fa-cloud-arrow-down';
+                                if (lower.includes('drive')) icon = 'fa-brands fa-google-drive';
+                                else if (lower.includes('cloud')) icon = 'fa-cloud';
+                                else if (lower.includes('batch') || lower.includes('zip')) icon = 'fa-file-zipper';
+                                return `<button data-url="${l.url}" class="final-link-btn inline-flex items-center gap-2 bg-secondary/10 text-secondary text-sm font-medium px-3 py-1.5 rounded-md hover:bg-secondary/20 hover:text-primary transition">
+                                    <i class="fa-solid ${icon} fa-fw"></i> ${l.provider}
+                                </button>`;
+                            }).join('')}
+                        </div>
+                    </div>`;
+            };
+
+            let contentHTML = '';
+            if (state.activeDownloadTab === 'zippack') {
+                // We call createLinkCard without the index for zip/packs
+                contentHTML += movie_files.map(item => createLinkCard(item)).join('');
+                contentHTML += season_packs.map(item => createLinkCard(item)).join('');
             } else {
-                scWrap.innerHTML = '<div class="text-sm text-slate-400">No screenshots</div>';
+                individual_episodes.forEach(season => {
+                    contentHTML += `<h5 class="text-primary font-bold pt-3 pb-1">${season.season_title}</h5>`;
+                    // We pass the index only for single episodes
+                    contentHTML += season.episodes.map((episode, index) => createLinkCard(episode, index)).join('');
+                });
             }
 
-            window.scrollTo({ top: qs('#movie-details-section').offsetTop - 80, behavior: 'smooth' });
-
-        } catch (e) {
-            console.error('fetchMoviePage', e);
-            showToast('Failed to load details');
-        } finally {
-            isFetchingDetails = false;
-        }
-    }
-    
-    // --- Pagination and Search Helpers ---
-    
-    function renderPagination(current, total, query = null) { // NEW: Accepts optional query parameter
-      paginationContainer.innerHTML = '';
-      
-      const createPageButton = (page, text) => {
-        const btn = document.createElement('button');
-        btn.textContent = text || page;
-        btn.className = `glass px-4 py-2 rounded-full font-semibold transition hover:scale-[1.02] active:scale-95 ${page === current ? 'bg-brand-600/60' : ''} ${page === '...' ? 'cursor-default pointer-events-none' : ''}`;
-        
-        if (typeof page === 'number') {
-            // Pass the query back to fetchMovies for persistent search pagination
-            btn.addEventListener('click', () => fetchMovies(page, query));
-        }
-
-        return btn;
-      };
-
-      const prevButton = createPageButton(current - 1, 'Previous');
-      prevButton.disabled = current <= 1;
-      prevButton.classList.toggle('opacity-50', prevButton.disabled);
-      paginationContainer.appendChild(prevButton);
-
-      const startPage = Math.max(1, current - 2);
-      const endPage = Math.min(total, current + 2);
-      
-      if (startPage > 1) {
-          paginationContainer.appendChild(createPageButton(1, '1'));
-          if (startPage > 2) paginationContainer.appendChild(createPageButton('...', '...'));
-      }
-      
-      for (let i = startPage; i <= endPage; i++) {
-          paginationContainer.appendChild(createPageButton(i));
-      }
-      
-      if (endPage < total) {
-          if (endPage < total - 1) paginationContainer.appendChild(createPageButton('...', '...'));
-          paginationContainer.appendChild(createPageButton(total, total));
-      }
-
-      const nextButton = createPageButton(current + 1, 'Next');
-      nextButton.disabled = current >= total;
-      nextButton.classList.toggle('opacity-50', nextButton.disabled);
-      paginationContainer.appendChild(nextButton);
-    }
-
-    function doSearch(query) {
-      if (!query) return;
-      searchInput.value = query;
-      // Start search always at page 1
-      fetchMovies(1, query); 
-    }
-    
-    // --- Event Handlers & Initialization ---
-
-    // Initial load setup
-    window.addEventListener('load', () => {
-        // PWA: Register service worker
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('Service Worker Registered', reg))
-            .catch(err => console.error('Service Worker Error', err));
-        }
-
-        // Initialize chips after DOM is ready
-        const defaultChips = ['Inception', 'Breaking Bad', 'Oppenheimer', 'Stranger Things', 'Joker', 'Game of Thrones'];
-        defaultChips.forEach(c => quickChips.appendChild(createChip(c)));
-        
-        // Load initial data
-        fetchMovies(1);
-        
-        // Setup Event Handlers (which rely on DOM elements being defined)
-        searchButton.addEventListener('click', () => doSearch(searchInput.value.trim()));
-        searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(searchInput.value.trim()); });
-        backButton.addEventListener('click', () => {
-            movieDetailsSection.classList.add('hidden');
-            window.scrollTo({ top: qs('#results').offsetTop - 64, behavior: 'smooth' });
-        });
-        
-        // New mobile search button listener
-        mobileSearchButton.addEventListener('click', () => {
-            searchInput.focus();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-
-        closeModalButton.addEventListener('click', () => {
-            previewModal.classList.add('hidden');
-        });
-        previewModal.addEventListener('click', (e) => {
-            if (e.target.id === 'previewModal') {
-                previewModal.classList.add('hidden');
+            if (!contentHTML) {
+                downloadWrap.innerHTML = `<div class="text-sm text-secondary p-4 text-center">No downloads available for this category.</div>`;
+            } else {
+                downloadWrap.innerHTML = contentHTML;
             }
-        });
-        
-        // CORRECTED: Simplified the click handler to only manage final download buttons.
-        downloadWrap.addEventListener('click', async (e) => {
-            const button = e.target.closest('.download-action-btn.final-link-btn');
-            if (!button) return;
 
-            // The button is a final link, handle the download directly.
-            e.preventDefault();
-            handleFinalDownload(button.dataset.url, button);
-        });
-    });
-  </script>
+            qsa('.final-link-btn', downloadWrap).forEach(btn => btn.addEventListener('click', (e) => {
+                handleFinalDownload(e.currentTarget.dataset.url, e.currentTarget);
+            }));
+        }
+
+        function renderPagination(current, total, query) {
+            const container = elements.paginationContainer;
+            container.innerHTML = '';
+            if (total <= 1) return;
+
+            const createBtn = (page, text, icon = '') => {
+                const btn = document.createElement('button');
+                btn.className = 'bg-surface border border-white/10 h-10 px-4 rounded-lg text-sm font-semibold hover:border-white/20 transition disabled:opacity-50 disabled:cursor-not-allowed';
+                btn.innerHTML = icon ? `<i class="fa-solid ${icon}"></i>` : (text || page);
+                if (typeof page === 'number') btn.addEventListener('click', () => fetchMovies(page, query));
+                if (page === '...') btn.disabled = true;
+                if (page === current) btn.classList.add('!bg-accent', '!text-background', '!border-accent');
+                return btn;
+            };
+
+            container.appendChild(createBtn(current - 1, null, 'fa-arrow-left')).disabled = current <= 1;
+
+            const pages = getPaginationRange(current, total);
+            pages.forEach(p => container.appendChild(createBtn(p)));
+
+            container.appendChild(createBtn(current + 1, null, 'fa-arrow-right')).disabled = current >= total;
+        }
+
+        function getPaginationRange(current, total, width = 2) {
+            if (total <= (width * 2) + 3) {
+                return [...Array(total).keys()].map(i => i + 1);
+            }
+            const range = [];
+            range.push(1);
+            if (current > width + 2) range.push('...');
+            for (let i = Math.max(2, current - width); i <= Math.min(total - 1, current + width); i++) {
+                range.push(i);
+            }
+            if (current < total - (width + 1)) range.push('...');
+            range.push(total);
+            return range;
+        }
+
+        // --- Event Handlers & Initializers ---
+        function doSearch(query) {
+            const trimmedQuery = query.trim();
+            elements.searchInput.value = trimmedQuery;
+            fetchMovies(1, trimmedQuery);
+        }
+        
+        function backToResults() {
+            elements.movieDetailsSection.classList.add('hidden');
+            elements.movieList.classList.remove('hidden');
+            elements.paginationContainer.classList.remove('hidden');
+            elements.resultMetaContainer.querySelector('h2').textContent = state.currentQuery ? `Results for "${state.currentQuery}"` : 'Latest Releases';
+        }
+
+        function setActiveDownloadTab(tabName, context) {
+            state.activeDownloadTab = tabName;
+            qsa('.tab-button', context).forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabName);
+            });
+            renderDownloadLinks();
+        }
+
+        function initialize() {
+            // ERROR FIX: Removed service worker registration
+            const defaultChips = ['Inception', 'Breaking Bad', 'Oppenheimer', 'Stranger Things', 'Joker'];
+            defaultChips.forEach(c => elements.quickChips.appendChild(createChip(c)));
+            
+            elements.searchButton.addEventListener('click', () => doSearch(elements.searchInput.value));
+            elements.searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(elements.searchInput.value); });
+            
+            elements.closeModalButton.addEventListener('click', () => elements.previewModal.classList.add('hidden'));
+            elements.previewModal.addEventListener('click', (e) => {
+                if (e.target.id === 'previewModal') elements.previewModal.classList.add('hidden');
+            });
+            
+            fetchMovies(1); // Initial load
+        }
+
+        window.addEventListener('load', initialize);
+    </script>
 </body>
 </html>
 
