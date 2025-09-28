@@ -1,23 +1,21 @@
 {
-  "name": "SanchitFlix Hub",
+  "name": "SanchitFlix",
   "short_name": "SanchitFlix",
-  "description": "Your ultimate hub for movies and series access.",
-  "start_url": "./index.html",
+  "start_url": ".",
   "display": "standalone",
-  "background_color": "#0b0f14",
-  "theme_color": "#4938e6",
+  "background_color": "#111827",
+  "theme_color": "#111827",
+  "description": "Your Portal to Unlimited Entertainment.",
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='gradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%234938e6;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ec4899;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='%230f1620'/%3E%3Ctext x='50' y='70' font-family='Poppins, sans-serif' font-size='60' fill='url(%23gradient)' text-anchor='middle' font-weight='700'%3ESF%3C/text%3E%3C/svg%3E",
+      "src": "https://www.google.com/s2/favicons?sz=192&domain_url=https://real-morpheus.github.io",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='gradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%234938e6;stop-opacity:1' /%3E%3Cstop offset='100%25' style='stop-color:%23ec4899;stop-opacity:1' /%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='%230b0f14'/%3E%3Ctext x='50' y='70' font-family='Poppins, sans-serif' font-size='60' fill='url(%23gradient)' text-anchor='middle' font-weight='700'%3ESF%3C/text%3E%3C/svg%3E",
+      "src": "https://www.google.com/s2/favicons?sz=512&domain_url=https://real-morpheus.github.io",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "maskable"
+      "type": "image/png"
     }
   ]
 }
