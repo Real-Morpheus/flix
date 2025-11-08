@@ -1,726 +1,1353 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>SanchitFlix</title>
-    <meta name="theme-color" content="#111827" />
-
-    <!-- NEW GEMINI-STYLE LOGO / FAVICON -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='geminiGradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%2389f7fe'/%3E%3Cstop offset='50%25' stop-color='%2366a6ff'/%3E%3Cstop offset='100%25' stop-color='%23a382ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='%231f2937'/%3E%3Cpath fill='url(%23geminiGradient)' d='M50 10 L58 42 L90 50 L58 58 L50 90 L42 58 L10 50 L42 42 Z'/%3E%3C/svg%3E" />
-    
-    <!-- PWA MANIFEST -->
-    <link rel="manifest" href="manifest.json">
-
-    <!-- Tailwind CSS (with custom configuration) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ["Poppins", "ui-sans-serif", "system-ui"] },
-                    colors: {
-                        // New, sleeker color palette
-                        background: '#111827', // dark gray-blue
-                        surface: '#1F2937',    // lighter gray-blue for cards
-                        primary: '#E5E7EB',     // light gray for primary text
-                        secondary: '#9CA3AF',   // medium gray for secondary text
-                        accent: {
-                            light: '#22d3ee', // light cyan
-                            DEFAULT: '#06b6d4', // cyan-500
-                            dark: '#0891b2',  // cyan-600
-                        },
-                    },
-                    boxShadow: {
-                        // Updated glow effects to use the new accent color
-                        glow: "0 10px 30px -10px rgba(0,0,0,0.5)",
-                        accentGlow: "0 0 0 2px rgba(6, 182, 212, 0.3), 0 5px 20px rgba(6, 182, 212, 0.2)",
-                    },
-                    keyframes: {
-                        shimmer: {
-                            "0%": { backgroundPosition: "-450px 0" },
-                            "100%": { backgroundPosition: "450px 0" },
-                        },
-                        fadeUp: {
-                            "0%": { opacity: 0, transform: "translateY(10px)" },
-                            "100%": { opacity: 1, transform: "translateY(0)" },
-                        },
-                    },
-                    animation: {
-                        shimmer: "shimmer 1.5s linear infinite",
-                        fadeUp: "fadeUp .5s ease-out forwards",
-                    },
-                    backgroundImage: {
-                        // A subtle background glow from the top
-                        'soft-glow': "radial-gradient(circle 1000px at 50% -30%, rgba(6, 182, 212, 0.1), transparent 60%)",
-                    },
-                },
-            },
-        };
-    </script>
-
-    <!-- Fonts & Icons -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet" />
-
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>SanchitFlix - Dreamstream Cinema</title>
+    <!-- 
+      - Added Font Awesome link for icons.
+      - Added Google Fonts link for 'Inter'.
+      - NEW: Added an inline SVG favicon.
+    -->
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23667eea'/%3E%3Cpath d='M69.5,30.5c-6.6,0-12.4,3.2-16,8.5c-3.6-5.2-9.4-8.5-16-8.5C28.2,30.5,22,36.7,22,46c0,9.3,6.2,15.5,15.5,15.5 c6.6,0,12.4-3.2,16-8.5c3.6,5.2,9.4,8.5,16,8.5C78.8,61.5,85,55.3,85,46C85,36.7,78.8,30.5,69.5,30.5z M37.5,55.5 C32.8,55.5,29,51.7,29,47c0-4.7,3.8-8.5,8.5-8.5s8.5,3.8,8.5,8.5C46,51.7,42.2,55.5,37.5,55.5z M69.5,55.5 C64.8,55.5,61,51.7,61,47c0-4.7,3.8-8.5,8.5-8.5s8.5,3.8,8.5,8.5C78,51.7,74.2,55.5,69.5,55.5z' fill='%23ffffff'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
+        /*
+          --- REFACTOR NOTES ---
+...
+        */
+
         :root {
-            color-scheme: dark;
-        }
-        body {
-            background-color: #111827;
-            background-image: radial-gradient(circle 1000px at 50% -30%, rgba(6, 182, 212, 0.1), transparent 60%);
-            min-height: 100vh;
-            overflow-x: hidden;
-            color: #E5E7EB;
-        }
-        /* Removed .glass, using solid surfaces now */
-        .ring-focus:focus { box-shadow: 0 0 0 3px rgba(6, 182, 212, .4); outline: none; }
-        .skeleton { background: linear-gradient(90deg, rgba(255,255,255,.06) 25%, rgba(255,255,255,.10) 37%, rgba(255,255,255,.06) 63%); background-size: 450px 100%; }
-        .clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+            /* Theme Gradients (Kept from original) */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            
+            /* --- NEW LIGHT THEME (DEFAULT) --- */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f4f5f7; /* Light gray for contrast */
+            --card-bg: #ffffff;
+            --text-primary: #18181b; /* Near black */
+            --text-secondary: #52525b; /* Medium gray */
+            --border-color: #e4e4e7;
+            --accent-color: #667eea;
 
-        /* New button styles */
-        .accent-btn {
-            background: linear-gradient(to right, #22d3ee, #06b6d4);
-            box-shadow: 0 4px 15px -5px rgba(6, 182, 212, 0.5);
-            transition: all 0.2s ease-in-out;
-        }
-        .accent-btn:hover {
-            opacity: 0.9;
-            box-shadow: 0 6px 20px -5px rgba(6, 182, 212, 0.6);
-            transform: translateY(-1px);
+            /* --- NEW SHADOW SYSTEM (Flutter/Material-like) --- */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
 
-        .tab-button {
-            transition: all 0.2s ease-in-out;
-            font-weight: 600;
-            border-bottom: 2px solid transparent;
-            color: #9CA3AF; /* secondary text */
-            padding: 0.75rem 0.5rem;
+        /* --- NEW DARK THEME --- */
+        body.theme-dark {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #161a23; /* Darker secondary */
+            --card-bg: #1e2433;      /* Dark card */
+            --text-primary: #f8f8f8; /* Off-white */
+            --text-secondary: #a0a0a0; /* Lighter gray */
+            --border-color: rgba(255, 255, 255, 0.1);
+            --accent-color: #764ba2;
+
+            /* Dark-mode shadows are slightly stronger */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
         }
-        .tab-button.active {
-            color: #06b6d4; /* accent */
-            border-bottom-color: #06b6d4;
+        
+        /* Auto-dark mode based on system preference */
+        @media (prefers-color-scheme: dark) {
+            body:not(.theme-light) {
+                --bg-primary: #0a0a0a;
+                --bg-secondary: #161a23;
+                --card-bg: #1e2433;
+                --text-primary: #f8f8f8;
+                --text-secondary: #a0a0a0;
+                --border-color: rgba(255, 255, 255, 0.1);
+                --accent-color: #764ba2;
+                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+            }
         }
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(17, 24, 39, 0.8);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 50; backdrop-filter: blur(8px);
+
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', system-ui, sans-serif; }
+        
+        html {
+            scroll-behavior: smooth;
         }
-        .modal-content img { border-radius: 0.75rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
-        .modal-close {
-            position: absolute; top: 1rem; right: 1rem; z-index: 60;
-            background: rgba(31, 41, 55, 0.7); border: 1px solid rgba(255,255,255,0.1);
+
+        body { 
+            background: var(--bg-secondary); /* Use secondary for the "outside" area */
+            color: var(--text-primary); 
+            max-width:480px; /* Mobile-first constraint */
+            margin:0 auto; 
+            overflow-x:hidden; 
+            -webkit-font-smoothing:antialiased; 
+            padding-bottom: 70px; 
+            transition: background 0.3s ease, color 0.3s ease; 
+            will-change: background; 
+            position: relative; /* For containing fixed elements */
+        }
+        
+        /* --- NEW: Desktop/Tablet Responsiveness --- */
+        /* On desktop, frame the app like a native app */
+        @media (min-width: 1024px) {
+            body {
+                max-width: 480px; /* Keep phone size */
+                margin: 2rem auto;
+                border-radius: 24px; /* Rounded corners for the "phone" */
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+                height: calc(100vh - 4rem); /* Fit to screen */
+                overflow-y: auto; /* Enable scrolling *within* the frame */
+                overflow-x: hidden;
+            }
+            /* Adjust fixed elements to be contained by the new body frame */
+            .header { border-radius: 24px 24px 0 0; }
+            .bottom-nav { border-radius: 0 0 24px 24px; }
+            #side-menu-panel { border-radius: 0 0 24px 0; }
+            #loading-screen { border-radius: 24px; }
+            #stream-modal { border-radius: 24px; }
+        }
+
+        /* Ethereal Loading Nebula - Simplified Animations */
+        .loading-screen { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; background:var(--bg-primary); z-index:2000; max-width: 480px; margin: 0 auto; }
+        .loading-logo { font-size:52px; font-weight:900; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom:20px; animation: dreamPulse 2s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        .loading-text { color:var(--text-secondary); font-size:18px; animation: etherealFade 2s infinite ease-in-out; letter-spacing: 2px; }
+        @keyframes dreamPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes etherealFade { 0%, 100% { opacity:0.4; } 50% { opacity:1; } }
+
+        /* Header - Uses new shadows */
+        .header { 
+            background: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.8); /* JS will set --bg-primary-rgb */
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
+            padding: 16px; display: flex; gap: 12px; align-items: center; 
+            position: sticky; top: 0; z-index: 90; 
+            border-bottom: 1px solid var(--border-color); 
+            transition: all 0.4s ease; 
+            will-change: backdrop-filter; 
+            box-shadow: var(--shadow-md); 
+        }
+        .logo-container { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .logo { font-size:24px; font-weight:900; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -1px; transition: all 0.4s ease; }
+        .logo:hover { transform: scale(1.05); }
+        .provider-name-display {
+            font-size: 12px; font-weight: 700; background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border-color);
+        }
+        .header-actions { margin-left: auto; display: flex; align-items: center; gap: 16px; }
+        .header-icon-btn { background: none; border: 0; color: var(--text-secondary); font-size: 20px; cursor: pointer; transition: all 0.3s ease; position: relative; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .header-icon-btn:hover { color: var(--text-primary); transform: scale(1.1); background: rgba(0,0,0,0.05); }
+        body.theme-dark .header-icon-btn:hover { background: rgba(255,255,255,0.1); }
+
+        /* Cosmic Slide-Out Menu - Simplified Animation */
+        #side-menu-overlay {
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 2000; 
+            opacity: 0; pointer-events: none; transition: opacity 0.5s ease; 
             backdrop-filter: blur(10px);
+            max-width: 480px; margin: 0 auto;
+        }
+        #side-menu-panel {
+            position: fixed; top: 0; left: 0; bottom: 0; width: 80%; max-width: 280px; 
+            background: var(--bg-secondary); 
+            padding: 30px 16px 24px 16px; 
+            transform: translateX(-100%); /* Removed 3D rotate */
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1); 
+            display: flex; flex-direction: column; will-change: transform; 
+            box-shadow: var(--shadow-lg); 
+            border-right: 1px solid var(--border-color);
+        }
+        body.menu-open #side-menu-overlay { opacity: 1; pointer-events: all; }
+        body.menu-open #side-menu-panel { transform: translateX(0); }
+        .side-menu-header { margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; text-align: center; }
+        .side-menu-header h2 { font-size: 30px; font-weight: 900; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; animation: cosmicEntry 0.8s ease-out; }
+        .side-menu-header p { color: var(--text-secondary); font-size: 14px; margin-top: 6px; animation: cosmicEntry 0.8s ease-out 0.3s both; letter-spacing: 1px; }
+        @keyframes cosmicEntry { from { opacity: 0; transform: translateY(30px) scale(0.8); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        .provider-list { overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: 8px; }
+        .provider-list::-webkit-scrollbar { display: none; }
+        .provider-menu-btn {
+            display: flex; align-items: center; gap: 16px; width: 100%; padding: 16px; 
+            background: var(--bg-primary); 
+            border: 1px solid var(--border-color); 
+            border-radius: 16px; color: var(--text-secondary); text-align: left; 
+            font-size: 16px; font-weight: 600; cursor: pointer;
+            transition: all 0.4s ease; position: relative; 
+            overflow: hidden; will-change: transform, box-shadow;
+            box-shadow: var(--shadow-sm);
+        }
+        .provider-menu-btn i.icon { font-size: 22px; width: 24px; text-align: center; color: var(--accent-color); transition: all 0.3s; }
+        .provider-menu-btn:hover { 
+            background: var(--bg-secondary); 
+            transform: translateX(10px) scale(1.02); 
+            box-shadow: var(--shadow-md); 
+            color: var(--text-primary); 
+        }
+        .provider-menu-btn:hover i.icon { transform: scale(1.1); color: var(--text-primary); }
+        .provider-menu-btn.active { background: var(--primary-gradient); color: white; font-weight: 800; box-shadow: var(--shadow-md); }
+        .provider-menu-btn.active i.icon { color: white; transform: scale(1.1); }
+        .provider-menu-btn .check-mark { margin-left: auto; color: white; font-size: 18px; animation: starBurst 0.6s ease-out; }
+        @keyframes starBurst { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.3); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+
+        /* Slider - Removed clip-path for simpler, rounded design */
+        .slider-container { width: 100%; height: 240px; overflow: hidden; margin-bottom: 24px; position: relative; background: var(--card-bg); border-radius: 24px; box-shadow: var(--shadow-lg); will-change: contents; }
+        .slider { display: flex; height: 100%; transition: transform 0.8s cubic-bezier(0.23, 1, 0.320, 1); will-change: transform; }
+        .slide { min-width: 100%; height: 100%; position: relative; cursor: pointer; transition: all 0.4s ease; border-radius: 24px; overflow: hidden; }
+        .slide:hover { transform: scale(1.03); }
+        .slide img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.7) contrast(1.1); transition: all 0.4s ease; }
+        .slide:hover img { filter: brightness(1) contrast(1.2); transform: scale(1.05); }
+        .slide-overlay { position: absolute; left: 0; right: 0; bottom: 0; height: 100%; padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 70%, #000 100%); transition: all 0.4s ease; }
+        .slide-title { font-size: 22px; font-weight: 900; margin-bottom: 16px; color: #ffffff; animation: warpIn 0.6s ease-out; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        @keyframes warpIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-action-btn { 
+            display: inline-flex; align-items: center; gap: 10px; 
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            color: #ffffff; padding: 12px 20px; border-radius: 30px; 
+            text-decoration: none; font-weight: 700; font-size: 15px; 
+            align-self: flex-start; transition: all 0.4s ease; 
+            position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+        }
+        .slide-action-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: var(--shadow-md), 0 8px 25px rgba(0,0,0,0.3); }
+        .slider-indicators { position: absolute; right: 16px; bottom: 16px; display: flex; gap: 10px; z-index: 10; }
+        .indicator { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.4s ease; will-change: transform; position: relative; }
+        .indicator.active { background: var(--primary-gradient); transform: scale(1.3); }
+        .indicator:hover { transform: scale(1.5); }
+
+        /* Category Section - Simplified */
+        .category-section { margin-bottom: 32px; animation: cascadeIn 0.8s ease-out forwards; opacity: 0; }
+        .category-section:nth-child(1) { animation-delay: 0.1s; } .category-section:nth-child(2) { animation-delay: 0.2s; } .category-section:nth-child(3) { animation-delay: 0.3s; }
+        @keyframes cascadeIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .category-header { display: flex; justify-content: space-between; align-items: center; padding: 0 16px 12px; }
+        .category-title { font-size: 20px; font-weight: 900; color: var(--text-primary); position: relative; padding-left: 16px; transition: all 0.4s ease; }
+        .category-title::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 24px; background: var(--primary-gradient); border-radius: 2px; transition: all 0.4s; }
+        .category-title:hover { transform: translateX(8px); }
+        .see-all-btn { color: #ffffff; font-size: 14px; text-decoration: none; background: var(--primary-gradient); padding: 8px 12px; border-radius: 20px; transition: all 0.4s ease; position: relative; overflow: hidden; font-weight: 700; }
+        .see-all-btn:hover { transform: translateY(-3px) scale(1.1); box-shadow: var(--shadow-md); }
+
+        .content-slider { display: flex; overflow-x: auto; gap: 16px; padding: 8px 16px 12px; scrollbar-width: none; }
+        .content-slider::-webkit-scrollbar { display: none; }
+        .grid-item { flex: 0 0 calc(33.33% - 12px); cursor: pointer; transition: all 0.4s ease; will-change: transform; position: relative; border-radius: 12px; }
+        .grid-item:hover { transform: translateY(-8px) scale(1.05); z-index: 2; }
+        .content-card { border-radius: 12px; overflow: hidden; position: relative; background: var(--card-bg); transition: all 0.4s ease; box-shadow: var(--shadow-md); }
+        .content-card:hover { box-shadow: var(--shadow-lg); }
+        .content-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; transition: transform 0.4s ease; }
+        .grid-item:hover .content-card img { transform: scale(1.08); }
+        .content-caption { font-size: 14px; color: var(--text-secondary); text-align: center; margin-top: 10px; font-weight: 700; height: 32px; overflow: hidden; transition: all 0.4s ease; letter-spacing: 0.5px; }
+        .grid-item:hover .content-caption { color: var(--text-primary); }
+
+        /* Page Transitions - Simplified */
+        .page { display: none; animation: portalOpen 0.6s ease forwards; background: var(--bg-primary); min-height: 100vh; }
+        @keyframes portalOpen { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        .back-btn { background: none; border: 0; color: var(--text-primary); font-size: 22px; cursor: pointer; transition: all 0.3s ease; position: relative; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
+        .back-btn:hover { transform: scale(1.2); background: rgba(0,0,0,0.05); }
+        body.theme-dark .back-btn:hover { background: rgba(255,255,255,0.1); }
+
+        /* Provider Page - Simplified */
+        #provider-page { display: block; padding: 40px 20px 20px; text-align: center; animation: starfieldIn 1s ease-out; }
+        @keyframes starfieldIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        #provider-page h2 { background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 28px; font-size: 26px; }
+        .provider-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 20px; }
+        .provider-btn { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            color: var(--text-secondary); padding: 16px; border-radius: 16px; 
+            font-weight: 700; cursor: pointer; transition: all 0.4s ease; 
+            font-size: 14px; box-shadow: var(--shadow-md); position: relative; overflow: hidden; 
+        }
+        .provider-btn:hover { 
+            border-color: var(--accent-color); 
+            transform: translateY(-5px); 
+            box-shadow: var(--shadow-lg); 
+            color: var(--text-primary); 
+        }
+        .provider-notice { margin-top: 32px; padding: 18px; background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); color: var(--text-secondary); font-size: 14px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 12px; transition: all 0.4s ease; }
+        .provider-notice:hover { box-shadow: var(--shadow-md); transform: scale(1.03); }
+        .provider-notice i { color: var(--accent-color); font-size: 18px; animation: twinkle 1.5s infinite; }
+        @keyframes twinkle { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
+        .provider-notice p { margin: 0; line-height: 1.6; }
+
+        /* Detail Page - Simplified */
+        .detail-page { padding-top: 60px; }
+        .detail-backdrop { width: 100%; height: 260px; position: relative; overflow: hidden; border-radius: 0 0 30px 30px; }
+        .detail-backdrop img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.6) contrast(1.2); transition: all 0.4s ease; }
+        .detail-backdrop:hover img { filter: brightness(0.8) contrast(1.3); }
+        .detail-backdrop::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 140px; background: linear-gradient(to top, var(--bg-primary), transparent); transition: all 0.4s ease; }
+        .detail-content { padding: 16px; display: flex; gap: 16px; margin-top: -90px; position: relative; z-index: 10; }
+        .detail-poster { width: 130px; height: 195px; border-radius: 16px; overflow: hidden; border: 2px solid var(--border-color); box-shadow: var(--shadow-lg); flex-shrink: 0; transition: all 0.4s ease; will-change: transform; position: relative; }
+        .detail-poster:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
+        .detail-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .detail-info { flex: 1; }
+        .detail-title { font-size: 22px; font-weight: 900; margin-bottom: 10px; line-height: 1.2; color: var(--text-primary); transition: all 0.4s ease; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .detail-meta { display: flex; flex-wrap: wrap; gap: 12px; color: var(--text-secondary); font-size: 14px; margin-bottom: 14px; }
+        #detail-storyline { background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 16px; border-radius: 16px; margin: 16px 0 28px; color: var(--text-secondary); font-size: 16px; line-height: 1.7; text-align: justify; transition: all 0.4s ease; box-shadow: inset 0 2px 8px rgba(0,0,0,0.05); }
+        body.theme-dark #detail-storyline { box-shadow: inset 0 4px 20px rgba(0,0,0,0.5); }
+        #detail-storyline:hover { box-shadow: var(--shadow-md); }
+        #download-section-title { font-size: 20px; margin-bottom: 18px; background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; position: relative; padding-left: 18px; transition: all 0.4s ease; }
+        #download-section-title::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 20px; background: var(--primary-gradient); border-radius: 2px; transition: all 0.4s; }
+
+        .download-links-section { padding: 0 16px; margin-bottom: 28px; }
+        .link-list { display: flex; flex-direction: column; gap: 14px; }
+        .link-btn { 
+            text-decoration: none; background: var(--bg-secondary); 
+            border: 1px solid var(--border-color); 
+            color: var(--text-primary); padding: 14px; border-radius: 16px; 
+            font-weight: 700; cursor: pointer; text-align: left; 
+            display: flex; justify-content: space-between; align-items: center; 
+            position: relative; overflow: hidden; transition: all 0.4s ease; 
+            will-change: transform; box-shadow: var(--shadow-md); 
+        }
+        .link-btn:hover { 
+            transform: translateY(-4px); 
+            box-shadow: var(--shadow-lg); 
+            border-color: var(--accent-color);
+        }
+        .link-btn span { flex-grow: 1; }
+
+        /* --- NEW: CSS for Season Dropdown --- */
+        .season-select {
+            width: 100%;
+            padding: 14px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 16px;
+            appearance: none; /* Hide default arrow */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 20px;
+            cursor: pointer;
+        }
+        body.theme-dark .season-select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23f8f8f8'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
+        }
+        /* --- End of New CSS --- */
+
+
+        /* Stream Modal - Simplified */
+        #stream-modal { 
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1500; 
+            display: none; justify-content: center; align-items: center; 
+            backdrop-filter: blur(15px); animation: vortexOpen 0.6s ease;
+            max-width: 480px; margin: 0 auto;
+        }
+        @keyframes vortexOpen { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        .stream-modal-content { 
+            background: var(--bg-primary);
+            padding: 24px; border-radius: 20px; border: 1px solid var(--border-color); 
+            width: 90%; max-width: 400px; position: relative; 
+            box-shadow: var(--shadow-lg); 
+            transition: all 0.4s ease; 
+        }
+        .modal-close-btn { 
+            position: absolute; right: 12px; top: 12px; background: none; border: none; 
+            color: var(--text-secondary); font-size: 22px; cursor: pointer; 
+            transition: all 0.3s ease; border-radius: 50%; 
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; 
+        }
+        .modal-close-btn:hover { 
+            color: var(--text-primary); 
+            transform: scale(1.2); 
+            background: var(--bg-secondary); 
+        }
+        .stream-list { display: flex; flex-direction: column; gap: 14px; max-height: 70vh; overflow-y: auto; }
+        .stream-btn { 
+            display: block; width: 100%; padding: 16px; 
+            background: var(--bg-secondary); 
+            border: 1px solid var(--border-color); 
+            color: var(--text-primary); text-decoration: none; text-align: center; 
+            border-radius: 12px; font-weight: 700; transition: all 0.4s ease; 
+            cursor: pointer; position: relative; overflow: hidden; 
+        }
+        .stream-btn:hover { 
+            background: var(--primary-gradient); 
+            border-color: transparent; 
+            transform: translateX(8px); 
+            box-shadow: var(--shadow-md); 
+            color: white;
+        }
+
+        .category-grid { padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 24px 16px; animation: matrixRain 0.8s ease-out; }
+        @keyframes matrixRain { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+        .category-grid .grid-item { flex: unset; }
+
+        /* Pagination Controls - Simplified */
+        .pagination-controls { display: flex; justify-content: space-between; padding: 16px; }
+        .pagination-btn { 
+            background: var(--bg-secondary); 
+            color: var(--text-primary); 
+            border: 1px solid var(--border-color); 
+            padding: 12px 20px; border-radius: 25px; cursor: pointer; 
+            font-weight: 700; transition: all 0.4s ease; 
+            position: relative; overflow: hidden; 
+        }
+        .pagination-btn:hover:not(:disabled) { 
+            transform: translateY(-3px) scale(1.1); 
+            box-shadow: var(--shadow-md); 
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+        }
+        .pagination-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* Bottom Nav - Simplified */
+        .bottom-nav { 
+            position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; 
+            background: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.9);
+            backdrop-filter: blur(15px); 
+            border-top: 1px solid var(--border-color); 
+            display: none; justify-content: space-around; padding: 12px 0; z-index: 999; 
+            transition: all 0.4s ease; box-shadow: 0 -8px 30px rgba(0,0,0,0.1); 
+        }
+        body.theme-dark .bottom-nav { box-shadow: 0 -8px 30px rgba(0,0,0,0.4); }
+        .nav-item { 
+            flex: 1; text-align: center; color: var(--text-secondary); text-decoration: none; 
+            display: flex; flex-direction: column; align-items: center; 
+            gap: 6px; font-size: 12px; transition: all 0.4s ease; 
+            position: relative; 
+        }
+        .nav-item i { font-size: 22px; transition: transform 0.4s ease; }
+        .nav-item:hover { color: var(--text-primary); transform: translateY(-5px); }
+        .nav-item.active { color: var(--accent-color); }
+        .nav-item.active i { animation: supernova 0.8s ease-out; }
+        @keyframes supernova { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
+
+        /* Genres Grid - Simplified */
+        .genres-grid { padding: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; animation: quantumLeap 0.8s ease-out; }
+        @keyframes quantumLeap { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .genre-btn { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            color: var(--text-primary); padding: 20px; border-radius: 16px; 
+            font-weight: 800; cursor: pointer; text-align: center; 
+            transition: all 0.4s ease; 
+            position: relative; overflow: hidden; box-shadow: var(--shadow-md); 
+        }
+        .genre-btn:hover { 
+            transform: translateY(-6px); 
+            box-shadow: var(--shadow-lg); 
+            border-color: var(--accent-color);
+        }
+
+        /* Search Page - Simplified */
+        #search-page .search-container { position: relative; animation: echoLocate 0.6s ease-out; }
+        @keyframes echoLocate { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        #search-page .search-input { 
+            color: var(--text-primary); padding: 16px 50px 16px 50px; 
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color); 
+            box-shadow: var(--shadow-md); 
+            transition: all 0.4s ease; 
+            border-radius: 30px; width: 100%; font-size: 16px; 
+        }
+        #search-page .search-input:focus { 
+            border-color: var(--accent-color); 
+            box-shadow: var(--shadow-lg); 
+            outline: none; transform: scale(1.02); 
+        }
+        #search-page .search-btn-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--accent-color); transition: all 0.3s; }
+        #search-page .clear-btn { 
+            position: absolute; right: 20px; top: 50%; transform: translateY(-50%); 
+            font-size: 18px; color: var(--text-secondary); background: none; border: 0; 
+            cursor: pointer; display: none; transition: all 0.3s ease; 
+            border-radius: 50%; width: 32px; height: 32px; 
+            display: flex; align-items: center; justify-content: center; 
+        }
+        #search-page .clear-btn:hover { color: var(--text-primary); transform: translateY(-50%) scale(1.2); background: var(--bg-secondary); }
+        #search-description { text-align: center; padding: 40px 20px; color: var(--text-secondary); animation: holographicFade 0.8s ease-out; }
+        #search-description h3 { font-size: 20px; color: var(--text-primary); margin-bottom: 10px; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        @keyframes holographicFade { from { opacity: 0; } to { opacity: 1; } }
+
+        /* About Page - Simplified */
+        #about-page { padding: 16px; animation: originStory 0.8s ease-out; }
+        @keyframes originStory { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        #about-page h2 { background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 14px; transition: all 0.4s ease; }
+        #about-page p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px; transition: all 0.4s ease; letter-spacing: 0.5px; }
+        #about-page p:hover { color: var(--text-primary); }
+        .developer-info { 
+            margin-top: 28px; padding: 20px; 
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color); 
+            border-radius: 20px; text-align: center; 
+            transition: all 0.4s ease; box-shadow: var(--shadow-md); 
+        }
+        .developer-info:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
+        .developer-info h3 { background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 20px; font-size: 20px; transition: all 0.4s ease; }
+        .social-links { display: flex; flex-direction: column; gap: 14px; }
+        .social-btn { 
+            display: flex; align-items: center; justify-content: center; gap: 12px; 
+            padding: 14px; border-radius: 16px; text-decoration: none; 
+            font-weight: 700; transition: all 0.4s ease; 
+            position: relative; overflow: hidden; box-shadow: var(--shadow-sm); 
+        }
+        .social-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: var(--shadow-md); }
+        .social-btn i { font-size: 22px; transition: transform 0.4s ease; }
+        .social-btn:hover i { transform: scale(1.2); }
+        .social-btn.instagram { background: linear-gradient(45deg, #e4405f, #f77737); color: white; }
+        .social-btn.github { background: #24292e; color: white; }
+        body.theme-light .social-btn.github { background: #24292e; color: white; }
+        body.theme-dark .social-btn.github { background: #39414a; color: white; }
+        .social-btn.telegram { background: linear-gradient(45deg, #0088cc, #00aaff); color: white; }
+
+        /* Skeleton Loader - Updated for new theme */
+        .skeleton { 
+            background: linear-gradient(90deg, var(--bg-secondary), var(--card-bg), var(--bg-secondary)); 
+            background-size: 200% 100%; border-radius: 12px; 
+            animation: skeleton-wave 1.5s linear infinite alternate; 
+            will-change: background-position; 
+        }
+        @keyframes skeleton-wave { from { background-position: 200% center; } to { background-position: 0% center; } }
+
+        /* Favorites Button - Simplified */
+        .favorite-btn { 
+            position: absolute; top: 10px; right: 10px; 
+            background: rgba(0,0,0,0.6); border: none; 
+            color: var(--text-secondary); font-size: 16px; cursor: pointer; 
+            border-radius: 50%; width: 36px; height: 36px; 
+            display: flex; align-items: center; justify-content: center; 
+            transition: all 0.4s ease; z-index: 2; 
+            border-radius: 50%; box-shadow: 0 2px 10px rgba(0,0,0,0.3); 
+        }
+        .favorite-btn:hover { background: var(--secondary-gradient); transform: scale(1.3); color: white; }
+        .favorite-btn.active { color: #ff6b6b; background: rgba(255, 107, 107, 0.3); animation: cosmicHeart 0.8s ease-out; }
+        /* Simplified heart pulse */
+        @keyframes cosmicHeart { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.4); } }
+
+        /* Reduced Motion Accessibility */
+        @media (prefers-reduced-motion: reduce) { 
+            *, *::before, *::after { 
+                animation-duration: 0.01ms !important; 
+                animation-iteration-count: 1 !important; 
+                transition-duration: 0.01ms !important; 
+                transform: none !important; 
+                animation: none !important;
+                transition: none !important;
+            } 
         }
     </style>
 </head>
-<body class="font-sans selection:bg-accent/30 min-h-screen">
-    <!-- NAVBAR -->
-    <header class="sticky top-0 z-40 backdrop-blur-lg supports-[backdrop-filter]:bg-background/80 bg-background/90 border-b border-white/10">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="flex h-16 items-center justify-between">
-                <a href="https://real-morpheus.github.io/portfolio" target="_blank" rel="noopener" class="group inline-flex items-center gap-3">
-                    <span class="relative grid h-9 w-9 place-items-center rounded-lg bg-surface border border-white/10">
-                        <svg class="h-7 w-7" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <defs>
-                                <linearGradient id="geminiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" stop-color="#89f7fe" />
-                                    <stop offset="50%" stop-color="#66a6ff" />
-                                    <stop offset="100%" stop-color="#a382ff" />
-                                </linearGradient>
-                            </defs>
-                            <path fill="url(#geminiGradient)" d="M50 10 L58 42 L90 50 L58 58 L50 90 L42 58 L10 50 L42 42 Z"/>
-                        </svg>
-                    </span>
-                    <span class="text-lg sm:text-xl font-bold tracking-tight text-primary">SanchitFlix</span>
-                </a>
+<body>
 
-                <div class="flex items-center gap-2">
-                    <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-secondary">
-                        <a class="hover:text-primary transition" href="#" onclick="fetchMovies(1); event.preventDefault();">Home</a>
-                        <a class="hover:text-primary transition" href="https://real-morpheus.github.io/portfolio" target="_blank" rel="noopener">About</a>
-                    </nav>
-                    <button id="mobile-search-button" class="md:hidden h-10 w-10 grid place-items-center rounded-full text-secondary hover:text-primary hover:bg-surface transition" aria-label="Open search">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </div>
-            </div>
+  <!-- App content moves inside the body -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-logo">SanchitFlix</div>
+    <div class="loading-text">Loading...</div>
+  </div>
+
+  <div id="provider-page" class="page">
+    <h2>Choose Your Provider</h2>
+    <div id="provider-grid" class="provider-grid"></div>
+    <div class="provider-notice">
+        <i class="fas fa-info-circle"></i>
+        <p>You can change providers any time from the menu.</p>
+    </div>
+  </div>
+
+  <div id="home-page" class="page">
+    <div class="header">
+      <button id="menu-btn" class="header-icon-btn"><i class="fas fa-bars"></i></button>
+      <div class="logo-container">
+          <div class="logo">SanchitFlix</div>
+          <span id="provider-name-display-home" class="provider-name-display"></span>
+      </div>
+      <div class="header-actions">
+          <!-- Updated theme-toggle-btn with an icon that will change -->
+          <button id="theme-toggle-btn" class="header-icon-btn"><i class="fas fa-sun"></i></button>
+          <button id="header-search-btn" class="header-icon-btn"><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+    <div id="slider-container" class="slider-container">
+        <div id="slider" class="slider"></div>
+        <div id="slider-indicators" class="slider-indicators"></div>
+    </div>
+    <div id="home-content"></div>
+  </div>
+  
+  <!-- RE-ADDED GENRES PAGE -->
+  <div id="genres-page" class="page">
+    <div class="header">
+        <button id="menu-btn-genre" class="header-icon-btn"><i class="fas fa-bars"></i></button>
+        <div class="logo-container">
+            <div class="logo">Genres</div>
+            <span id="provider-name-display-genre" class="provider-name-display"></span>
         </div>
-    </header>
-
-    <!-- HERO -->
-    <section class="relative py-12 sm:py-16 lg:py-20">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-3xl mx-auto">
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tighter text-primary">
-                    Your Portal to <span class="text-accent">Unlimited</span> Entertainment
-                </h1>
-                <p class="mt-4 text-base sm:text-lg text-secondary">Instantly find and download your favorite movies and series. Simple, fast, and elegant.</p>
-
-                <!-- Search -->
-                <div class="mt-8 max-w-2xl mx-auto">
-                    <div class="relative">
-                        <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-secondary"></i>
-                        <input id="search-input" type="text" placeholder="Search for 'The Matrix'..." class="w-full bg-surface border border-white/10 rounded-full h-14 pl-12 pr-36 text-base text-primary placeholder-secondary ring-focus" />
-                        <button id="search-button" class="absolute right-2 top-1/2 -translate-y-1/2 inline-flex items-center justify-center gap-2 accent-btn text-gray-900 h-11 px-6 rounded-full font-semibold active:scale-95 transition">
-                            <span>Search</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Quick chips -->
-                <div class="mt-5 flex flex-wrap gap-2 justify-center" id="quickChips"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- STATUS TOAST -->
-    <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 hidden max-w-[90vw]">
-        <div class="bg-surface border border-white/10 rounded-full px-4 py-3 text-sm flex items-center gap-3 shadow-lg">
-            <i class="fa-solid fa-circle-info text-accent"></i>
-            <span id="toastText" class="truncate"></span>
+        <div class="header-actions">
+            <button id="header-search-btn-genre" class="header-icon-btn"><i class="fas fa-search"></i></button>
         </div>
     </div>
+    <div id="genres-grid" class="genres-grid"></div>
+  </div>
 
-    <!-- RESULTS SECTION -->
-    <main id="results" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
-        <div id="resultMetaContainer" class="flex items-center justify-between mb-5">
-            <h2 class="text-2xl font-bold">Latest Releases</h2>
-            <div class="text-sm text-secondary" id="resultMeta"></div>
-        </div>
+  <!-- RE-ADDED CATEGORY PAGE -->
+  <div id="category-page" class="page">
+    <div class="header">
+        <button id="back-btn-category" class="back-btn"><i class="fas fa-arrow-left"></i></button>
+        <div id="category-page-title" class="logo">Category</div>
+    </div>
+    <div id="category-grid" class="category-grid"></div>
+    <div id="category-pagination-controls" class="pagination-controls">
+      <button id="category-prev-btn" class="pagination-btn">Prev</button>
+      <button id="category-next-btn" class="pagination-btn">Next</button>
+    </div>
+  </div>
 
-        <!-- GRID -->
-        <div id="movie-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5"></div>
+  <!-- RE-ADDED SEARCH PAGE -->
+  <div id="search-page" class="page">
+    <div class="header">
+        <button id="search-back-btn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
+        <div class="logo">Search</div>
+    </div>
+    <div class="search-container" style="padding: 16px;">
+      <i class="fas fa-search search-btn-icon"></i>
+      <input id="search-input" class="search-input" placeholder="Search for movies or shows..."/>
+      <button id="clear-search-btn" class="clear-btn"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="search-description">
+        <h3>Find Your Favorite</h3>
+        <p>Search for any movie or show you can think of.</p>
+    </div>
+    <div id="search-grid" class="category-grid"></div>
+  </div>
+  
+  <div id="detail-page" class="page detail-page"> <!-- Added detail-page class for padding -->
+    <div class="header" style="background: transparent; border: none; box-shadow: none;">
+        <button id="detail-back-btn" class="back-btn" style="position: static; display: block;"><i class="fas fa-arrow-left"></i></button>
+    </div>
+    <div id="detail-backdrop" class="detail-backdrop"></div>
+    <div class="detail-content">
+      <div id="detail-poster" class="detail-poster"></div>
+      <div class="detail-info">
+        <h1 id="detail-title" class="detail-title"></h1>
+        <div id="detail-meta" class="detail-meta"></div>
+      </div>
+    </div>
+    <div style="padding: 0 16px;">
+      <div id="detail-storyline" class="detail-storyline"></div>
+      <div class="download-links-section">
+        <h3 id="download-section-title">Download Links</h3>
+        <div id="detail-link-list" class="link-list"></div>
+      </div>
+    </div>
+  </div>
 
-        <!-- PAGINATION -->
-        <div id="pagination-container" class="mt-10 flex flex-wrap justify-center items-center gap-2"></div>
-
-        <!-- SKELETONS -->
-        <template id="card-skeleton">
-            <div class="bg-surface rounded-lg overflow-hidden border border-white/10">
-                <div class="aspect-[2/3] skeleton animate-shimmer"></div>
-                <div class="p-3">
-                    <div class="h-4 w-3/4 skeleton animate-shimmer rounded"></div>
-                    <div class="h-3 w-1/2 mt-2 skeleton animate-shimmer rounded"></div>
-                </div>
+  <div id="about-page" class="page">
+    <div class="header">
+        <button id="about-back-btn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
+        <div class="logo">SanchitFlix Origin</div>
+    </div>
+    <div style="padding: 16px;">
+        <h2>A Dream Forged in Code</h2>
+        <p>Where pixels dance with stories untold, SanchitFlix crafts portals to cinematic universes. Trends pulse like stars, genres unfold as galaxies—your command shapes the narrative.</p>
+        <p>Built for the dreamers: swift, immersive, boundless. Every interaction a spark in the dev's eternal forge.</p>
+        <div class="developer-info">
+            <h3>Link to the Architect</h3>
+            <div class="social-links">
+                <a href="https://www.instagram.com/sanch1t_/" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="https://github.com/real-morpehus" target="_blank" class="social-btn github"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://t.me/S4NCHITT" target="_blank" class="social-btn telegram"><i class="fab fa-telegram-plane"></i> S4NCHITT</a>
             </div>
-        </template>
-
-        <!-- DETAILS -->
-        <section id="movie-details-section" class="hidden mt-6"></section>
-    </main>
-
-    <!-- FOOTER -->
-    <footer id="about" class="border-t border-white/10 mt-12">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 text-center text-sm text-secondary">
-            <p>2022–2025 © SanchitFlix. Redesigned for a premium user experience.</p>
         </div>
-    </footer>
+    </div>
+  </div>
+  
+  <div id="stream-modal" class="stream-modal">
+    <div class="stream-modal-content">
+      <button class="modal-close-btn" onclick="closeStreamModal()"><i class="fas fa-times"></i></button>
+      <h3 id="stream-modal-title">Gateway Choices</h3>
+      <div id="stream-list" class="stream-list"></div>
+    </div>
+  </div>
 
-    <!-- MODALS -->
-    <div id="previewModal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <button id="closeModal" class="modal-close h-10 w-10 grid place-items-center rounded-full hover:bg-white/10 active:scale-95 transition">
-                <i class="fa-solid fa-xmark text-white/80 text-xl"></i>
+  <div id="side-menu-overlay">
+    <div id="side-menu-panel">
+      <div class="side-menu-header">
+        <h2>Change Provider</h2>
+        <p>Select a source</p>
+      </div>
+      <div id="provider-list" class="provider-list"></div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+      <a href="#" id="nav-home" class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
+      <a href="#" id="nav-genres" class="nav-item"><i class="fas fa-th-large"></i><span>Genres</span></a>
+      <a href="#" id="nav-about" class="nav-item"><i class="fas fa-info-circle"></i><span>Origin</span></a>
+  </nav>
+  
+<script>
+
+/* -------------- CONFIG & STATE -------------- */
+const POLY_API_BASE = "https://polymovies.onrender.com";
+let activeProvider = null;
+let catalogData = null;
+let currentCategory = { title: '', filter: '', page: 1 };
+let currentSlideIndex = 0;
+let sliderInterval = null;
+let previousPage = 'home-page';
+let favorites = JSON.parse(localStorage.getItem('sanchitflix_favorites') || '[]');
+
+/* -------------- DOM ELEMENTS (RE-POPULATED) -------------- */
+const DOM = {
+    body: document.body, loadingScreen: document.getElementById('loading-screen'), allPages: document.querySelectorAll('.page'), 
+    backBtns: document.querySelectorAll('.back-btn'), bottomNav: document.querySelector('.bottom-nav'),
+    providerPage: document.getElementById('provider-page'), providerGrid: document.getElementById('provider-grid'),
+    homePage: document.getElementById('home-page'), homeContent: document.getElementById('home-content'), 
+    providerNameDisplayHome: document.getElementById('provider-name-display-home'), providerNameDisplayGenre: document.getElementById('provider-name-display-genre'),
+    headerSearchBtn: document.getElementById('header-search-btn'), headerSearchBtnGenre: document.getElementById('header-search-btn-genre'),
+    themeToggleBtn: document.getElementById('theme-toggle-btn'), menuBtn: document.getElementById('menu-btn'), menuBtnGenre: document.getElementById('menu-btn-genre'),
+    slider: document.getElementById('slider'), sliderIndicators: document.getElementById('slider-indicators'),
+    genresPage: document.getElementById('genres-page'), genresGrid: document.getElementById('genres-grid'), 
+    categoryPage: document.getElementById('category-page'), categoryPageTitle: document.getElementById('category-page-title'), categoryGrid: document.getElementById('category-grid'),
+    categoryPagination: { controls: document.getElementById('category-pagination-controls'), prevBtn: document.getElementById('category-prev-btn'), nextBtn: document.getElementById('category-next-btn'), },
+    searchPage: document.getElementById('search-page'), searchGrid: document.getElementById('search-grid'), searchInput: document.getElementById('search-input'), clearSearchBtn: document.getElementById('clear-search-btn'),
+    detailPage: document.getElementById('detail-page'), detailBackdrop: document.getElementById('detail-backdrop'), detailPoster: document.getElementById('detail-poster'),
+    detailTitle: document.getElementById('detail-title'), detailMeta: document.getElementById('detail-meta'), detailStoryline: document.getElementById('detail-storyline'),
+    downloadSectionTitle: document.getElementById('download-section-title'), detailLinkList: document.getElementById('detail-link-list'),
+    streamModal: document.getElementById('stream-modal'), streamList: document.getElementById('stream-list'), streamModalTitle: document.getElementById('stream-modal-title'),
+    sideMenuOverlay: document.getElementById('side-menu-overlay'), sideMenuPanel: document.getElementById('side-menu-panel'), providerList: document.getElementById('provider-list'),
+    navHome: document.getElementById('nav-home'), navGenres: document.getElementById('nav-genres'), navAbout: document.getElementById('nav-about'),
+};
+
+/* -------------- HELPERS -------------- */
+const fetchJSON = async (url, retries = 3) => {
+    for (let i = 0; i < retries; i++) {
+        try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); return await res.json(); } 
+        catch (e) { if (i === retries - 1) { console.error(`Fetch failed for ${url}`, e); return null; } await new Promise(r => setTimeout(r, 1500 * (i + 1))); }
+    }
+};
+const placeholder = (t) => `https://placehold.co/500x750/1a1a2e/667eea?text=${encodeURIComponent(t||'SanchitFlix')}`;
+const escapeHtml = (s) => String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const getShortTitle = (t) => t ? t.split(' ').slice(0, 4).join(' ') : '';
+const getCleanTitle = (title) => title ? title.replace(/\s*\(.*?\)\s*|\s*\[.*?\]\s*/g, '').trim() : '';
+const debounce = (fn, delay) => { let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), delay); }; };
+
+/* -------------- NEW: THEME & FAVORITES -------------- */
+function initializeTheme() {
+    const preference = localStorage.getItem('sanchitflix_theme');
+    const systemIsDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (preference === 'dark' || (!preference && systemIsDark)) {
+        DOM.body.classList.add('theme-dark');
+    } else {
+        DOM.body.classList.add('theme-light');
+    }
+    updateThemeIcon();
+    updateRgbVariable(); // For backdrop-filter transparency
+}
+
+function toggleTheme() {
+    const isDark = DOM.body.classList.contains('theme-dark');
+    if (isDark) {
+        DOM.body.classList.remove('theme-dark');
+        DOM.body.classList.add('theme-light');
+        localStorage.setItem('sanchitflix_theme', 'light');
+    } else {
+        DOM.body.classList.remove('theme-light');
+        DOM.body.classList.add('theme-dark');
+        localStorage.setItem('sanchitflix_theme', 'dark');
+    }
+    updateThemeIcon();
+    updateRgbVariable();
+}
+
+function updateThemeIcon() {
+    const isDark = DOM.body.classList.contains('theme-dark');
+    const icon = DOM.themeToggleBtn.querySelector('i');
+    if (isDark) {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+    } else {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    }
+}
+
+// This helper function sets a CSS variable with the RGB values
+// of the --bg-primary color. This is needed so the 'rgba(var(--bg-primary-rgb), 0.8)'
+// backdrop filter can work, as 'rgba(var(--bg-primary), 0.8)' is not valid CSS.
+function updateRgbVariable() {
+    const bgPrimaryColor = getComputedStyle(DOM.body).getPropertyValue('--bg-primary').trim();
+    // Check if it's a hex color
+    if (bgPrimaryColor.startsWith('#')) {
+        const r = parseInt(bgPrimaryColor.substring(1, 3), 16);
+        const g = parseInt(bgPrimaryColor.substring(3, 5), 16);
+        const b = parseInt(bgPrimaryColor.substring(5, 7), 16);
+        DOM.body.style.setProperty('--bg-primary-rgb', `${r}, ${g}, ${b}`);
+    }
+}
+
+// Listen for system theme changes
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    const preference = localStorage.getItem('sanchitflix_theme');
+    // Only change if user has 'system' (null) preference
+    if (!preference) {
+        if (e.matches) {
+            DOM.body.classList.add('theme-dark');
+            DOM.body.classList.remove('theme-light');
+        } else {
+            DOM.body.classList.remove('theme-dark');
+            DOM.body.classList.add('theme-light');
+        }
+        updateThemeIcon();
+        updateRgbVariable();
+    }
+});
+
+function toggleFavorite(itemId) {
+    const index = favorites.indexOf(itemId);
+    if (index > -1) { favorites.splice(index, 1); } else { favorites.push(itemId); }
+    localStorage.setItem('sanchitflix_favorites', JSON.stringify(favorites));
+    return index === -1;
+}
+function isFavorite(itemId) { return favorites.includes(itemId); }
+
+/* -------------- PAGE NAVIGATION -------------- */
+const showPage = (pageId, fromPage = null) => {
+    if (fromPage && fromPage !== pageId) previousPage = fromPage;
+    DOM.allPages.forEach(p => p.style.display = 'none');
+    document.getElementById(pageId).style.display = 'block';
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    
+    if (['home-page', 'category-page', 'detail-page'].includes(pageId)) { 
+        DOM.navHome.classList.add('active'); 
+        startSliderAuto(); 
+    } else if (pageId === 'genres-page') { 
+        DOM.navGenres.classList.add('active'); 
+        clearInterval(sliderInterval); 
+    } else if (pageId === 'about-page') { 
+        DOM.navAbout.classList.add('active'); 
+        clearInterval(sliderInterval); 
+    }
+    // Search page doesn't light up any nav item
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+const goBack = () => { showPage(previousPage); };
+
+/* -------------- SKELETON LOADER -------------- */
+const renderSkeleton = (container, isGrid = false, count = 8) => {
+    let skeletons = '';
+    for (let i = 0; i < count; i++) { 
+        skeletons += `<div class="${isGrid ? 'grid-item' : 'grid-item'}" style="${isGrid ? '' : 'flex: 0 0 calc(33.33% - 12px);'}"><div class="content-card skeleton" style="aspect-ratio: 2/3;"></div><p class="content-caption skeleton" style="height: 14px; width: 85%; margin: 10px auto 0;"></p></div>`; 
+    }
+    container.innerHTML = skeletons;
+};
+
+/* -------------- APP INITIALIZATION & PROVIDER SELECTION -------------- */
+document.addEventListener('DOMContentLoaded', () => {
+    initializeTheme(); // Use new theme function
+    attachEventListeners(); 
+    checkProviderSelection();
+});
+
+function attachEventListeners() {
+    DOM.backBtns.forEach(btn => btn.addEventListener('click', goBack));
+    DOM.themeToggleBtn.addEventListener('click', toggleTheme); // Use new theme function
+    DOM.menuBtn.addEventListener('click', openProviderMenu);
+    DOM.menuBtnGenre.addEventListener('click', openProviderMenu); // RE-ADDED
+    DOM.sideMenuOverlay.addEventListener('click', closeProviderMenu);
+    DOM.sideMenuPanel.addEventListener('click', (e) => e.stopPropagation());
+    
+    // RE-ADDED Search Listeners
+    const debouncedSearch = debounce(doSearch, 400);
+    const searchInputHandler = (e) => {
+        const clearBtn = DOM.clearSearchBtn;
+        if(clearBtn) {
+            clearBtn.style.display = DOM.searchInput.value ? 'block' : 'none';
+        }
+        if (e.key === 'Enter') debouncedSearch();
+        else debouncedSearch();
+    };
+    DOM.searchInput.addEventListener('keydown', searchInputHandler); DOM.searchInput.addEventListener('input', searchInputHandler);
+    if(DOM.clearSearchBtn) {
+        DOM.clearSearchBtn.addEventListener('click', () => {
+            DOM.searchInput.value = ''; DOM.clearSearchBtn.style.display = 'none'; DOM.searchGrid.innerHTML = '';
+            document.getElementById('search-description').style.display = 'block';
+        });
+    }
+
+    const showSearchPage = () => {
+        const activePage = document.querySelector('.page[style*="block"]');
+        showPage('search-page', activePage ? activePage.id : 'home-page');
+    };
+    DOM.headerSearchBtn.addEventListener('click', showSearchPage); // RE-ADDED
+    DOM.headerSearchBtnGenre.addEventListener('click', showSearchPage); // RE-ADDED
+    
+    // RE-ADDED Category Pagination Listeners
+    DOM.categoryPagination.prevBtn.addEventListener('click', () => { if (currentCategory.page > 1) loadCategoryPage(currentCategory.page - 1); });
+    DOM.categoryPagination.nextBtn.addEventListener('click', () => { loadCategoryPage(currentCategory.page + 1); });
+    
+    const getActivePageId = () => {
+        const activePage = document.querySelector('.page[style*="block"]');
+        return activePage ? activePage.id : 'home-page';
+    }
+    
+    DOM.navHome.addEventListener('click', (e) => { e.preventDefault(); showPage('home-page', getActivePageId()); });
+    DOM.navGenres.addEventListener('click', (e) => { e.preventDefault(); showPage('genres-page', getActivePageId()); }); // RE-ADDED
+    DOM.navAbout.addEventListener('click', (e) => { e.preventDefault(); showPage('about-page', getActivePageId()); });
+}
+
+function checkProviderSelection() {
+    activeProvider = localStorage.getItem('sanchitflix_provider');
+    if (activeProvider) initializeApp(false); else showProviderSelectionPage();
+}
+
+async function showProviderSelectionPage() {
+    DOM.providerGrid.innerHTML = '<p class="loading-text" style="grid-column: 1 / -1; animation: none; font-size: 16px;">Finding providers...</p>';
+    showPage('provider-page');
+    DOM.loadingScreen.style.display = 'flex';
+
+    const allProviders = await fetchJSON(`${POLY_API_BASE}/providers`);
+    DOM.providerGrid.innerHTML = ''; 
+    
+    if (allProviders) {
+        const disabledProviders = ["joya9tv","a111477","animetsu","autoembed","cinemaluxe","dooflix","filmyfly","flixhq","guardahd","hianime","kisskh","luxmovies","moviebox","movies4u","moviesapi","multi","netflixmirror","ogomovies","primewire","primemirror","protonmovies","ridomovies","ringz","showbox","skymoviehd","tokyoinsider","vadapav"];
+        const enabledProviders = allProviders.filter(p => !disabledProviders.includes(p.toLowerCase()));
+        
+        if (enabledProviders.length === 0) {
+            DOM.providerGrid.innerHTML = '<p style="grid-column: 1 / -1; font-size: 16px;">No providers are available right now.</p>';
+        } else {
+            enabledProviders.forEach(provider => {
+                const btn = document.createElement('button'); 
+                btn.className = 'provider-btn'; 
+                btn.textContent = provider;
+                btn.onclick = () => { 
+                    localStorage.setItem('sanchitflix_provider', provider); 
+                    activeProvider = provider;
+                    initializeApp(false);
+                };
+                DOM.providerGrid.appendChild(btn);
+            });
+        }
+    } else {
+        DOM.providerGrid.innerHTML = '<p style="grid-column: 1 / -1; font-size: 16px;">Could not load providers. Please refresh.</p>';
+    }
+    DOM.loadingScreen.style.display = 'none';
+}
+
+async function initializeApp(isSwitching) {
+    if (!isSwitching) showPage('home-page');
+    DOM.providerNameDisplayHome.textContent = activeProvider; 
+    DOM.providerNameDisplayGenre.textContent = activeProvider; // RE-ADDED
+    DOM.bottomNav.style.display = 'flex'; DOM.loadingScreen.style.display = 'flex';
+    catalogData = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/catalog`);
+    if (!catalogData) {
+        DOM.homeContent.innerHTML = "<p style='text-align: center; color: var(--text-secondary); padding: 40px;'>This provider is not responding. Please try another.</p>";
+        DOM.loadingScreen.style.display = 'none'; return;
+    }
+    const trendingPosts = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/posts?page=1`);
+    if (trendingPosts && trendingPosts.length > 0) {
+        document.getElementById('slider-container').style.display = 'block';
+        renderSlider(trendingPosts.slice(0, 3));
+    } else {
+        document.getElementById('slider-container').style.display = 'none';
+    }
+    buildHomePage(catalogData.catalog || []); 
+    buildGenresPage(catalogData.genres || []); // RE-ADDED
+}
+
+/* -------------- SLIDER -------------- */
+function renderSlider(items) {
+    DOM.slider.innerHTML = ''; DOM.sliderIndicators.innerHTML = '';
+    items.forEach((item, index) => {
+        const slide = document.createElement('div'); slide.className = 'slide';
+        const itemId = item.link || item.title;
+        const isFav = isFavorite(itemId);
+        slide.innerHTML = `<img src="${item.image || placeholder(item.title)}" alt="${escapeHtml(item.title)}">
+            <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
+                <i class="fas fa-heart"></i>
             </button>
-            <img id="previewImage" src="" alt="Full-size screenshot preview">
+            <div class="slide-overlay">
+                <div class="slide-title">${escapeHtml(getCleanTitle(item.title))}</div>
+                <a class="slide-action-btn"><i class="fas fa-play"></i> View Details</a>
+            </div>`;
+        slide.onclick = () => openDetailPage(item, 'home-page');
+        DOM.slider.appendChild(slide);
+        const indicator = document.createElement('div'); indicator.className = 'indicator';
+        indicator.onclick = () => goToSlide(index);
+        DOM.sliderIndicators.appendChild(indicator);
+    });
+    updateSliderTransform();
+}
+function updateSliderTransform() { if (DOM.slider) { DOM.slider.style.transform = `translateX(-${currentSlideIndex * 100}%)`; DOM.sliderIndicators.querySelectorAll('.indicator').forEach((ind, i) => ind.classList.toggle('active', i === currentSlideIndex)); } }
+function goToSlide(index) { currentSlideIndex = index; updateSliderTransform(); startSliderAuto(); }
+function startSliderAuto() {
+    clearInterval(sliderInterval);
+    sliderInterval = setInterval(() => {
+        const slideCount = DOM.slider.querySelectorAll('.slide').length;
+        if (slideCount > 0) { currentSlideIndex = (currentSlideIndex + 1) % slideCount; updateSliderTransform(); }
+    }, 5000);
+}
+
+/* -------------- DYNAMIC PAGE BUILDERS -------------- */
+function buildHomePage(catalogItems) {
+    DOM.homeContent.innerHTML = '';
+    catalogItems.forEach(section => {
+        const sectionEl = document.createElement('div'); sectionEl.className = 'category-section';
+        // RE-ADDED see-all-btn
+        sectionEl.innerHTML = `<div class="category-header"><h2 class="category-title">${escapeHtml(section.title)}</h2><a href="#" class="see-all-btn">View More</a></div><div class="content-slider"></div>`;
+        // RE-ADDED see-all-btn onclick
+        sectionEl.querySelector('.see-all-btn').onclick = (e) => { e.preventDefault(); openCategoryPage(section.title, section.filter); };
+        renderSkeleton(sectionEl.querySelector('.content-slider'), false, 8);
+        DOM.homeContent.appendChild(sectionEl);
+    });
+    DOM.loadingScreen.style.display = 'none';
+    const sliderContainers = DOM.homeContent.querySelectorAll('.content-slider');
+    catalogItems.forEach(async (section, index) => {
+        const posts = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/posts?filter=${encodeURIComponent(section.filter)}&page=1`);
+        if (posts && posts.length > 0) renderContentSlider(posts, sliderContainers[index]);
+        else sliderContainers[index].innerHTML = '<p style="padding-left: 16px; color: var(--text-secondary);">No content found here.</p>';
+    });
+}
+// RE-ADDED buildGenresPage
+function buildGenresPage(genreItems) {
+    DOM.genresGrid.innerHTML = '';
+    if (genreItems) genreItems.forEach(genre => {
+        const btn = document.createElement('button'); btn.className = 'genre-btn';
+        btn.textContent = genre.title; btn.onclick = () => openCategoryPage(genre.title, genre.filter);
+        DOM.genresGrid.appendChild(btn);
+    });
+}
+
+/* -------------- CATEGORY & SEARCH PAGES (RE-ADDED) -------------- */
+async function loadCategoryPage(page) {
+    currentCategory.page = page; 
+    const fromPage = currentCategory.filter.includes('genre') ? 'genres-page' : 'home-page';
+    showPage('category-page', fromPage);
+    
+    DOM.categoryPageTitle.textContent = currentCategory.title;
+    renderSkeleton(DOM.categoryGrid, true, 12); 
+    DOM.categoryPagination.controls.style.visibility = 'hidden';
+    
+    const url = `${POLY_API_BASE}/api/${activeProvider}/posts?filter=${encodeURIComponent(currentCategory.filter)}&page=${page}`;
+    const posts = await fetchJSON(url);
+    
+    if (posts && posts.length > 0) {
+        renderGrid(posts, DOM.categoryGrid); 
+        DOM.categoryPagination.controls.style.visibility = 'visible';
+        DOM.categoryPagination.prevBtn.disabled = (page === 1); 
+        DOM.categoryPagination.nextBtn.disabled = posts.length < 10; // Simple check
+    } else {
+        DOM.categoryGrid.innerHTML = `<p style="color: var(--text-secondary); text-align: center; grid-column: 1 / -1; font-size: 16px;">No content found here.</p>`;
+        if(page === 1) DOM.categoryPagination.controls.style.visibility = 'hidden';
+        DOM.categoryPagination.nextBtn.disabled = true;
+    }
+}
+
+async function doSearch() {
+    const query = DOM.searchInput.value.trim(); 
+    if (!query) {
+        DOM.searchGrid.innerHTML = '';
+        document.getElementById('search-description').style.display = 'block';
+        return;
+    }
+    document.getElementById('search-description').style.display = 'none';
+    DOM.searchGrid.innerHTML = ''; 
+    renderSkeleton(DOM.searchGrid, true, 12);
+    
+    const results = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/search?query=${encodeURIComponent(query)}&page=1`);
+    
+    if (results && results.length > 0) renderGrid(results, DOM.searchGrid);
+    else DOM.searchGrid.innerHTML = `<p style="color: var(--text-secondary); text-align: center; grid-column: 1 / -1; font-size: 16px;">No results found for your search.</p>`;
+}
+
+/* -------------- GRID & SLIDER ITEM RENDERING -------------- */
+function renderContentSlider(items, container) {
+  container.innerHTML = '';
+  items.forEach(item => {
+    const gridItem = document.createElement('div'); gridItem.className = 'grid-item';
+    const itemId = item.link || item.title;
+    const isFav = isFavorite(itemId);
+    gridItem.innerHTML = `
+        <div class="content-card">
+            <img src="${item.image || placeholder(item.title)}" onerror="this.src='${placeholder(item.title)}'"/>
+            <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
+                <i class="fas fa-heart"></i>
+            </button>
         </div>
-    </div>
-
-    <div id="redirectStatus" class="modal-overlay hidden">
-        <div class="p-6 rounded-xl bg-surface border border-accent/30 shadow-accentGlow text-center max-w-xs mx-4">
-            <i class="fa-solid fa-cloud-arrow-down fa-spin text-accent text-4xl"></i>
-            <h3 class="text-xl font-bold mt-4 text-primary">Accessing Secure Link...</h3>
-            <p class="text-secondary mt-1 text-sm">Please wait a moment...</p>
+        <p class="content-caption">${escapeHtml(getShortTitle(item.title))}</p>`;
+    gridItem.onclick = () => openDetailPage(item, 'home-page');
+    container.appendChild(gridItem);
+  });
+}
+// RE-ADDED renderGrid
+function renderGrid(items, container) {
+  container.innerHTML = '';
+  items.forEach(item => {
+    const gridItem = document.createElement('div'); gridItem.className = 'grid-item';
+    const itemId = item.link || item.title;
+    const isFav = isFavorite(itemId);
+    gridItem.innerHTML = `
+        <div class="content-card">
+            <img src="${item.image || placeholder(item.title)}" onerror="this.src='${placeholder(item.title)}'"/>
+            <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
+                <i class="fas fa-heart"></i>
+            </button>
         </div>
-    </div>
+        <p class="content-caption">${escapeHtml(getShortTitle(item.title))}</p>`;
+    gridItem.onclick = () => openDetailPage(item, document.querySelector('.page[style*="block"]').id);
+    container.appendChild(gridItem);
+  });
+}
 
-    <script>
-        const API_URL = 'https://4khdhub.fans/';
-        const DATA_API_URL = 'https://sanch1tx-flix.hf.space';
-
-        // DOM Element selectors
-        const qs = (sel, ctx = document) => ctx.querySelector(sel);
-        const qsa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
-
-        const elements = {
-            movieList: qs('#movie-list'),
-            movieDetailsSection: qs('#movie-details-section'),
-            results: qs('#results'), 
-            backButton: null, // will be created dynamically
-            resultMeta: qs('#resultMeta'),
-            resultMetaContainer: qs('#resultMetaContainer'),
-            toast: qs('#toast'),
-            toastText: qs('#toastText'),
-            paginationContainer: qs('#pagination-container'),
-            searchInput: qs('#search-input'),
-            searchButton: qs('#search-button'),
-            mobileSearchButton: qs('#mobile-search-button'),
-            quickChips: qs('#quickChips'),
-            redirectStatus: qs('#redirectStatus'),
-            previewModal: qs('#previewModal'),
-            previewImage: qs('#previewImage'),
-            closeModalButton: qs('#closeModal'),
-        };
-
-        let state = {
-            currentPage: 1,
-            maxPages: 5,
-            isFetchingDetails: false,
-            currentDetailsData: null,
-            activeDownloadTab: 'zippack',
-            currentQuery: '',
-        };
-        
-        // --- UI Functions ---
-        function showToast(text) {
-            elements.toastText.textContent = text || 'Working…';
-            elements.toast.classList.remove('hidden');
-            clearTimeout(showToast._t);
-            showToast._t = setTimeout(() => elements.toast.classList.add('hidden'), 2200);
+/* -------------- DETAIL PAGE & LINK LOGIC -------------- */
+async function openDetailPage(item, fromPage) {
+    showPage('detail-page', fromPage);
+    const itemId = item.link || item.title;
+    const isFav = isFavorite(itemId);
+    DOM.detailTitle.textContent = item.title;
+    const image = item.image || placeholder(item.title);
+    DOM.detailBackdrop.innerHTML = `<img src="${image}" alt="Backdrop">`;
+    DOM.detailPoster.innerHTML = `<img src="${image}" alt="Poster">`;
+    DOM.detailStoryline.textContent = 'Loading story...'; 
+    DOM.detailLinkList.innerHTML = '<p>Getting links...</p>';
+    DOM.detailMeta.innerHTML = ''; 
+    DOM.downloadSectionTitle.textContent = "Download Links"; // Default title
+    
+    // Clear old favorite button before adding new one
+    const oldFavBtn = DOM.detailPoster.querySelector('.favorite-btn');
+    if (oldFavBtn) oldFavBtn.remove();
+    
+    const favBtn = document.createElement('button'); favBtn.className = `favorite-btn ${isFav ? 'active' : ''}`;
+    favBtn.innerHTML = '<i class="fas fa-heart"></i>';
+    favBtn.onclick = (e) => { e.stopPropagation(); toggleFavorite(itemId); favBtn.classList.toggle('active'); };
+    DOM.detailPoster.appendChild(favBtn);
+    
+    const metaData = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/meta?link=${encodeURIComponent(item.link)}`);
+    if (metaData) {
+        DOM.detailStoryline.textContent = metaData.synopsis || 'Story details are not available.';
+        if (metaData.type) DOM.detailMeta.innerHTML = `<span style="background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;">${metaData.type.toUpperCase()}</span><span>${metaData.year || ''}</span><span>${metaData.runtime || ''}</span>`;
+        DOM.detailLinkList.innerHTML = '';
+        if (!metaData.linkList || metaData.linkList.length === 0) {
+            DOM.detailLinkList.innerHTML = `<p>No links found for this.</p>`; return;
         }
 
-        function showSkeletons(count = 12) {
-            elements.movieList.innerHTML = '';
-            const tpl = qs('#card-skeleton').content;
-            for (let i = 0; i < count; i++) {
-                elements.movieList.appendChild(tpl.cloneNode(true));
+        // --- NEW LOGIC FOR SERIES ---
+        if (metaData.type === 'series') {
+            DOM.downloadSectionTitle.textContent = "Select Season / Quality";
+            
+            // 1. Create Season Select Dropdown
+            const seasonSelect = document.createElement('select');
+            seasonSelect.className = 'season-select';
+            
+            // 2. Populate dropdown directly from linkList
+            metaData.linkList.forEach((linkItem, index) => { // Added index
+                const option = document.createElement('option');
+                option.value = index; // Store the index of the linkItem
+                option.textContent = linkItem.title;
+                option.dataset.type = metaData.type || 'series'; // Store type for later
+                seasonSelect.appendChild(option);
+            });
+            
+            DOM.detailLinkList.appendChild(seasonSelect);
+
+            // 3. Create a container for quality/episode buttons
+            const episodesListContainer = document.createElement('div');
+            episodesListContainer.id = "episodes-list-container"; // Add ID for the new function
+            episodesListContainer.className = 'link-list'; // Reuse existing class for gap
+            DOM.detailLinkList.appendChild(episodesListContainer);
+
+            // 4. Add event listener to load episodes when dropdown changes
+            seasonSelect.addEventListener('change', (e) => {
+                const selectedIndex = e.target.value;
+                const selectedLinkItem = metaData.linkList[selectedIndex]; // Get the full object
+                const itemType = e.target.options[e.target.selectedIndex].dataset.type;
+                loadEpisodesOntoPage(selectedLinkItem, itemType); // Pass the full object
+            });
+            
+            // 5. Load episodes for the *first* season by default
+            if (metaData.linkList.length > 0) {
+                const firstItem = metaData.linkList[0];
+                loadEpisodesOntoPage(firstItem, metaData.type || 'series'); // Pass the full object
             }
-        }
-        
-        function createChip(text) {
-            const btn = document.createElement('button');
-            btn.className = 'bg-surface border border-white/10 text-xs px-3 py-1.5 rounded-full hover:border-accent/80 hover:text-primary transition';
-            btn.textContent = text;
-            btn.addEventListener('click', () => doSearch(text));
-            return btn;
-        }
 
-        function movieCard({ title, imageUrl, link, quality }, i) {
-            const a = document.createElement('a');
-            a.href = '#';
-            a.className = 'group relative overflow-hidden rounded-lg bg-surface border border-white/10 shadow-lg hover:shadow-accent/20 hover:-translate-y-1 transition-all duration-300';
-            a.setAttribute('data-movie-url', link);
-            a.style.animationDelay = `${i * 40}ms`;
-            a.style.opacity = 0;
-            a.classList.add('animate-fadeUp');
-
-            a.innerHTML = `
-                <div class="relative aspect-[2/3]">
-                    <img data-src="${imageUrl}" alt="${title}" class="block w-full h-full object-cover" onerror="this.src='https://placehold.co/400x600/1F2937/9CA3AF?text=No+Poster'" />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                    ${quality ? `<span class="absolute top-2 right-2 text-xs font-bold bg-accent text-background px-2 py-0.5 rounded-full">${quality}</span>` : ''}
-                </div>
-                <div class="p-3">
-                    <h3 class="font-semibold text-sm text-primary group-hover:text-accent-light transition-colors clamp-2">${title}</h3>
-                </div>`;
-
-            a.addEventListener('click', (e) => { e.preventDefault(); fetchMoviePage(link); });
-
-            lazyObserver.observe(a.querySelector('img'));
-            return a;
-        }
-
-        const lazyObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    const src = img.dataset.src;
-                    if (src) {
-                        img.src = src;
-                        img.removeAttribute('data-src');
+        } else {
+            // --- ORIGINAL LOGIC FOR MOVIES ---
+            DOM.downloadSectionTitle.textContent = "Stream / Download Links";
+            metaData.linkList.forEach(linkItem => {
+                if (linkItem.directLinks && linkItem.directLinks.length > 0) {
+                    const directLink = linkItem.directLinks[0];
+                    
+                    if (directLink.link.includes('mdrive.today') || directLink.link.includes('gadgetsweb.xyz') || directLink.link.includes('magiclinks.my')) {
+                        const linkBtn = document.createElement('button'); linkBtn.className = 'link-btn';
+                        linkBtn.innerHTML = `<span>${escapeHtml(linkItem.title)}</span><i class="fas fa-play"></i>`;
+                        // MODIFIED: This now correctly opens the modal
+                        linkBtn.onclick = () => {
+                            loadStreamLinksIntoModal(directLink.link, metaData.type || 'movie');
+                            DOM.streamModal.style.display = 'flex';
+                        }
+                        DOM.detailLinkList.appendChild(linkBtn);
+                    } else {
+                        const linkAnchor = document.createElement('a'); linkAnchor.className = 'link-btn';
+                        linkAnchor.href = directLink.link; linkAnchor.target = '_blank';
+                        linkAnchor.innerHTML = `<span>${escapeHtml(linkItem.title)}</span><i class="fas fa-download"></i>`;
+                        DOM.detailLinkList.appendChild(linkAnchor);
                     }
-                    observer.unobserve(img);
                 }
             });
-        }, { rootMargin: '200px' });
+        }
+        // --- END OF LOGIC ---
 
-        // --- API & Data Handling ---
-        async function fetchApi(endpoint, params = {}) {
-            const url = new URL(`${DATA_API_URL}${endpoint}`);
-            Object.entries(params).forEach(([key, value]) => url.searchParams.append(key, value));
+        if (DOM.detailLinkList.innerHTML === '') DOM.detailLinkList.innerHTML = `<p>Could not find any links.</p>`;
+    } else {
+        DOM.detailLinkList.innerHTML = `<p>No links found for this.</p>`;
+    }
+}
+
+/* -------------- MODALS -------------- */
+// THIS FUNCTION IS NO LONGER USED BY THE SERIES DETAIL PAGE, BUT KEPT FOR NOW
+async function getEpisodeLinks(episodesUrl, itemType) { // Added itemType
+    DOM.streamModalTitle.textContent = 'Loading Episodes...'; 
+    DOM.streamList.innerHTML = '<div class="loading-text" style="text-align: center;">Please wait...</div>';
+    DOM.streamModal.style.display = 'flex'; // Open modal
+    
+    const episodes = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/episodes?url=${encodeURIComponent(episodesUrl)}`);
+    
+    DOM.streamModalTitle.textContent = 'Select Episode'; 
+    DOM.streamList.innerHTML = ''; // Clear loading
+    
+    if (episodes && episodes.length > 0) {
+        episodes.forEach(episode => {
+            const episodeBtn = document.createElement('button'); 
+            episodeBtn.className = 'stream-btn';
+            episodeBtn.textContent = episode.title;
             
-            const response = await fetch(url);
-            if (!response.ok) throw new Error(`API error: ${response.statusText}`);
-            return response.json();
-        }
-
-        async function fetchMovies(page = 1, query = '') {
-            try {
-                elements.movieDetailsSection.classList.add('hidden');
-                elements.movieList.classList.remove('hidden');
-                elements.paginationContainer.classList.remove('hidden');
+            // On click, load stream links into the *same* modal
+            episodeBtn.onclick = () => {
+                // Load streams *into* the modal
+                loadStreamLinksIntoModal(episode.link, itemType || 'series');
                 
-                state.currentQuery = query;
-                state.currentPage = page;
+                // Add a "Back" button to the stream list
+                const backBtn = document.createElement('button');
+                backBtn.className = 'stream-btn';
+                backBtn.style.cssText = 'background: var(--secondary-gradient); color: white;'; // Style it
+                backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Episodes';
+                backBtn.onclick = () => getEpisodeLinks(episodesUrl, itemType); // Re-call self
                 
-                const activeQuery = state.currentQuery.trim();
-                const title = activeQuery ? `Results for "${activeQuery}"` : 'Latest Releases';
-                elements.resultMetaContainer.querySelector('h2').textContent = title;
-
-                showToast(activeQuery ? `Searching for “${activeQuery}”...` : `Loading page ${page}...`);
-                showSkeletons();
-                
-                let data;
-                if (activeQuery) {
-                    data = await fetchApi('/search', { query: activeQuery, page });
-                } else {
-                    data = await fetchApi(page === 1 ? '/home' : `/page/${page}`);
-                }
-                
-                const movies = data.results.map(item => ({
-                    title: item.title, imageUrl: item.poster, link: item.url, quality: item.quality
-                }));
-                
-                renderResults(movies);
-                renderPagination(state.currentPage, data.totalPages || state.maxPages, activeQuery);
-            } catch (e) {
-                console.error('fetchMovies Error:', e);
-                elements.movieList.innerHTML = `<div class="col-span-full text-center text-red-400 py-16">Failed to load content. Please try again later.</div>`;
-                elements.paginationContainer.innerHTML = '';
-            }
-        }
-        
-        async function fetchMoviePage(relativeUrl) {
-            if (state.isFetchingDetails) return;
-            state.isFetchingDetails = true;
-
-            try {
-                showToast('Loading details…');
-                elements.movieList.classList.add('hidden');
-                elements.paginationContainer.classList.add('hidden');
-                elements.movieDetailsSection.innerHTML = '<div class="text-center py-20"><i class="fa-solid fa-spinner fa-spin text-4xl text-accent"></i></div>';
-                elements.movieDetailsSection.classList.remove('hidden');
-
-                const absoluteUrl = API_URL + relativeUrl;
-                const details = await fetchApi('/details', { url: absoluteUrl });
-                
-                state.currentDetailsData = details;
-                renderMovieDetails(details);
-                
-                window.scrollTo({ top: elements.results.offsetTop - 80, behavior: 'smooth' });
-            } catch (e) {
-                console.error('fetchMoviePage Error:', e);
-                showToast('Failed to load details');
-                elements.movieDetailsSection.innerHTML = `<div class="text-center text-red-400 py-16">Could not load details for this title.</div>`;
-            } finally {
-                state.isFetchingDetails = false;
-            }
-        }
-        
-        async function handleFinalDownload(url, button) {
-            if (button) {
-                button.disabled = true;
-                button.dataset.originalHTML = button.innerHTML;
-                button.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
-            }
-            elements.redirectStatus.classList.remove('hidden');
-
-            try {
-                const data = await fetchApi('/bypass', { url });
-                if (data && data.final_url) {
-                    showToast('Redirecting to download!');
-                    setTimeout(() => window.location.href = data.final_url, 500);
-                } else {
-                    throw new Error(data.error || 'Could not get the final URL.');
-                }
-            } catch (error) {
-                console.error('Bypass error:', error);
-                showToast(`Error: ${error.message}`);
-            } finally {
-                elements.redirectStatus.classList.add('hidden');
-                if (button) {
-                    button.disabled = false;
-                    button.innerHTML = button.dataset.originalHTML;
-                }
-            }
-        }
-
-        // --- Render Functions ---
-        function renderResults(movies) {
-            elements.movieList.innerHTML = '';
-            if (!movies.length) {
-                elements.movieList.innerHTML = `<div class="col-span-full text-center text-secondary py-16">No results found. Try a different search.</div>`;
-                return;
-            }
-            movies.forEach((m, i) => elements.movieList.appendChild(movieCard(m, i)));
-        }
-
-        function renderMovieDetails(details) {
-            // Main structure
-            const detailsHTML = `
-                <button id="back-button" class="mb-6 inline-flex items-center gap-2 bg-surface border border-white/10 px-4 h-11 rounded-full text-sm font-semibold hover:border-white/20 transition">
-                    <i class="fa-solid fa-arrow-left"></i>
-                    <span>Back to results</span>
-                </button>
-                <div class="bg-surface/50 border border-white/10 rounded-2xl">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 p-4 sm:p-6 lg:p-8">
-                        <div class="md:col-span-1">
-                            <img src="${details.poster || 'https://placehold.co/800x1200/1F2937/9CA3AF?text=No+Image'}" class="w-full h-auto rounded-lg object-cover shadow-lg" alt="Poster for ${details.title}">
-                        </div>
-                        <div class="md:col-span-2 space-y-5">
-                            <div>
-                                <h3 class="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">${details.title || 'Untitled'}</h3>
-                                <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-3 text-secondary text-sm">
-                                    ${details.metadata.imdb ? `<span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-star text-yellow-400"></i> ${details.metadata.imdb}</span>` : ''}
-                                    ${details.metadata.release ? `<span>${details.metadata.release}</span>` : ''}
-                                    ${details.metadata.runtime ? `<span>${details.metadata.runtime}</span>` : ''}
-                                </div>
-                            </div>
-                            <p class="text-secondary text-base leading-relaxed">${details.summary || 'No storyline available.'}</p>
-                            
-                            <!-- Key-Value Metadata -->
-                            <div id="metadata-wrap" class="grid grid-cols-2 gap-x-4 gap-y-2 pt-2 text-sm"></div>
-
-                            <!-- Watch Online -->
-                            <div id="watch-online-wrap"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Downloads & Screenshots in separate cards below -->
-                <div class="mt-6 space-y-6">
-                    <div id="downloads-container"></div>
-                    <div id="screenshots-container"></div>
-                </div>
-            `;
-            elements.movieDetailsSection.innerHTML = detailsHTML;
-            elements.backButton = qs('#back-button');
-            elements.backButton.addEventListener('click', backToResults);
-
-            // Populate metadata
-            const metadataWrap = qs('#metadata-wrap');
-            const metaToDisplay = { Genre: details.metadata.genre, Director: details.metadata.director, Cast: details.metadata.cast, Quality: details.metadata.quality };
-            metadataWrap.innerHTML = Object.entries(metaToDisplay).map(([key, value]) => {
-                return value ? `<div class="truncate"><span class="text-secondary">${key}:</span> <span class="text-primary font-medium">${value}</span></div>` : '';
-            }).join('');
-            
-            // Watch Online Button
-            const watchWrap = qs('#watch-online-wrap');
-            if (details.metadata.watch) {
-                watchWrap.innerHTML = `<a href="${details.metadata.watch}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 accent-btn text-background px-5 py-2.5 rounded-full font-bold transition">
-                    <i class="fa-solid fa-play"></i><span>Watch Trailer</span></a>`;
-            }
-
-            renderDownloadsSection(details.download_options);
-            renderScreenshotsSection(details.screenshots);
-        }
-
-        function renderDownloadsSection(download_options) {
-            const container = qs('#downloads-container');
-            const { movie_files, season_packs, individual_episodes } = download_options;
-            const hasMovieFiles = movie_files.length > 0;
-            const hasSeasonPacks = season_packs.length > 0;
-            const hasIndividualEpisodes = individual_episodes?.some(s => s.episodes?.length > 0);
-
-            if (!hasMovieFiles && !hasSeasonPacks && !hasIndividualEpisodes) return;
-
-            state.activeDownloadTab = (hasMovieFiles || hasSeasonPacks) ? 'zippack' : 'singleeps';
-            
-            let tabsHTML = '';
-            if (hasMovieFiles || hasSeasonPacks) {
-                tabsHTML += `<button data-tab="zippack" class="tab-button">Zip / Pack</button>`;
-            }
-            if (hasIndividualEpisodes) {
-                tabsHTML += `<button data-tab="singleeps" class="tab-button">Single Episodes</button>`;
-            }
-
-            container.innerHTML = `
-                <div class="bg-surface/50 border border-white/10 rounded-2xl p-4 sm:p-6">
-                    <h4 class="text-xl font-bold mb-4">Download Links</h4>
-                    <div class="border-b border-white/10 mb-4 flex gap-4">${tabsHTML}</div>
-                    <div id="downloadWrap" class="space-y-3"></div>
-                </div>`;
-            
-            qsa('.tab-button', container).forEach(btn => btn.addEventListener('click', (e) => {
-                setActiveDownloadTab(e.target.dataset.tab, container);
-            }));
-            
-            setActiveDownloadTab(state.activeDownloadTab, container);
-        }
-
-        function renderScreenshotsSection(screenshots) {
-            if (!screenshots || screenshots.length === 0) return;
-            const container = qs('#screenshots-container');
-            container.innerHTML = `
-                <div class="bg-surface/50 border border-white/10 rounded-2xl p-4 sm:p-6">
-                    <h4 class="text-xl font-bold mb-4">Screenshots</h4>
-                    <div id="screensWrap" class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                        ${screenshots.map(src => `
-                            <a href="${src}" class="block relative overflow-hidden rounded-lg border border-white/10 cursor-pointer group aspect-video">
-                                <img src="${src}" alt="Screenshot" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                                <div class="absolute inset-0 bg-black/50 grid place-items-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <i class="fa-solid fa-magnifying-glass-plus text-white text-2xl"></i>
-                                </div>
-                            </a>`).join('')}
-                    </div>
-                </div>`;
-
-            qsa('#screensWrap a', container).forEach(a => a.addEventListener('click', (e) => {
-                e.preventDefault();
-                elements.previewImage.src = a.href;
-                elements.previewModal.classList.remove('hidden');
-            }));
-        }
-        
-        function renderDownloadLinks() {
-            const downloadWrap = qs('#downloadWrap');
-            if (!downloadWrap || !state.currentDetailsData) return;
-            
-            downloadWrap.innerHTML = '';
-            const { movie_files, season_packs, individual_episodes } = state.currentDetailsData.download_options;
-
-            const createLinkCard = (item, index) => {
-                const links = item.downloads?.filter(l => !l.provider.toLowerCase().includes('direct link')) || [];
-                if (links.length === 0) return '';
-                
-                let titleText = item.quality_description || item.season_title || item.episode_title || 'File';
-                // This condition now only runs when an index is explicitly passed (for single episodes)
-                if (typeof index === 'number') {
-                    titleText = `Episode ${index + 1}`;
-                }
-                
-                return `
-                    <div class="bg-background/40 p-3 rounded-lg border border-white/10">
-                        <div class="flex justify-between items-center">
-                            <span class="font-semibold text-primary text-base">${titleText}</span>
-                            <span class="text-xs text-secondary">${item.size || ''}</span>
-                        </div>
-                        <div class="flex flex-wrap gap-2 pt-3">
-                            ${links.map(l => {
-                                const lower = l.provider.toLowerCase();
-                                let icon = 'fa-cloud-arrow-down';
-                                if (lower.includes('drive')) icon = 'fa-brands fa-google-drive';
-                                else if (lower.includes('cloud')) icon = 'fa-cloud';
-                                else if (lower.includes('batch') || lower.includes('zip')) icon = 'fa-file-zipper';
-                                return `<button data-url="${l.url}" class="final-link-btn inline-flex items-center gap-2 bg-secondary/10 text-secondary text-sm font-medium px-3 py-1.5 rounded-md hover:bg-secondary/20 hover:text-primary transition">
-                                    <i class="fa-solid ${icon} fa-fw"></i> ${l.provider}
-                                </button>`;
-                            }).join('')}
-                        </div>
-                    </div>`;
+                DOM.streamList.prepend(backBtn); // Add to the top of the stream list
             };
+            DOM.streamList.appendChild(episodeBtn); // Add episode button
+        });
+    } else {
+        DOM.streamList.innerHTML = `<p>No episodes found.</p>`;
+    } 
+}
 
-            let contentHTML = '';
-            if (state.activeDownloadTab === 'zippack') {
-                // We call createLinkCard without the index for zip/packs
-                contentHTML += movie_files.map(item => createLinkCard(item)).join('');
-                contentHTML += season_packs.map(item => createLinkCard(item)).join('');
-            } else {
-                individual_episodes.forEach(season => {
-                    contentHTML += `<h5 class="text-primary font-bold pt-3 pb-1">${season.season_title}</h5>`;
-                    // We pass the index only for single episodes
-                    contentHTML += season.episodes.map((episode, index) => createLinkCard(episode, index)).join('');
-                });
-            }
+// *** NEW FUNCTION TO LOAD EPISODES ONTO THE PAGE ***
+async function loadEpisodesOntoPage(linkItem, itemType) {
+    const container = document.getElementById('episodes-list-container');
+    if (!container) return;
 
-            if (!contentHTML) {
-                downloadWrap.innerHTML = `<div class="text-sm text-secondary p-4 text-center">No downloads available for this category.</div>`;
-            } else {
-                downloadWrap.innerHTML = contentHTML;
-            }
+    container.innerHTML = '<p class="loading-text" style="text-align: center; padding: 20px;">Loading episodes...</p>';
+    
+    let episodes = [];
 
-            qsa('.final-link-btn', downloadWrap).forEach(btn => btn.addEventListener('click', (e) => {
-                handleFinalDownload(e.currentTarget.dataset.url, e.currentTarget);
-            }));
-        }
+    if (linkItem.directLinks && linkItem.directLinks.length > 0) {
+        // Case 1: The "episodes" are already in directLinks
+        episodes = linkItem.directLinks;
+    } else if (linkItem.episodesLink) {
+        // Case 2: We need to fetch the episodes from episodesLink
+        episodes = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/episodes?url=${encodeURIComponent(linkItem.episodesLink)}`);
+    }
+    
+    container.innerHTML = ''; // Clear loading
+    
+    if (episodes && episodes.length > 0) {
+        episodes.forEach(episode => {
+            // Use episode.link for the final stream modal
+            const episodeOrDirectLink = episode.link || episode; 
 
-        function renderPagination(current, total, query) {
-            const container = elements.paginationContainer;
-            container.innerHTML = '';
-            if (total <= 1) return;
-
-            const createBtn = (page, text, icon = '') => {
-                const btn = document.createElement('button');
-                btn.className = 'bg-surface border border-white/10 h-10 px-4 rounded-lg text-sm font-semibold hover:border-white/20 transition disabled:opacity-50 disabled:cursor-not-allowed';
-                btn.innerHTML = icon ? `<i class="fa-solid ${icon}"></i>` : (text || page);
-                if (typeof page === 'number') btn.addEventListener('click', () => fetchMovies(page, query));
-                if (page === '...') btn.disabled = true;
-                if (page === current) btn.classList.add('!bg-accent', '!text-background', '!border-accent');
-                return btn;
+            const episodeBtn = document.createElement('button'); 
+            episodeBtn.className = 'link-btn'; // Reuse link-btn style
+            episodeBtn.innerHTML = `<span>${escapeHtml(episode.title || episodeOrDirectLink)}</span><i class="fas fa-play"></i>`;
+            
+            // On click, load stream links into the modal and show it
+            episodeBtn.onclick = () => {
+                // Pass the correct link (episode.link) and type
+                loadStreamLinksIntoModal(episodeOrDirectLink, itemType || 'series');
+                DOM.streamModal.style.display = 'flex';
             };
+            container.appendChild(episodeBtn); // Add episode button
+        });
+    } else {
+        container.innerHTML = `<p>No episodes found for this selection.</p>`;
+    }
+}
 
-            container.appendChild(createBtn(current - 1, null, 'fa-arrow-left')).disabled = current <= 1;
 
-            const pages = getPaginationRange(current, total);
-            pages.forEach(p => container.appendChild(createBtn(p)));
+async function loadStreamLinksIntoModal(link, type) { // Renamed from getStreamLinks
+    DOM.streamModalTitle.textContent = 'Loading Streams...'; 
+    DOM.streamList.innerHTML = '<div class="loading-text" style="text-align: center;">Please wait...</div>';
+    // DO NOT open modal here, it's opened by the caller
+    // --- MODIFICATION: Force 'drive', 'hdhub4u', or 'kmMovies' provider for special links ---
+    let streamApiProvider = activeProvider;
+    if (link.includes('mdrive.today')) {
+        streamApiProvider = 'drive'; // This forces the API call to use /api/drive/stream
+    } else if (link.includes('gadgetsweb.xyz')) {
+        streamApiProvider = 'hdhub4u'; // This forces the API call to use /api/hdhub4u/stream
+    } else if (link.includes('magiclinks.my')) {
+        streamApiProvider = 'kmMovies'; // This forces the API call to use /api/kmMovies/stream
+    }
+    // --- END MODIFICATION ---
 
-            container.appendChild(createBtn(current + 1, null, 'fa-arrow-right')).disabled = current >= total;
-        }
+    const streamData = await fetchJSON(`${POLY_API_BASE}/api/${streamApiProvider}/stream?link=${encodeURIComponent(link)}&type=${type}`);
+    
+    DOM.streamModalTitle.textContent = 'Select Stream'; 
+    DOM.streamList.innerHTML = '';
+    if (streamData && streamData.length > 0) {
+        streamData.forEach(stream => {
+            const streamBtn = document.createElement('a'); streamBtn.className = 'stream-btn';
+            streamBtn.href = stream.link; streamBtn.target = '_blank';
+            // Added an icon and escapeHtml
+            streamBtn.innerHTML = `${escapeHtml(stream.server) || 'Server'} (${escapeHtml(stream.type)}) <i class="fas fa-external-link-alt" style="font-size: 0.8em; margin-left: 8px;"></i>`;
+            DOM.streamList.appendChild(streamBtn);
+        });
+    } else DOM.streamList.innerHTML = `<p>No stream links found.</p>`;
+}
 
-        function getPaginationRange(current, total, width = 2) {
-            if (total <= (width * 2) + 3) {
-                return [...Array(total).keys()].map(i => i + 1);
+async function openProviderMenu() {
+    DOM.body.classList.add('menu-open');
+    DOM.providerList.innerHTML = '<div class="loading-text" style="text-align: center; padding: 24px;">Loading...</div>';
+    const allProviders = await fetchJSON(`${POLY_API_BASE}/providers`);
+    DOM.providerList.innerHTML = '';
+    if (allProviders) {
+        const disabledProviders = ["joya9tv","a111477","animetsu","autoembed","cinemaluxe","dooflix","filmyfly","flixhq","guardahd","hianime","kisskh","luxmovies","moviebox","movies4u","moviesapi","multi","netflixmirror","ogomovies","primewire","primemirror","protonmovies","ridomovies","ringz","showbox","skymoviehd","tokyoinsider","vadapav"];
+        const enabledProviders = allProviders.filter(p => !disabledProviders.includes(p.toLowerCase()));
+        enabledProviders.forEach(provider => {
+            const btn = document.createElement('button');
+            btn.className = 'provider-menu-btn';
+            let checkMark = '';
+            if (provider === activeProvider) {
+                btn.classList.add('active');
+                checkMark = `<i class="fas fa-check check-mark"></i>`;
             }
-            const range = [];
-            range.push(1);
-            if (current > width + 2) range.push('...');
-            for (let i = Math.max(2, current - width); i <= Math.min(total - 1, current + width); i++) {
-                range.push(i);
-            }
-            if (current < total - (width + 1)) range.push('...');
-            range.push(total);
-            return range;
-        }
+            btn.innerHTML = `<i class="fas fa-film icon"></i> <span>${provider}</span> ${checkMark}`;
+            btn.onclick = () => {
+                if (provider !== activeProvider) {
+                    localStorage.setItem('sanchitflix_provider', provider);
+                    activeProvider = provider;
+                    closeProviderMenu();
+                    initializeApp(true); 
+                } else {
+                    closeProviderMenu();
+                }
+            };
+            DOM.providerList.appendChild(btn);
+        });
+    } else {
+        DOM.providerList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Could not load providers.</p>';
+    }
+}
+function closeProviderMenu() { DOM.body.classList.remove('menu-open'); }
+function closeStreamModal() { DOM.streamModal.style.display = 'none'; DOM.streamList.innerHTML = ''; }
+// RE-ADDED openCategoryPage
+function openCategoryPage(title, filter) { currentCategory = { title, filter, page: 1 }; loadCategoryPage(1); }
 
-        // --- Event Handlers & Initializers ---
-        function doSearch(query) {
-            const trimmedQuery = query.trim();
-            elements.searchInput.value = trimmedQuery;
-            fetchMovies(1, trimmedQuery);
-        }
-        
-        function backToResults() {
-            elements.movieDetailsSection.classList.add('hidden');
-            elements.movieList.classList.remove('hidden');
-            elements.paginationContainer.classList.remove('hidden');
-            elements.resultMetaContainer.querySelector('h2').textContent = state.currentQuery ? `Results for "${state.currentQuery}"` : 'Latest Releases';
-        }
+// Global exposure
+window.toggleFavorite = toggleFavorite;
+window.closeStreamModal = closeStreamModal;
 
-        function setActiveDownloadTab(tabName, context) {
-            state.activeDownloadTab = tabName;
-            qsa('.tab-button', context).forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.tab === tabName);
-            });
-            renderDownloadLinks();
-        }
-
-        function initialize() {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js')
-                    .then(reg => console.log('Service Worker Registered', reg))
-                    .catch(err => console.error('SW Error', err));
-            }
-
-            const defaultChips = ['Inception', 'Breaking Bad', 'Oppenheimer', 'Stranger Things', 'Joker'];
-            defaultChips.forEach(c => elements.quickChips.appendChild(createChip(c)));
-            
-            elements.searchButton.addEventListener('click', () => doSearch(elements.searchInput.value));
-            elements.searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSearch(elements.searchInput.value); });
-            
-            elements.mobileSearchButton.addEventListener('click', () => {
-                elements.searchInput.focus();
-                window.scrollTo({
-                    top: elements.searchInput.getBoundingClientRect().top + window.scrollY - 80, // 80px offset
-                    behavior: 'smooth'
-                });
-            });
-
-            elements.closeModalButton.addEventListener('click', () => elements.previewModal.classList.add('hidden'));
-            elements.previewModal.addEventListener('click', (e) => {
-                if (e.target.id === 'previewModal') elements.previewModal.classList.add('hidden');
-            });
-            
-            fetchMovies(1); // Initial load
-        }
-
-        window.addEventListener('load', initialize);
-    </script>
+</script>
 </body>
 </html>
-
