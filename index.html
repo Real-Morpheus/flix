@@ -7,9 +7,9 @@
     <!-- 
       - Added Font Awesome link for icons.
       - Added Google Fonts link for 'Inter'.
-      - NEW: Added an inline SVG favicon.
+      - NEW: Replaced icon with a professional, Netflix-style "S" favicon.
     -->
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23667eea'/%3E%3Cpath d='M69.5,30.5c-6.6,0-12.4,3.2-16,8.5c-3.6-5.2-9.4-8.5-16-8.5C28.2,30.5,22,36.7,22,46c0,9.3,6.2,15.5,15.5,15.5 c6.6,0,12.4-3.2,16-8.5c3.6,5.2,9.4,8.5,16,8.5C78.8,61.5,85,55.3,85,46C85,36.7,78.8,30.5,69.5,30.5z M37.5,55.5 C32.8,55.5,29,51.7,29,47c0-4.7,3.8-8.5,8.5-8.5s8.5,3.8,8.5,8.5C46,51.7,42.2,55.5,37.5,55.5z M69.5,55.5 C64.8,55.5,61,51.7,61,47c0-4.7,3.8-8.5,8.5-8.5s8.5,3.8,8.5,8.5C78,51.7,74.2,55.5,69.5,55.5z' fill='%23ffffff'/%3E%3C/svg%3E">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23141414'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-size='80' font-weight='900' fill='%23E50914' font-family='Arial, sans-serif'%3ES%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
@@ -186,10 +186,41 @@
         .provider-menu-btn .check-mark { margin-left: auto; color: white; font-size: 18px; animation: starBurst 0.6s ease-out; }
         @keyframes starBurst { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.3); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
 
+        /* --- *** NEW *** --- */
+        /* This new wrapper will hold the slider AND the indicators */
+        .slider-wrapper {
+            position: relative;
+            border-radius: 24px;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 24px;
+            background: var(--card-bg); /* Moved background here */
+        }
+
         /* Slider - Removed clip-path for simpler, rounded design */
-        .slider-container { width: 100%; height: 240px; overflow: hidden; margin-bottom: 24px; position: relative; background: var(--card-bg); border-radius: 24px; box-shadow: var(--shadow-lg); will-change: contents; }
-        .slider { display: flex; height: 100%; transition: transform 0.8s cubic-bezier(0.23, 1, 0.320, 1); will-change: transform; }
-        .slide { min-width: 100%; height: 100%; position: relative; cursor: pointer; transition: all 0.4s ease; border-radius: 24px; overflow: hidden; }
+        /* --- NEW: Added touch-swipe styles to slider --- */
+        .slider-container { 
+            width: 100%; height: 240px; /* margin-bottom/position/shadow moved to wrapper */
+            background: var(--card-bg); border-radius: 24px; /* Keep radius for clipping */
+            will-change: contents; 
+            /* Added for touch swipe */
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+            /* Removed overflow: hidden; */
+        }
+        .slider-container::-webkit-scrollbar { display: none; } /* Chrome, Safari */
+
+        .slider { 
+            display: flex; height: 100%; 
+            /* Removed transition, will be handled by snap scrolling or JS */
+            will-change: transform; 
+        }
+        .slide { 
+            min-width: 100%; height: 100%; position: relative; cursor: pointer; 
+            transition: all 0.4s ease; border-radius: 24px; overflow: hidden; 
+            /* Added for touch swipe */
+            scroll-snap-align: start;
+        }
         .slide:hover { transform: scale(1.03); }
         .slide img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.7) contrast(1.1); transition: all 0.4s ease; }
         .slide:hover img { filter: brightness(1) contrast(1.2); transform: scale(1.05); }
@@ -557,8 +588,17 @@
           <button id="header-search-btn" class="header-icon-btn"><i class="fas fa-search"></i></button>
       </div>
     </div>
-    <div id="slider-container" class="slider-container">
-        <div id="slider" class="slider"></div>
+    <!-- 
+      *** MODIFICATION ***
+      - Added a .slider-wrapper to hold both the container and indicators.
+      - This prevents the indicators from scrolling with the overflow.
+      - #slider-indicators is now a sibling of #slider-container, not a child.
+    -->
+    <div class="slider-wrapper">
+        <div id="slider-container" class="slider-container">
+            <div id="slider" class="slider"></div>
+            <!-- Indicators moved out -->
+        </div>
         <div id="slider-indicators" class="slider-indicators"></div>
     </div>
     <div id="home-content"></div>
@@ -675,7 +715,7 @@
       <a href="#" id="nav-about" class="nav-item"><i class="fas fa-info-circle"></i><span>Origin</span></a>
   </nav>
   
-<script>
+    <script>
 
 /* -------------- CONFIG & STATE -------------- */
 const POLY_API_BASE = "https://polymovies.onrender.com";
@@ -686,6 +726,10 @@ let currentSlideIndex = 0;
 let sliderInterval = null;
 let previousPage = 'home-page';
 let favorites = JSON.parse(localStorage.getItem('sanchitflix_favorites') || '[]');
+// --- NEW: State for slider swipe ---
+let sliderTouchStartX = 0;
+let sliderTouchMoveX = 0;
+let isSliderSwiping = false;
 
 /* -------------- DOM ELEMENTS (RE-POPULATED) -------------- */
 const DOM = {
@@ -710,6 +754,10 @@ const DOM = {
 };
 
 /* -------------- HELPERS -------------- */
+
+// *** REMOVED ***: providerMetadata object
+// *** REMOVED ***: getProviderDisplayName function
+
 const fetchJSON = async (url, retries = 3) => {
     for (let i = 0; i < retries; i++) {
         try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); return await res.json(); } 
@@ -805,6 +853,7 @@ function isFavorite(itemId) { return favorites.includes(itemId); }
 /* -------------- PAGE NAVIGATION -------------- */
 const showPage = (pageId, fromPage = null) => {
     if (fromPage && fromPage !== pageId) previousPage = fromPage;
+    
     DOM.allPages.forEach(p => p.style.display = 'none');
     document.getElementById(pageId).style.display = 'block';
     document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
@@ -823,7 +872,11 @@ const showPage = (pageId, fromPage = null) => {
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
-const goBack = () => { showPage(previousPage); };
+// --- REVERTED: goBack uses internal history ---
+const goBack = () => { 
+    showPage(previousPage); 
+};
+
 
 /* -------------- SKELETON LOADER -------------- */
 const renderSkeleton = (container, isGrid = false, count = 8) => {
@@ -886,6 +939,15 @@ function attachEventListeners() {
     DOM.navHome.addEventListener('click', (e) => { e.preventDefault(); showPage('home-page', getActivePageId()); });
     DOM.navGenres.addEventListener('click', (e) => { e.preventDefault(); showPage('genres-page', getActivePageId()); }); // RE-ADDED
     DOM.navAbout.addEventListener('click', (e) => { e.preventDefault(); showPage('about-page', getActivePageId()); });
+
+    // --- NEW: Slider Swipe Listeners ---
+    const sliderContainer = document.getElementById('slider-container');
+    sliderContainer.addEventListener('touchstart', handleSliderTouchStart, { passive: true });
+    sliderContainer.addEventListener('touchmove', handleSliderTouchMove, { passive: true });
+    sliderContainer.addEventListener('touchend', handleSliderTouchEnd);
+
+    // --- *** MODIFIED ***: Listen for scroll, but with a slightly faster 100ms debounce ---
+    sliderContainer.addEventListener('scroll', debounce(handleSliderScroll, 100));
 }
 
 function checkProviderSelection() {
@@ -902,7 +964,8 @@ async function showProviderSelectionPage() {
     DOM.providerGrid.innerHTML = ''; 
     
     if (allProviders) {
-        const disabledProviders = ["joya9tv","a111477","animetsu","autoembed","cinemaluxe","dooflix","filmyfly","flixhq","guardahd","hianime","kisskh","luxmovies","moviebox","movies4u","moviesapi","multi","netflixmirror","ogomovies","primewire","primemirror","protonmovies","ridomovies","ringz","showbox","skymoviehd","tokyoinsider","vadapav"];
+        // *** MODIFIED ***: Removed providers from disabled list
+        const disabledProviders = ["joya9tv","autoembed","cinemaluxe","dooflix","flixhq","hianime","luxmovies","moviebox","movies4u","moviesapi","multi","netflixmirror","ogomovies","primewire","primemirror","protonmovies","ridomovies","ringz","showbox","skymoviehd","vadapav"];
         const enabledProviders = allProviders.filter(p => !disabledProviders.includes(p.toLowerCase()));
         
         if (enabledProviders.length === 0) {
@@ -911,6 +974,7 @@ async function showProviderSelectionPage() {
             enabledProviders.forEach(provider => {
                 const btn = document.createElement('button'); 
                 btn.className = 'provider-btn'; 
+                // *** MODIFIED ***: Removed helper function
                 btn.textContent = provider;
                 btn.onclick = () => { 
                     localStorage.setItem('sanchitflix_provider', provider); 
@@ -927,9 +991,13 @@ async function showProviderSelectionPage() {
 }
 
 async function initializeApp(isSwitching) {
-    if (!isSwitching) showPage('home-page');
-    DOM.providerNameDisplayHome.textContent = activeProvider; 
-    DOM.providerNameDisplayGenre.textContent = activeProvider; // RE-ADDED
+    if (!isSwitching) {
+        showPage('home-page');
+    }
+    // *** MODIFIED ***: Removed helper function
+    const displayName = activeProvider;
+    DOM.providerNameDisplayHome.textContent = displayName; 
+    DOM.providerNameDisplayGenre.textContent = displayName; // RE-ADDED
     DOM.bottomNav.style.display = 'flex'; DOM.loadingScreen.style.display = 'flex';
     catalogData = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/catalog`);
     if (!catalogData) {
@@ -939,7 +1007,8 @@ async function initializeApp(isSwitching) {
     const trendingPosts = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/posts?page=1`);
     if (trendingPosts && trendingPosts.length > 0) {
         document.getElementById('slider-container').style.display = 'block';
-        renderSlider(trendingPosts.slice(0, 3));
+        // --- UPDATED: Show 5 cards in slider ---
+        renderSlider(trendingPosts.slice(0, 5));
     } else {
         document.getElementById('slider-container').style.display = 'none';
     }
@@ -970,7 +1039,20 @@ function renderSlider(items) {
     });
     updateSliderTransform();
 }
-function updateSliderTransform() { if (DOM.slider) { DOM.slider.style.transform = `translateX(-${currentSlideIndex * 100}%)`; DOM.sliderIndicators.querySelectorAll('.indicator').forEach((ind, i) => ind.classList.toggle('active', i === currentSlideIndex)); } }
+function updateSliderTransform() { 
+    if (DOM.slider) { 
+        // --- UPDATED: Use scrollLeft for manual swipe ---
+    const container = document.getElementById('slider-container');
+    const scrollAmount = currentSlideIndex * container.clientWidth;
+    container.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+        
+    // --- *** REMOVED *** ---
+    // We are removing this logic to prevent conflicts.
+    // The 'handleSliderScroll' function will now be the ONLY function
+    // that updates the indicators.
+    // DOM.sliderIndicators.querySelectorAll('.indicator').forEach((ind, i) => ind.classList.toggle('active', i === currentSlideIndex)); 
+    } 
+}
 function goToSlide(index) { currentSlideIndex = index; updateSliderTransform(); startSliderAuto(); }
 function startSliderAuto() {
     clearInterval(sliderInterval);
@@ -979,6 +1061,57 @@ function startSliderAuto() {
         if (slideCount > 0) { currentSlideIndex = (currentSlideIndex + 1) % slideCount; updateSliderTransform(); }
     }, 5000);
 }
+
+// --- NEW: Slider Swipe Handlers ---
+function handleSliderTouchStart(e) {
+    clearInterval(sliderInterval); // Stop auto-slide on touch
+    sliderTouchStartX = e.touches[0].clientX;
+    sliderTouchMoveX = sliderTouchStartX;
+    isSliderSwiping = true;
+    // We let the native scroll handle the movement
+}
+
+function handleSliderTouchMove(e) {
+    if (!isSliderSwiping) return;
+    sliderTouchMoveX = e.touches[0].clientX;
+}
+
+function handleSliderTouchEnd(e) {
+    if (!isSliderSwiping) return;
+    isSliderSwiping = false;
+
+    // We no longer need to calculate the index here.
+    // The native scroll snap and the 'scroll' event listener (handleSliderScroll) will handle it.
+    
+    // We just restart the auto-slide, and let the scroll listener update the index.
+    startSliderAuto();
+}
+// --- End Slider Swipe Handlers ---
+
+// --- *** MODIFIED ***: Handle scroll snap index changes ---
+// This function is now the ONLY source of truth for updating the indicators.
+function handleSliderScroll() {
+    const sliderContainer = document.getElementById('slider-container');
+    if (!sliderContainer) return;
+
+    const slideWidth = sliderContainer.clientWidth;
+    if (slideWidth === 0) return;
+
+    // Calculate the current index based on scroll position
+    const newIndex = Math.round(sliderContainer.scrollLeft / slideWidth);
+
+    // --- *** LOGIC SIMPLIFIED *** ---
+    // REMOVED: if (newIndex !== currentSlideIndex) { ... }
+    // The scroll position is the *single source of truth*.
+    // We update the global index AND the indicators directly from it.
+    
+    currentSlideIndex = newIndex; 
+
+    DOM.sliderIndicators.querySelectorAll('.indicator').forEach((ind, i) => {
+        ind.classList.toggle('active', i === currentSlideIndex);
+    });
+}
+
 
 /* -------------- DYNAMIC PAGE BUILDERS -------------- */
 function buildHomePage(catalogItems) {
@@ -1285,7 +1418,7 @@ async function loadStreamLinksIntoModal(link, type) { // Renamed from getStreamL
     if (link.includes('mdrive.today')) {
         streamApiProvider = 'drive'; // This forces the API call to use /api/drive/stream
     } else if (link.includes('gadgetsweb.xyz')) {
-        streamApiProvider = 'hdhub4u'; // This forces the API call to use /api/hdhub4u/stream
+        streamApiProvider = 'hdhub4u'; // This forces the API call to use /api/hdhub4a/stream
     } else if (link.includes('magiclinks.my')) {
         streamApiProvider = 'kmMovies'; // This forces the API call to use /api/kmMovies/stream
     }
@@ -1312,7 +1445,8 @@ async function openProviderMenu() {
     const allProviders = await fetchJSON(`${POLY_API_BASE}/providers`);
     DOM.providerList.innerHTML = '';
     if (allProviders) {
-        const disabledProviders = ["joya9tv","a111477","animetsu","autoembed","cinemaluxe","dooflix","filmyfly","flixhq","guardahd","hianime","kisskh","luxmovies","moviebox","movies4u","moviesapi","multi","netflixmirror","ogomovies","primewire","primemirror","protonmovies","ridomovies","ringz","showbox","skymoviehd","tokyoinsider","vadapav"];
+        // *** MODIFIED ***: Removed providers from disabled list
+        const disabledProviders = ["joya9tv","autoembed","cinemaluxe","dooflix","flixhq","hianime","luxmovies","moviebox","movies4u","moviesapi","multi","netflixmirror","ogomovies","primewire","primemirror","protonmovies","ridomotives","ringz","showbox","skymoviehd","vadapav"];
         const enabledProviders = allProviders.filter(p => !disabledProviders.includes(p.toLowerCase()));
         enabledProviders.forEach(provider => {
             const btn = document.createElement('button');
@@ -1322,6 +1456,7 @@ async function openProviderMenu() {
                 btn.classList.add('active');
                 checkMark = `<i class="fas fa-check check-mark"></i>`;
             }
+            // *** MODIFIED ***: Removed helper function
             btn.innerHTML = `<i class="fas fa-film icon"></i> <span>${provider}</span> ${checkMark}`;
             btn.onclick = () => {
                 if (provider !== activeProvider) {
