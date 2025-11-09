@@ -755,10 +755,24 @@ const DOM = {
 
 /* -------------- HELPERS -------------- */
 
-// *** REMOVED ***: providerMetadata object
-// *** REMOVED ***: getProviderDisplayName function
+// --- NEW: Added back provider list and metadata based on user's JSON ---
+const ALL_PROVIDERS_LIST = [{"display_name":"MoviesDrive","value":"drive","version":"1.4","icon":"","type":"global","disabled":false},{"display_name":"World4uFree","value":"world4u","version":"1.4","icon":"","type":"global","disabled":false},{"display_name":"MoviesMod","value":"mod","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"UHDMovies","value":"uhd","version":"1.1","icon":"","type":"global","disabled":false},{"display_name":"FilmyFly","value":"filmyfly","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"HdHub4u","value":"hdhub4u","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"VegaMovies","value":"vega","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"A.111477","value":"a111477","version":"1.2","icon":"","type":"english","disabled":false},{"display_name":"Animetsu","value":"animetsu","version":"1.1","icon":"","type":"english","disabled":false},{"display_name":"TokyoInsider","value":"tokyoInsider","version":"1.0","icon":"","type":"english","disabled":false},{"display_name":"KissKh","value":"kissKh","version":"1.2","icon":"","type":"english","disabled":false},{"display_name":"RogMovies","value":"luxMovies","version":"1.6","icon":"","type":"india","disabled":false},{"display_name":"TopMovies","value":"topmovies","version":"1.0","icon":"","type":"india","disabled":false},{"display_name":"GuardaHD","value":"guardahd","version":"1.3","icon":"","type":"global","disabled":false}];
+
+const PROVIDER_METADATA = ALL_PROVIDERS_LIST.reduce((acc, provider) => {
+    acc[provider.value] = provider.display_name;
+    return acc;
+}, {});
+
+const getProviderDisplayName = (value) => PROVIDER_METADATA[value] || value;
+// --- End new provider data ---
 
 const fetchJSON = async (url, retries = 3) => {
+    // --- NEW: Mock provider fetch to use ONLY the user's list ---
+    if (url === `${POLY_API_BASE}/providers`) {
+        return Promise.resolve(ALL_PROVIDERS_LIST);
+    }
+    // --- End mock ---
+
     for (let i = 0; i < retries; i++) {
         try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); return await res.json(); } 
         catch (e) { if (i === retries - 1) { console.error(`Fetch failed for ${url}`, e); return null; } await new Promise(r => setTimeout(r, 1500 * (i + 1))); }
@@ -946,8 +960,8 @@ function attachEventListeners() {
     sliderContainer.addEventListener('touchmove', handleSliderTouchMove, { passive: true });
     sliderContainer.addEventListener('touchend', handleSliderTouchEnd);
 
-    // --- *** MODIFIED ***: Listen for scroll, but with a slightly faster 100ms debounce ---
-    sliderContainer.addEventListener('scroll', debounce(handleSliderScroll, 100));
+    // --- *** MODIFIED ***: Listen for scroll, removed debounce for faster indicator updates ---
+    sliderContainer.addEventListener('scroll', handleSliderScroll);
 }
 
 function checkProviderSelection() {
@@ -964,9 +978,8 @@ async function showProviderSelectionPage() {
     DOM.providerGrid.innerHTML = ''; 
     
     if (allProviders) {
-        // *** MODIFIED ***: Removed providers from disabled list
-        const disabledProviders = ["joya9tv","autoembed","cinemaluxe","dooflix","flixhq","hianime","luxmovies","moviebox","movies4u","moviesapi","multi","netflixmirror","ogomovies","primewire","primemirror","protonmovies","ridomovies","ringz","showbox","skymoviehd","vadapav"];
-        const enabledProviders = allProviders.filter(p => !disabledProviders.includes(p.toLowerCase()));
+        // *** MODIFIED ***: Use provider list from mock and filter by 'disabled' property
+        const enabledProviders = allProviders.filter(p => !p.disabled);
         
         if (enabledProviders.length === 0) {
             DOM.providerGrid.innerHTML = '<p style="grid-column: 1 / -1; font-size: 16px;">No providers are available right now.</p>';
@@ -974,11 +987,12 @@ async function showProviderSelectionPage() {
             enabledProviders.forEach(provider => {
                 const btn = document.createElement('button'); 
                 btn.className = 'provider-btn'; 
-                // *** MODIFIED ***: Removed helper function
-                btn.textContent = provider;
+                // *** MODIFIED ***: Use display_name for text
+                btn.textContent = provider.display_name;
                 btn.onclick = () => { 
-                    localStorage.setItem('sanchitflix_provider', provider); 
-                    activeProvider = provider;
+                    // *** MODIFIED ***: Use provider.value to store
+                    localStorage.setItem('sanchitflix_provider', provider.value); 
+                    activeProvider = provider.value;
                     initializeApp(false);
                 };
                 DOM.providerGrid.appendChild(btn);
@@ -994,8 +1008,8 @@ async function initializeApp(isSwitching) {
     if (!isSwitching) {
         showPage('home-page');
     }
-    // *** MODIFIED ***: Removed helper function
-    const displayName = activeProvider;
+    // *** MODIFIED ***: Re-added helper function
+    const displayName = getProviderDisplayName(activeProvider);
     DOM.providerNameDisplayHome.textContent = displayName; 
     DOM.providerNameDisplayGenre.textContent = displayName; // RE-ADDED
     DOM.bottomNav.style.display = 'flex'; DOM.loadingScreen.style.display = 'flex';
@@ -1445,23 +1459,24 @@ async function openProviderMenu() {
     const allProviders = await fetchJSON(`${POLY_API_BASE}/providers`);
     DOM.providerList.innerHTML = '';
     if (allProviders) {
-        // *** MODIFIED ***: Removed providers from disabled list
-        const disabledProviders = ["joya9tv","autoembed","cinemaluxe","dooflix","flixhq","hianime","luxmovies","moviebox","movies4u","moviesapi","multi","netflixmirror","ogomovies","primewire","primemirror","protonmovies","ridomotives","ringz","showbox","skymoviehd","vadapav"];
-        const enabledProviders = allProviders.filter(p => !disabledProviders.includes(p.toLowerCase()));
+        // *** MODIFIED ***: Use provider list from mock and filter by 'disabled' property
+        const enabledProviders = allProviders.filter(p => !p.disabled);
         enabledProviders.forEach(provider => {
             const btn = document.createElement('button');
             btn.className = 'provider-menu-btn';
             let checkMark = '';
-            if (provider === activeProvider) {
+            // *** MODIFIED ***: Compare against provider.value
+            if (provider.value === activeProvider) {
                 btn.classList.add('active');
                 checkMark = `<i class="fas fa-check check-mark"></i>`;
             }
-            // *** MODIFIED ***: Removed helper function
-            btn.innerHTML = `<i class="fas fa-film icon"></i> <span>${provider}</span> ${checkMark}`;
+            // *** MODIFIED ***: Use provider.display_name for text
+            btn.innerHTML = `<i class="fas fa-film icon"></i> <span>${provider.display_name}</span> ${checkMark}`;
             btn.onclick = () => {
-                if (provider !== activeProvider) {
-                    localStorage.setItem('sanchitflix_provider', provider);
-                    activeProvider = provider;
+                // *** MODIFIED ***: Compare and set provider.value
+                if (provider.value !== activeProvider) {
+                    localStorage.setItem('sanchitflix_provider', provider.value);
+                    activeProvider = provider.value;
                     closeProviderMenu();
                     initializeApp(true); 
                 } else {
