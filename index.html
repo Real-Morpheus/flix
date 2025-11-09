@@ -4,20 +4,18 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>SanchitFlix - Dreamstream Cinema</title>
-    <!-- 
-      - Added Font Awesome link for icons.
-      - Added Google Fonts link for 'Inter'.
-      - NEW: Replaced icon with a professional, Netflix-style "S" favicon.
+    <!--
+        - Added Font Awesome link for icons.
+        - Added Google Fonts link for 'Inter'.
+        - NEW: Replaced icon with a professional, Netflix-style "S" favicon.
     -->
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23141414'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-size='80' font-weight='900' fill='%23E50914' font-family='Arial, sans-serif'%3ES%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         /*
-          --- REFACTOR NOTES ---
-...
+        --- REFACTOR NOTES --- ...
         */
-
         :root {
             /* Theme Gradients (Kept from original) */
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -31,7 +29,6 @@
             --text-secondary: #52525b; /* Medium gray */
             --border-color: #e4e4e7;
             --accent-color: #667eea;
-
             /* --- NEW SHADOW SYSTEM (Flutter/Material-like) --- */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
@@ -42,12 +39,11 @@
         body.theme-dark {
             --bg-primary: #0a0a0a;
             --bg-secondary: #161a23; /* Darker secondary */
-            --card-bg: #1e2433;      /* Dark card */
+            --card-bg: #1e2433; /* Dark card */
             --text-primary: #f8f8f8; /* Off-white */
             --text-secondary: #a0a0a0; /* Lighter gray */
             --border-color: rgba(255, 255, 255, 0.1);
             --accent-color: #764ba2;
-
             /* Dark-mode shadows are slightly stronger */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
@@ -76,16 +72,16 @@
             scroll-behavior: smooth;
         }
 
-        body { 
+        body {
             background: var(--bg-secondary); /* Use secondary for the "outside" area */
-            color: var(--text-primary); 
+            color: var(--text-primary);
             max-width:480px; /* Mobile-first constraint */
-            margin:0 auto; 
-            overflow-x:hidden; 
-            -webkit-font-smoothing:antialiased; 
-            padding-bottom: 70px; 
-            transition: background 0.3s ease, color 0.3s ease; 
-            will-change: background; 
+            margin:0 auto;
+            overflow-x:hidden;
+            -webkit-font-smoothing:antialiased;
+            padding-bottom: 70px;
+            transition: background 0.3s ease, color 0.3s ease;
+            will-change: background;
             position: relative; /* For containing fixed elements */
         }
         
@@ -117,15 +113,15 @@
         @keyframes etherealFade { 0%, 100% { opacity:0.4; } 50% { opacity:1; } }
 
         /* Header - Uses new shadows */
-        .header { 
+        .header {
             background: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.8); /* JS will set --bg-primary-rgb */
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
-            padding: 16px; display: flex; gap: 12px; align-items: center; 
-            position: sticky; top: 0; z-index: 90; 
-            border-bottom: 1px solid var(--border-color); 
-            transition: all 0.4s ease; 
-            will-change: backdrop-filter; 
-            box-shadow: var(--shadow-md); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 16px; display: flex; gap: 12px; align-items: center;
+            position: sticky; top: 0; z-index: 90;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.4s ease;
+            will-change: backdrop-filter;
+            box-shadow: var(--shadow-md);
         }
         .logo-container { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
         .logo { font-size:24px; font-weight:900; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -1px; transition: all 0.4s ease; }
@@ -140,19 +136,19 @@
 
         /* Cosmic Slide-Out Menu - Simplified Animation */
         #side-menu-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 2000; 
-            opacity: 0; pointer-events: none; transition: opacity 0.5s ease; 
+            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 2000;
+            opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
             backdrop-filter: blur(10px);
             max-width: 480px; margin: 0 auto;
         }
         #side-menu-panel {
-            position: fixed; top: 0; left: 0; bottom: 0; width: 80%; max-width: 280px; 
-            background: var(--bg-secondary); 
-            padding: 30px 16px 24px 16px; 
+            position: fixed; top: 0; left: 0; bottom: 0; width: 80%; max-width: 280px;
+            background: var(--bg-secondary);
+            padding: 30px 16px 24px 16px;
             transform: translateX(-100%); /* Removed 3D rotate */
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1); 
-            display: flex; flex-direction: column; will-change: transform; 
-            box-shadow: var(--shadow-lg); 
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+            display: flex; flex-direction: column; will-change: transform;
+            box-shadow: var(--shadow-lg);
             border-right: 1px solid var(--border-color);
         }
         body.menu-open #side-menu-overlay { opacity: 1; pointer-events: all; }
@@ -164,21 +160,21 @@
         .provider-list { overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: 8px; }
         .provider-list::-webkit-scrollbar { display: none; }
         .provider-menu-btn {
-            display: flex; align-items: center; gap: 16px; width: 100%; padding: 16px; 
-            background: var(--bg-primary); 
-            border: 1px solid var(--border-color); 
-            border-radius: 16px; color: var(--text-secondary); text-align: left; 
+            display: flex; align-items: center; gap: 16px; width: 100%; padding: 16px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px; color: var(--text-secondary); text-align: left;
             font-size: 16px; font-weight: 600; cursor: pointer;
-            transition: all 0.4s ease; position: relative; 
+            transition: all 0.4s ease; position: relative;
             overflow: hidden; will-change: transform, box-shadow;
             box-shadow: var(--shadow-sm);
         }
         .provider-menu-btn i.icon { font-size: 22px; width: 24px; text-align: center; color: var(--accent-color); transition: all 0.3s; }
-        .provider-menu-btn:hover { 
-            background: var(--bg-secondary); 
-            transform: translateX(10px) scale(1.02); 
-            box-shadow: var(--shadow-md); 
-            color: var(--text-primary); 
+        .provider-menu-btn:hover {
+            background: var(--bg-secondary);
+            transform: translateX(10px) scale(1.02);
+            box-shadow: var(--shadow-md);
+            color: var(--text-primary);
         }
         .provider-menu-btn:hover i.icon { transform: scale(1.1); color: var(--text-primary); }
         .provider-menu-btn.active { background: var(--primary-gradient); color: white; font-weight: 800; box-shadow: var(--shadow-md); }
@@ -195,13 +191,13 @@
             margin-bottom: 24px;
             background: var(--card-bg); /* Moved background here */
         }
-
+        
         /* Slider - Removed clip-path for simpler, rounded design */
         /* --- NEW: Added touch-swipe styles to slider --- */
-        .slider-container { 
+        .slider-container {
             width: 100%; height: 240px; /* margin-bottom/position/shadow moved to wrapper */
             background: var(--card-bg); border-radius: 24px; /* Keep radius for clipping */
-            will-change: contents; 
+            will-change: contents;
             /* Added for touch swipe */
             overflow-x: auto;
             scroll-snap-type: x mandatory;
@@ -209,15 +205,14 @@
             /* Removed overflow: hidden; */
         }
         .slider-container::-webkit-scrollbar { display: none; } /* Chrome, Safari */
-
-        .slider { 
-            display: flex; height: 100%; 
+        .slider {
+            display: flex; height: 100%;
             /* Removed transition, will be handled by snap scrolling or JS */
-            will-change: transform; 
+            will-change: transform;
         }
-        .slide { 
-            min-width: 100%; height: 100%; position: relative; cursor: pointer; 
-            transition: all 0.4s ease; border-radius: 24px; overflow: hidden; 
+        .slide {
+            min-width: 100%; height: 100%; position: relative; cursor: pointer;
+            transition: all 0.4s ease; border-radius: 24px; overflow: hidden;
             /* Added for touch swipe */
             scroll-snap-align: start;
         }
@@ -227,14 +222,14 @@
         .slide-overlay { position: absolute; left: 0; right: 0; bottom: 0; height: 100%; padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 70%, #000 100%); transition: all 0.4s ease; }
         .slide-title { font-size: 22px; font-weight: 900; margin-bottom: 16px; color: #ffffff; animation: warpIn 0.6s ease-out; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         @keyframes warpIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .slide-action-btn { 
-            display: inline-flex; align-items: center; gap: 10px; 
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            color: #ffffff; padding: 12px 20px; border-radius: 30px; 
-            text-decoration: none; font-weight: 700; font-size: 15px; 
-            align-self: flex-start; transition: all 0.4s ease; 
-            position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+        .slide-action-btn {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff; padding: 12px 20px; border-radius: 30px;
+            text-decoration: none; font-weight: 700; font-size: 15px;
+            align-self: flex-start; transition: all 0.4s ease;
+            position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .slide-action-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: var(--shadow-md), 0 8px 25px rgba(0,0,0,0.3); }
         .slider-indicators { position: absolute; right: 16px; bottom: 16px; display: flex; gap: 10px; z-index: 10; }
@@ -252,7 +247,6 @@
         .category-title:hover { transform: translateX(8px); }
         .see-all-btn { color: #ffffff; font-size: 14px; text-decoration: none; background: var(--primary-gradient); padding: 8px 12px; border-radius: 20px; transition: all 0.4s ease; position: relative; overflow: hidden; font-weight: 700; }
         .see-all-btn:hover { transform: translateY(-3px) scale(1.1); box-shadow: var(--shadow-md); }
-
         .content-slider { display: flex; overflow-x: auto; gap: 16px; padding: 8px 16px 12px; scrollbar-width: none; }
         .content-slider::-webkit-scrollbar { display: none; }
         .grid-item { flex: 0 0 calc(33.33% - 12px); cursor: pointer; transition: all 0.4s ease; will-change: transform; position: relative; border-radius: 12px; }
@@ -276,18 +270,18 @@
         @keyframes starfieldIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
         #provider-page h2 { background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 28px; font-size: 26px; }
         .provider-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 20px; }
-        .provider-btn { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border-color); 
-            color: var(--text-secondary); padding: 16px; border-radius: 16px; 
-            font-weight: 700; cursor: pointer; transition: all 0.4s ease; 
-            font-size: 14px; box-shadow: var(--shadow-md); position: relative; overflow: hidden; 
+        .provider-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary); padding: 16px; border-radius: 16px;
+            font-weight: 700; cursor: pointer; transition: all 0.4s ease;
+            font-size: 14px; box-shadow: var(--shadow-md); position: relative; overflow: hidden;
         }
-        .provider-btn:hover { 
-            border-color: var(--accent-color); 
-            transform: translateY(-5px); 
-            box-shadow: var(--shadow-lg); 
-            color: var(--text-primary); 
+        .provider-btn:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+            color: var(--text-primary);
         }
         .provider-notice { margin-top: 32px; padding: 18px; background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); color: var(--text-secondary); font-size: 14px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 12px; transition: all 0.4s ease; }
         .provider-notice:hover { box-shadow: var(--shadow-md); transform: scale(1.03); }
@@ -313,25 +307,24 @@
         #detail-storyline:hover { box-shadow: var(--shadow-md); }
         #download-section-title { font-size: 20px; margin-bottom: 18px; background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; position: relative; padding-left: 18px; transition: all 0.4s ease; }
         #download-section-title::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 20px; background: var(--primary-gradient); border-radius: 2px; transition: all 0.4s; }
-
         .download-links-section { padding: 0 16px; margin-bottom: 28px; }
         .link-list { display: flex; flex-direction: column; gap: 14px; }
-        .link-btn { 
-            text-decoration: none; background: var(--bg-secondary); 
-            border: 1px solid var(--border-color); 
-            color: var(--text-primary); padding: 14px; border-radius: 16px; 
-            font-weight: 700; cursor: pointer; text-align: left; 
-            display: flex; justify-content: space-between; align-items: center; 
-            position: relative; overflow: hidden; transition: all 0.4s ease; 
-            will-change: transform; box-shadow: var(--shadow-md); 
+        .link-btn {
+            text-decoration: none; background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary); padding: 14px; border-radius: 16px;
+            font-weight: 700; cursor: pointer; text-align: left;
+            display: flex; justify-content: space-between; align-items: center;
+            position: relative; overflow: hidden; transition: all 0.4s ease;
+            will-change: transform; box-shadow: var(--shadow-md);
         }
-        .link-btn:hover { 
-            transform: translateY(-4px); 
-            box-shadow: var(--shadow-lg); 
+        .link-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
             border-color: var(--accent-color);
         }
         .link-btn span { flex-grow: 1; }
-
+        
         /* --- NEW: CSS for Season Dropdown --- */
         .season-select {
             width: 100%;
@@ -355,67 +348,65 @@
         }
         /* --- End of New CSS --- */
 
-
         /* Stream Modal - Simplified */
-        #stream-modal { 
-            position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1500; 
-            display: none; justify-content: center; align-items: center; 
+        #stream-modal {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1500;
+            display: none; justify-content: center; align-items: center;
             backdrop-filter: blur(15px); animation: vortexOpen 0.6s ease;
             max-width: 480px; margin: 0 auto;
         }
         @keyframes vortexOpen { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .stream-modal-content { 
+        .stream-modal-content {
             background: var(--bg-primary);
-            padding: 24px; border-radius: 20px; border: 1px solid var(--border-color); 
-            width: 90%; max-width: 400px; position: relative; 
-            box-shadow: var(--shadow-lg); 
-            transition: all 0.4s ease; 
+            padding: 24px; border-radius: 20px; border: 1px solid var(--border-color);
+            width: 90%; max-width: 400px; position: relative;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.4s ease;
         }
-        .modal-close-btn { 
-            position: absolute; right: 12px; top: 12px; background: none; border: none; 
-            color: var(--text-secondary); font-size: 22px; cursor: pointer; 
-            transition: all 0.3s ease; border-radius: 50%; 
-            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; 
+        .modal-close-btn {
+            position: absolute; right: 12px; top: 12px; background: none; border: none;
+            color: var(--text-secondary); font-size: 22px; cursor: pointer;
+            transition: all 0.3s ease; border-radius: 50%;
+            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
         }
-        .modal-close-btn:hover { 
-            color: var(--text-primary); 
-            transform: scale(1.2); 
-            background: var(--bg-secondary); 
+        .modal-close-btn:hover {
+            color: var(--text-primary);
+            transform: scale(1.2);
+            background: var(--bg-secondary);
         }
         .stream-list { display: flex; flex-direction: column; gap: 14px; max-height: 70vh; overflow-y: auto; }
-        .stream-btn { 
-            display: block; width: 100%; padding: 16px; 
-            background: var(--bg-secondary); 
-            border: 1px solid var(--border-color); 
-            color: var(--text-primary); text-decoration: none; text-align: center; 
-            border-radius: 12px; font-weight: 700; transition: all 0.4s ease; 
-            cursor: pointer; position: relative; overflow: hidden; 
+        .stream-btn {
+            display: block; width: 100%; padding: 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary); text-decoration: none; text-align: center;
+            border-radius: 12px; font-weight: 700; transition: all 0.4s ease;
+            cursor: pointer; position: relative; overflow: hidden;
         }
-        .stream-btn:hover { 
-            background: var(--primary-gradient); 
-            border-color: transparent; 
-            transform: translateX(8px); 
-            box-shadow: var(--shadow-md); 
+        .stream-btn:hover {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            transform: translateX(8px);
+            box-shadow: var(--shadow-md);
             color: white;
         }
-
         .category-grid { padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 24px 16px; animation: matrixRain 0.8s ease-out; }
         @keyframes matrixRain { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
         .category-grid .grid-item { flex: unset; }
 
         /* Pagination Controls - Simplified */
         .pagination-controls { display: flex; justify-content: space-between; padding: 16px; }
-        .pagination-btn { 
-            background: var(--bg-secondary); 
-            color: var(--text-primary); 
-            border: 1px solid var(--border-color); 
-            padding: 12px 20px; border-radius: 25px; cursor: pointer; 
-            font-weight: 700; transition: all 0.4s ease; 
-            position: relative; overflow: hidden; 
+        .pagination-btn {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 12px 20px; border-radius: 25px; cursor: pointer;
+            font-weight: 700; transition: all 0.4s ease;
+            position: relative; overflow: hidden;
         }
-        .pagination-btn:hover:not(:disabled) { 
-            transform: translateY(-3px) scale(1.1); 
-            box-shadow: var(--shadow-md); 
+        .pagination-btn:hover:not(:disabled) {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: var(--shadow-md);
             background: var(--primary-gradient);
             color: white;
             border-color: transparent;
@@ -423,20 +414,20 @@
         .pagination-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
         /* Bottom Nav - Simplified */
-        .bottom-nav { 
-            position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; 
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto;
             background: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.9);
-            backdrop-filter: blur(15px); 
-            border-top: 1px solid var(--border-color); 
-            display: none; justify-content: space-around; padding: 12px 0; z-index: 999; 
-            transition: all 0.4s ease; box-shadow: 0 -8px 30px rgba(0,0,0,0.1); 
+            backdrop-filter: blur(15px);
+            border-top: 1px solid var(--border-color);
+            display: none; justify-content: space-around; padding: 12px 0; z-index: 999;
+            transition: all 0.4s ease; box-shadow: 0 -8px 30px rgba(0,0,0,0.1);
         }
         body.theme-dark .bottom-nav { box-shadow: 0 -8px 30px rgba(0,0,0,0.4); }
-        .nav-item { 
-            flex: 1; text-align: center; color: var(--text-secondary); text-decoration: none; 
-            display: flex; flex-direction: column; align-items: center; 
-            gap: 6px; font-size: 12px; transition: all 0.4s ease; 
-            position: relative; 
+        .nav-item {
+            flex: 1; text-align: center; color: var(--text-secondary); text-decoration: none;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 6px; font-size: 12px; transition: all 0.4s ease;
+            position: relative;
         }
         .nav-item i { font-size: 22px; transition: transform 0.4s ease; }
         .nav-item:hover { color: var(--text-primary); transform: translateY(-5px); }
@@ -447,43 +438,43 @@
         /* Genres Grid - Simplified */
         .genres-grid { padding: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; animation: quantumLeap 0.8s ease-out; }
         @keyframes quantumLeap { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .genre-btn { 
-            background: var(--card-bg); 
-            border: 1px solid var(--border-color); 
-            color: var(--text-primary); padding: 20px; border-radius: 16px; 
-            font-weight: 800; cursor: pointer; text-align: center; 
-            transition: all 0.4s ease; 
-            position: relative; overflow: hidden; box-shadow: var(--shadow-md); 
+        .genre-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary); padding: 20px; border-radius: 16px;
+            font-weight: 800; cursor: pointer; text-align: center;
+            transition: all 0.4s ease;
+            position: relative; overflow: hidden; box-shadow: var(--shadow-md);
         }
-        .genre-btn:hover { 
-            transform: translateY(-6px); 
-            box-shadow: var(--shadow-lg); 
+        .genre-btn:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg);
             border-color: var(--accent-color);
         }
 
         /* Search Page - Simplified */
         #search-page .search-container { position: relative; animation: echoLocate 0.6s ease-out; }
         @keyframes echoLocate { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        #search-page .search-input { 
-            color: var(--text-primary); padding: 16px 50px 16px 50px; 
+        #search-page .search-input {
+            color: var(--text-primary); padding: 16px 50px 16px 50px;
             background: var(--bg-secondary);
-            border: 1px solid var(--border-color); 
-            box-shadow: var(--shadow-md); 
-            transition: all 0.4s ease; 
-            border-radius: 30px; width: 100%; font-size: 16px; 
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s ease;
+            border-radius: 30px; width: 100%; font-size: 16px;
         }
-        #search-page .search-input:focus { 
-            border-color: var(--accent-color); 
-            box-shadow: var(--shadow-lg); 
-            outline: none; transform: scale(1.02); 
+        #search-page .search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: var(--shadow-lg);
+            outline: none; transform: scale(1.02);
         }
         #search-page .search-btn-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--accent-color); transition: all 0.3s; }
-        #search-page .clear-btn { 
-            position: absolute; right: 20px; top: 50%; transform: translateY(-50%); 
-            font-size: 18px; color: var(--text-secondary); background: none; border: 0; 
-            cursor: pointer; display: none; transition: all 0.3s ease; 
-            border-radius: 50%; width: 32px; height: 32px; 
-            display: flex; align-items: center; justify-content: center; 
+        #search-page .clear-btn {
+            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+            font-size: 18px; color: var(--text-secondary); background: none; border: 0;
+            cursor: pointer; display: none; transition: all 0.3s ease;
+            border-radius: 50%; width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center;
         }
         #search-page .clear-btn:hover { color: var(--text-primary); transform: translateY(-50%) scale(1.2); background: var(--bg-secondary); }
         #search-description { text-align: center; padding: 40px 20px; color: var(--text-secondary); animation: holographicFade 0.8s ease-out; }
@@ -496,21 +487,21 @@
         #about-page h2 { background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 14px; transition: all 0.4s ease; }
         #about-page p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px; transition: all 0.4s ease; letter-spacing: 0.5px; }
         #about-page p:hover { color: var(--text-primary); }
-        .developer-info { 
-            margin-top: 28px; padding: 20px; 
+        .developer-info {
+            margin-top: 28px; padding: 20px;
             background: var(--bg-secondary);
-            border: 1px solid var(--border-color); 
-            border-radius: 20px; text-align: center; 
-            transition: all 0.4s ease; box-shadow: var(--shadow-md); 
+            border: 1px solid var(--border-color);
+            border-radius: 20px; text-align: center;
+            transition: all 0.4s ease; box-shadow: var(--shadow-md);
         }
         .developer-info:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
         .developer-info h3 { background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 20px; font-size: 20px; transition: all 0.4s ease; }
         .social-links { display: flex; flex-direction: column; gap: 14px; }
-        .social-btn { 
-            display: flex; align-items: center; justify-content: center; gap: 12px; 
-            padding: 14px; border-radius: 16px; text-decoration: none; 
-            font-weight: 700; transition: all 0.4s ease; 
-            position: relative; overflow: hidden; box-shadow: var(--shadow-sm); 
+        .social-btn {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 14px; border-radius: 16px; text-decoration: none;
+            font-weight: 700; transition: all 0.4s ease;
+            position: relative; overflow: hidden; box-shadow: var(--shadow-sm);
         }
         .social-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: var(--shadow-md); }
         .social-btn i { font-size: 22px; transition: transform 0.4s ease; }
@@ -522,23 +513,23 @@
         .social-btn.telegram { background: linear-gradient(45deg, #0088cc, #00aaff); color: white; }
 
         /* Skeleton Loader - Updated for new theme */
-        .skeleton { 
-            background: linear-gradient(90deg, var(--bg-secondary), var(--card-bg), var(--bg-secondary)); 
-            background-size: 200% 100%; border-radius: 12px; 
-            animation: skeleton-wave 1.5s linear infinite alternate; 
-            will-change: background-position; 
+        .skeleton {
+            background: linear-gradient(90deg, var(--bg-secondary), var(--card-bg), var(--bg-secondary));
+            background-size: 200% 100%; border-radius: 12px;
+            animation: skeleton-wave 1.5s linear infinite alternate;
+            will-change: background-position;
         }
         @keyframes skeleton-wave { from { background-position: 200% center; } to { background-position: 0% center; } }
 
         /* Favorites Button - Simplified */
-        .favorite-btn { 
-            position: absolute; top: 10px; right: 10px; 
-            background: rgba(0,0,0,0.6); border: none; 
-            color: var(--text-secondary); font-size: 16px; cursor: pointer; 
-            border-radius: 50%; width: 36px; height: 36px; 
-            display: flex; align-items: center; justify-content: center; 
-            transition: all 0.4s ease; z-index: 2; 
-            border-radius: 50%; box-shadow: 0 2px 10px rgba(0,0,0,0.3); 
+        .favorite-btn {
+            position: absolute; top: 10px; right: 10px;
+            background: rgba(0,0,0,0.6); border: none;
+            color: var(--text-secondary); font-size: 16px; cursor: pointer;
+            border-radius: 50%; width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.4s ease; z-index: 2;
+            border-radius: 50%; box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         .favorite-btn:hover { background: var(--secondary-gradient); transform: scale(1.3); color: white; }
         .favorite-btn.active { color: #ff6b6b; background: rgba(255, 107, 107, 0.3); animation: cosmicHeart 0.8s ease-out; }
@@ -546,958 +537,1083 @@
         @keyframes cosmicHeart { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.4); } }
 
         /* Reduced Motion Accessibility */
-        @media (prefers-reduced-motion: reduce) { 
-            *, *::before, *::after { 
-                animation-duration: 0.01ms !important; 
-                animation-iteration-count: 1 !important; 
-                transition-duration: 0.01ms !important; 
-                transform: none !important; 
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                transform: none !important;
                 animation: none !important;
                 transition: none !important;
-            } 
+            }
         }
     </style>
 </head>
 <body>
-
-  <!-- App content moves inside the body -->
-  <div id="loading-screen" class="loading-screen">
-    <div class="loading-logo">SanchitFlix</div>
-    <div class="loading-text">Loading...</div>
-  </div>
-
-  <div id="provider-page" class="page">
-    <h2>Choose Your Provider</h2>
-    <div id="provider-grid" class="provider-grid"></div>
-    <div class="provider-notice">
-        <i class="fas fa-info-circle"></i>
-        <p>You can change providers any time from the menu.</p>
+    <!-- App content moves inside the body -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-logo">SanchitFlix</div>
+        <div class="loading-text">Loading...</div>
     </div>
-  </div>
 
-  <div id="home-page" class="page">
-    <div class="header">
-      <button id="menu-btn" class="header-icon-btn"><i class="fas fa-bars"></i></button>
-      <div class="logo-container">
-          <div class="logo">SanchitFlix</div>
-          <span id="provider-name-display-home" class="provider-name-display"></span>
-      </div>
-      <div class="header-actions">
-          <!-- Updated theme-toggle-btn with an icon that will change -->
-          <button id="theme-toggle-btn" class="header-icon-btn"><i class="fas fa-sun"></i></button>
-          <button id="header-search-btn" class="header-icon-btn"><i class="fas fa-search"></i></button>
-      </div>
-    </div>
-    <!-- 
-      *** MODIFICATION ***
-      - Added a .slider-wrapper to hold both the container and indicators.
-      - This prevents the indicators from scrolling with the overflow.
-      - #slider-indicators is now a sibling of #slider-container, not a child.
-    -->
-    <div class="slider-wrapper">
-        <div id="slider-container" class="slider-container">
-            <div id="slider" class="slider"></div>
-            <!-- Indicators moved out -->
-        </div>
-        <div id="slider-indicators" class="slider-indicators"></div>
-    </div>
-    <div id="home-content"></div>
-  </div>
-  
-  <!-- RE-ADDED GENRES PAGE -->
-  <div id="genres-page" class="page">
-    <div class="header">
-        <button id="menu-btn-genre" class="header-icon-btn"><i class="fas fa-bars"></i></button>
-        <div class="logo-container">
-            <div class="logo">Genres</div>
-            <span id="provider-name-display-genre" class="provider-name-display"></span>
-        </div>
-        <div class="header-actions">
-            <button id="header-search-btn-genre" class="header-icon-btn"><i class="fas fa-search"></i></button>
+    <div id="provider-page" class="page">
+        <h2>Choose Your Provider</h2>
+        <div id="provider-grid" class="provider-grid"></div>
+        <div class="provider-notice">
+            <i class="fas fa-info-circle"></i>
+            <p>You can change providers any time from the menu.</p>
         </div>
     </div>
-    <div id="genres-grid" class="genres-grid"></div>
-  </div>
 
-  <!-- RE-ADDED CATEGORY PAGE -->
-  <div id="category-page" class="page">
-    <div class="header">
-        <button id="back-btn-category" class="back-btn"><i class="fas fa-arrow-left"></i></button>
-        <div id="category-page-title" class="logo">Category</div>
+    <div id="home-page" class="page">
+        <div class="header">
+            <button id="menu-btn" class="header-icon-btn"><i class="fas fa-bars"></i></button>
+            <div class="logo-container">
+                <div class="logo">SanchitFlix</div>
+                <span id="provider-name-display-home" class="provider-name-display"></span>
+            </div>
+            <div class="header-actions">
+                <!-- Updated theme-toggle-btn with an icon that will change -->
+                <button id="theme-toggle-btn" class="header-icon-btn"><i class="fas fa-sun"></i></button>
+                <button id="header-search-btn" class="header-icon-btn"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        <!--
+        *** MODIFICATION ***
+        - Added a .slider-wrapper to hold both the container and indicators.
+        - This prevents the indicators from scrolling with the overflow.
+        - #slider-indicators is now a sibling of #slider-container, not a child.
+        -->
+        <div class="slider-wrapper">
+            <div id="slider-container" class="slider-container">
+                <div id="slider" class="slider"></div>
+                <!-- Indicators moved out -->
+            </div>
+            <div id="slider-indicators" class="slider-indicators"></div>
+        </div>
+        <div id="home-content"></div>
     </div>
-    <div id="category-grid" class="category-grid"></div>
-    <div id="category-pagination-controls" class="pagination-controls">
-      <button id="category-prev-btn" class="pagination-btn">Prev</button>
-      <button id="category-next-btn" class="pagination-btn">Next</button>
+    
+    <!-- RE-ADDED GENRES PAGE -->
+    <div id="genres-page" class="page">
+        <div class="header">
+            <button id="menu-btn-genre" class="header-icon-btn"><i class="fas fa-bars"></i></button>
+            <div class="logo-container">
+                <div class="logo">Genres</div>
+                <span id="provider-name-display-genre" class="provider-name-display"></span>
+            </div>
+            <div class="header-actions">
+                <button id="header-search-btn-genre" class="header-icon-btn"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        <div id="genres-grid" class="genres-grid"></div>
     </div>
-  </div>
 
-  <!-- RE-ADDED SEARCH PAGE -->
-  <div id="search-page" class="page">
-    <div class="header">
-        <button id="search-back-btn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
-        <div class="logo">Search</div>
+    <!-- RE-ADDED CATEGORY PAGE -->
+    <div id="category-page" class="page">
+        <div class="header">
+            <button id="back-btn-category" class="back-btn"><i class="fas fa-arrow-left"></i></button>
+            <div id="category-page-title" class="logo">Category</div>
+        </div>
+        <div id="category-grid" class="category-grid"></div>
+        <div id="category-pagination-controls" class="pagination-controls">
+            <button id="category-prev-btn" class="pagination-btn">Prev</button>
+            <button id="category-next-btn" class="pagination-btn">Next</button>
+        </div>
     </div>
-    <div class="search-container" style="padding: 16px;">
-      <i class="fas fa-search search-btn-icon"></i>
-      <input id="search-input" class="search-input" placeholder="Search for movies or shows..."/>
-      <button id="clear-search-btn" class="clear-btn"><i class="fas fa-times"></i></button>
-    </div>
-    <div id="search-description">
-        <h3>Find Your Favorite</h3>
-        <p>Search for any movie or show you can think of.</p>
-    </div>
-    <div id="search-grid" class="category-grid"></div>
-  </div>
-  
-  <div id="detail-page" class="page detail-page"> <!-- Added detail-page class for padding -->
-    <div class="header" style="background: transparent; border: none; box-shadow: none;">
-        <button id="detail-back-btn" class="back-btn" style="position: static; display: block;"><i class="fas fa-arrow-left"></i></button>
-    </div>
-    <div id="detail-backdrop" class="detail-backdrop"></div>
-    <div class="detail-content">
-      <div id="detail-poster" class="detail-poster"></div>
-      <div class="detail-info">
-        <h1 id="detail-title" class="detail-title"></h1>
-        <div id="detail-meta" class="detail-meta"></div>
-      </div>
-    </div>
-    <div style="padding: 0 16px;">
-      <div id="detail-storyline" class="detail-storyline"></div>
-      <div class="download-links-section">
-        <h3 id="download-section-title">Download Links</h3>
-        <div id="detail-link-list" class="link-list"></div>
-      </div>
-    </div>
-  </div>
 
-  <div id="about-page" class="page">
-    <div class="header">
-        <button id="about-back-btn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
-        <div class="logo">SanchitFlix Origin</div>
+    <!-- RE-ADDED SEARCH PAGE -->
+    <div id="search-page" class="page">
+        <div class="header">
+            <button id="search-back-btn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
+            <div class="logo">Search</div>
+        </div>
+        <div class="search-container" style="padding: 16px;">
+            <i class="fas fa-search search-btn-icon"></i>
+            <input id="search-input" class="search-input" placeholder="Search for movies or shows..."/>
+            <button id="clear-search-btn" class="clear-btn"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="search-description">
+            <h3>Find Your Favorite</h3>
+            <p>Search for any movie or show you can think of.</p>
+        </div>
+        <div id="search-grid" class="category-grid"></div>
     </div>
-    <div style="padding: 16px;">
-        <h2>A Dream Forged in Code</h2>
-        <p>Where pixels dance with stories untold, SanchitFlix crafts portals to cinematic universes. Trends pulse like stars, genres unfold as galaxies—your command shapes the narrative.</p>
-        <p>Built for the dreamers: swift, immersive, boundless. Every interaction a spark in the dev's eternal forge.</p>
-        <div class="developer-info">
-            <h3>Link to the Architect</h3>
-            <div class="social-links">
-                <a href="https://www.instagram.com/sanch1t_/" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="https://github.com/real-morpehus" target="_blank" class="social-btn github"><i class="fab fa-github"></i> GitHub</a>
-                <a href="https://t.me/S4NCHITT" target="_blank" class="social-btn telegram"><i class="fab fa-telegram-plane"></i> S4NCHITT</a>
+    
+    <div id="detail-page" class="page detail-page"> <!-- Added detail-page class for padding -->
+        <div class="header" style="background: transparent; border: none; box-shadow: none;">
+            <button id="detail-back-btn" class="back-btn" style="position: static; display: block;"><i class="fas fa-arrow-left"></i></button>
+        </div>
+        <div id="detail-backdrop" class="detail-backdrop"></div>
+        <div class="detail-content">
+            <div id="detail-poster" class="detail-poster"></div>
+            <div class="detail-info">
+                <h1 id="detail-title" class="detail-title"></h1>
+                <div id="detail-meta" class="detail-meta"></div>
+            </div>
+        </div>
+        <div style="padding: 0 16px;">
+            <div id="detail-storyline" class="detail-storyline"></div>
+            <div class="download-links-section">
+                <h3 id="download-section-title">Download Links</h3>
+                <div id="detail-link-list" class="link-list"></div>
             </div>
         </div>
     </div>
-  </div>
-  
-  <div id="stream-modal" class="stream-modal">
-    <div class="stream-modal-content">
-      <button class="modal-close-btn" onclick="closeStreamModal()"><i class="fas fa-times"></i></button>
-      <h3 id="stream-modal-title">Gateway Choices</h3>
-      <div id="stream-list" class="stream-list"></div>
-    </div>
-  </div>
 
-  <div id="side-menu-overlay">
-    <div id="side-menu-panel">
-      <div class="side-menu-header">
-        <h2>Change Provider</h2>
-        <p>Select a source</p>
-      </div>
-      <div id="provider-list" class="provider-list"></div>
+    <div id="about-page" class="page">
+        <div class="header">
+            <button id="about-back-btn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
+            <div class="logo">SanchitFlix Origin</div>
+        </div>
+        <div style="padding: 16px;">
+            <h2>A Dream Forged in Code</h2>
+            <p>Where pixels dance with stories untold, SanchitFlix crafts portals to cinematic universes. Trends pulse like stars, genres unfold as galaxies—your command shapes the narrative.</p>
+            <p>Built for the dreamers: swift, immersive, boundless. Every interaction a spark in the dev's eternal forge.</p>
+            <div class="developer-info">
+                <h3>Link to the Architect</h3>
+                <div class="social-links">
+                    <a href="https://www.instagram.com/sanch1t_/" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                    <a href="https://github.com/real-morpehus" target="_blank" class="social-btn github"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://t.me/S4NCHITT" target="_blank" class="social-btn telegram"><i class="fab fa-telegram-plane"></i> S4NCHITT</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+    
+    <div id="stream-modal" class="stream-modal">
+        <div class="stream-modal-content">
+            <button class="modal-close-btn" onclick="closeStreamModal()"><i class="fas fa-times"></i></button>
+            <h3 id="stream-modal-title">Gateway Choices</h3>
+            <div id="stream-list" class="stream-list"></div>
+        </div>
+    </div>
 
-  <nav class="bottom-nav">
-      <a href="#" id="nav-home" class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
-      <a href="#" id="nav-genres" class="nav-item"><i class="fas fa-th-large"></i><span>Genres</span></a>
-      <a href="#" id="nav-about" class="nav-item"><i class="fas fa-info-circle"></i><span>Origin</span></a>
-  </nav>
-  
+    <div id="side-menu-overlay">
+        <div id="side-menu-panel">
+            <div class="side-menu-header">
+                <h2>Change Provider</h2>
+                <p>Select a source</p>
+            </div>
+            <div id="provider-list" class="provider-list"></div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="#" id="nav-home" class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="#" id="nav-genres" class="nav-item"><i class="fas fa-th-large"></i><span>Genres</span></a>
+        <a href="#" id="nav-about" class="nav-item"><i class="fas fa-info-circle"></i><span>Origin</span></a>
+    </nav>
+    
     <script>
+        /* -------------- CONFIG & STATE -------------- */
+        const POLY_API_BASE = "https://polymovies.onrender.com";
+        let activeProvider = null;
+        let catalogData = null;
+        let currentCategory = { title: '', filter: '', page: 1 };
+        let currentSlideIndex = 0;
+        let sliderInterval = null;
+        let previousPage = 'home-page';
+        let favorites = JSON.parse(localStorage.getItem('sanchitflix_favorites') || '[]');
+        // --- NEW: State for slider swipe ---
+        let sliderTouchStartX = 0;
+        let sliderTouchMoveX = 0;
+        let isSliderSwiping = false;
 
-/* -------------- CONFIG & STATE -------------- */
-const POLY_API_BASE = "https://polymovies.onrender.com";
-let activeProvider = null;
-let catalogData = null;
-let currentCategory = { title: '', filter: '', page: 1 };
-let currentSlideIndex = 0;
-let sliderInterval = null;
-let previousPage = 'home-page';
-let favorites = JSON.parse(localStorage.getItem('sanchitflix_favorites') || '[]');
-// --- NEW: State for slider swipe ---
-let sliderTouchStartX = 0;
-let sliderTouchMoveX = 0;
-let isSliderSwiping = false;
+        /* -------------- DOM ELEMENTS (RE-POPULATED) -------------- */
+        const DOM = {
+            body: document.body,
+            loadingScreen: document.getElementById('loading-screen'),
+            allPages: document.querySelectorAll('.page'),
+            backBtns: document.querySelectorAll('.back-btn'),
+            bottomNav: document.querySelector('.bottom-nav'),
 
-/* -------------- DOM ELEMENTS (RE-POPULATED) -------------- */
-const DOM = {
-    body: document.body, loadingScreen: document.getElementById('loading-screen'), allPages: document.querySelectorAll('.page'), 
-    backBtns: document.querySelectorAll('.back-btn'), bottomNav: document.querySelector('.bottom-nav'),
-    providerPage: document.getElementById('provider-page'), providerGrid: document.getElementById('provider-grid'),
-    homePage: document.getElementById('home-page'), homeContent: document.getElementById('home-content'), 
-    providerNameDisplayHome: document.getElementById('provider-name-display-home'), providerNameDisplayGenre: document.getElementById('provider-name-display-genre'),
-    headerSearchBtn: document.getElementById('header-search-btn'), headerSearchBtnGenre: document.getElementById('header-search-btn-genre'),
-    themeToggleBtn: document.getElementById('theme-toggle-btn'), menuBtn: document.getElementById('menu-btn'), menuBtnGenre: document.getElementById('menu-btn-genre'),
-    slider: document.getElementById('slider'), sliderIndicators: document.getElementById('slider-indicators'),
-    genresPage: document.getElementById('genres-page'), genresGrid: document.getElementById('genres-grid'), 
-    categoryPage: document.getElementById('category-page'), categoryPageTitle: document.getElementById('category-page-title'), categoryGrid: document.getElementById('category-grid'),
-    categoryPagination: { controls: document.getElementById('category-pagination-controls'), prevBtn: document.getElementById('category-prev-btn'), nextBtn: document.getElementById('category-next-btn'), },
-    searchPage: document.getElementById('search-page'), searchGrid: document.getElementById('search-grid'), searchInput: document.getElementById('search-input'), clearSearchBtn: document.getElementById('clear-search-btn'),
-    detailPage: document.getElementById('detail-page'), detailBackdrop: document.getElementById('detail-backdrop'), detailPoster: document.getElementById('detail-poster'),
-    detailTitle: document.getElementById('detail-title'), detailMeta: document.getElementById('detail-meta'), detailStoryline: document.getElementById('detail-storyline'),
-    downloadSectionTitle: document.getElementById('download-section-title'), detailLinkList: document.getElementById('detail-link-list'),
-    streamModal: document.getElementById('stream-modal'), streamList: document.getElementById('stream-list'), streamModalTitle: document.getElementById('stream-modal-title'),
-    sideMenuOverlay: document.getElementById('side-menu-overlay'), sideMenuPanel: document.getElementById('side-menu-panel'), providerList: document.getElementById('provider-list'),
-    navHome: document.getElementById('nav-home'), navGenres: document.getElementById('nav-genres'), navAbout: document.getElementById('nav-about'),
-};
+            providerPage: document.getElementById('provider-page'),
+            providerGrid: document.getElementById('provider-grid'),
 
-/* -------------- HELPERS -------------- */
+            homePage: document.getElementById('home-page'),
+            homeContent: document.getElementById('home-content'),
+            providerNameDisplayHome: document.getElementById('provider-name-display-home'),
+            providerNameDisplayGenre: document.getElementById('provider-name-display-genre'),
+            headerSearchBtn: document.getElementById('header-search-btn'),
+            headerSearchBtnGenre: document.getElementById('header-search-btn-genre'),
+            themeToggleBtn: document.getElementById('theme-toggle-btn'),
+            menuBtn: document.getElementById('menu-btn'),
+            menuBtnGenre: document.getElementById('menu-btn-genre'),
 
-// --- NEW: Added back provider list and metadata based on user's JSON ---
-const ALL_PROVIDERS_LIST = [{"display_name":"MoviesDrive","value":"drive","version":"1.4","icon":"","type":"global","disabled":false},{"display_name":"World4uFree","value":"world4u","version":"1.4","icon":"","type":"global","disabled":false},{"display_name":"MoviesMod","value":"mod","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"UHDMovies","value":"uhd","version":"1.1","icon":"","type":"global","disabled":false},{"display_name":"FilmyFly","value":"filmyfly","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"HdHub4u","value":"hdhub4u","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"VegaMovies","value":"vega","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"A.111477","value":"a111477","version":"1.2","icon":"","type":"english","disabled":false},{"display_name":"Animetsu","value":"animetsu","version":"1.1","icon":"","type":"english","disabled":false},{"display_name":"TokyoInsider","value":"tokyoInsider","version":"1.0","icon":"","type":"english","disabled":false},{"display_name":"KissKh","value":"kissKh","version":"1.2","icon":"","type":"english","disabled":false},{"display_name":"RogMovies","value":"luxMovies","version":"1.6","icon":"","type":"india","disabled":false},{"display_name":"TopMovies","value":"topmovies","version":"1.0","icon":"","type":"india","disabled":false},{"display_name":"GuardaHD","value":"guardahd","version":"1.3","icon":"","type":"global","disabled":false}];
+            slider: document.getElementById('slider'),
+            sliderIndicators: document.getElementById('slider-indicators'),
 
-const PROVIDER_METADATA = ALL_PROVIDERS_LIST.reduce((acc, provider) => {
-    acc[provider.value] = provider.display_name;
-    return acc;
-}, {});
+            genresPage: document.getElementById('genres-page'),
+            genresGrid: document.getElementById('genres-grid'),
+            categoryPage: document.getElementById('category-page'),
+            categoryPageTitle: document.getElementById('category-page-title'),
+            categoryGrid: document.getElementById('category-grid'),
+            categoryPagination: {
+                controls: document.getElementById('category-pagination-controls'),
+                prevBtn: document.getElementById('category-prev-btn'),
+                nextBtn: document.getElementById('category-next-btn'),
+            },
 
-const getProviderDisplayName = (value) => PROVIDER_METADATA[value] || value;
-// --- End new provider data ---
+            searchPage: document.getElementById('search-page'),
+            searchGrid: document.getElementById('search-grid'),
+            searchInput: document.getElementById('search-input'),
+            clearSearchBtn: document.getElementById('clear-search-btn'),
 
-const fetchJSON = async (url, retries = 3) => {
-    // --- NEW: Mock provider fetch to use ONLY the user's list ---
-    if (url === `${POLY_API_BASE}/providers`) {
-        return Promise.resolve(ALL_PROVIDERS_LIST);
-    }
-    // --- End mock ---
+            detailPage: document.getElementById('detail-page'),
+            detailBackdrop: document.getElementById('detail-backdrop'),
+            detailPoster: document.getElementById('detail-poster'),
+            detailTitle: document.getElementById('detail-title'),
+            detailMeta: document.getElementById('detail-meta'),
+            detailStoryline: document.getElementById('detail-storyline'),
+            downloadSectionTitle: document.getElementById('download-section-title'),
+            detailLinkList: document.getElementById('detail-link-list'),
 
-    for (let i = 0; i < retries; i++) {
-        try { const res = await fetch(url); if (!res.ok) throw new Error(`HTTP ${res.status}`); return await res.json(); } 
-        catch (e) { if (i === retries - 1) { console.error(`Fetch failed for ${url}`, e); return null; } await new Promise(r => setTimeout(r, 1500 * (i + 1))); }
-    }
-};
-const placeholder = (t) => `https://placehold.co/500x750/1a1a2e/667eea?text=${encodeURIComponent(t||'SanchitFlix')}`;
-const escapeHtml = (s) => String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const getShortTitle = (t) => t ? t.split(' ').slice(0, 4).join(' ') : '';
-const getCleanTitle = (title) => title ? title.replace(/\s*\(.*?\)\s*|\s*\[.*?\]\s*/g, '').trim() : '';
-const debounce = (fn, delay) => { let timer; return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), delay); }; };
+            streamModal: document.getElementById('stream-modal'),
+            streamList: document.getElementById('stream-list'),
+            streamModalTitle: document.getElementById('stream-modal-title'),
 
-/* -------------- NEW: THEME & FAVORITES -------------- */
-function initializeTheme() {
-    const preference = localStorage.getItem('sanchitflix_theme');
-    const systemIsDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            sideMenuOverlay: document.getElementById('side-menu-overlay'),
+            sideMenuPanel: document.getElementById('side-menu-panel'),
+            providerList: document.getElementById('provider-list'),
 
-    if (preference === 'dark' || (!preference && systemIsDark)) {
-        DOM.body.classList.add('theme-dark');
-    } else {
-        DOM.body.classList.add('theme-light');
-    }
-    updateThemeIcon();
-    updateRgbVariable(); // For backdrop-filter transparency
-}
+            navHome: document.getElementById('nav-home'),
+            navGenres: document.getElementById('nav-genres'),
+            navAbout: document.getElementById('nav-about'),
+        };
 
-function toggleTheme() {
-    const isDark = DOM.body.classList.contains('theme-dark');
-    if (isDark) {
-        DOM.body.classList.remove('theme-dark');
-        DOM.body.classList.add('theme-light');
-        localStorage.setItem('sanchitflix_theme', 'light');
-    } else {
-        DOM.body.classList.remove('theme-light');
-        DOM.body.classList.add('theme-dark');
-        localStorage.setItem('sanchitflix_theme', 'dark');
-    }
-    updateThemeIcon();
-    updateRgbVariable();
-}
+        /* -------------- HELPERS -------------- */
+        // --- NEW: Added back provider list and metadata based on user's JSON ---
+        const ALL_PROVIDERS_LIST = [{"display_name":"MoviesDrive","value":"drive","version":"1.4","icon":"","type":"global","disabled":false},{"display_name":"World4uFree","value":"world4u","version":"1.4","icon":"","type":"global","disabled":false},{"display_name":"MoviesMod","value":"mod","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"UHDMovies","value":"uhd","version":"1.1","icon":"","type":"global","disabled":false},{"display_name":"FilmyFly","value":"filmyfly","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"HdHub4u","value":"hdhub4u","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"VegaMovies","value":"vega","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"A.111477","value":"a111477","version":"1.2","icon":"","type":"english","disabled":false},{"display_name":"Animetsu","value":"animetsu","version":"1.1","icon":"","type":"english","disabled":false},{"display_name":"TokyoInsider","value":"tokyoInsider","version":"1.0","icon":"","type":"english","disabled":false},{"display_name":"KissKh","value":"kissKh","version":"1.2","icon":"","type":"english","disabled":false},{"display_name":"RogMovies","value":"luxMovies","version":"1.6","icon":"","type":"india","disabled":false},{"display_name":"TopMovies","value":"topmovies","version":"1.0","icon":"","type":"india","disabled":false},{"display_name":"GuardaHD","value":"guardahd","version":"1.3","icon":"","type":"global","disabled":false}];
 
-function updateThemeIcon() {
-    const isDark = DOM.body.classList.contains('theme-dark');
-    const icon = DOM.themeToggleBtn.querySelector('i');
-    if (isDark) {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-    } else {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-    }
-}
+        const PROVIDER_METADATA = ALL_PROVIDERS_LIST.reduce((acc, provider) => {
+            acc[provider.value] = provider.display_name;
+            return acc;
+        }, {});
 
-// This helper function sets a CSS variable with the RGB values
-// of the --bg-primary color. This is needed so the 'rgba(var(--bg-primary-rgb), 0.8)'
-// backdrop filter can work, as 'rgba(var(--bg-primary), 0.8)' is not valid CSS.
-function updateRgbVariable() {
-    const bgPrimaryColor = getComputedStyle(DOM.body).getPropertyValue('--bg-primary').trim();
-    // Check if it's a hex color
-    if (bgPrimaryColor.startsWith('#')) {
-        const r = parseInt(bgPrimaryColor.substring(1, 3), 16);
-        const g = parseInt(bgPrimaryColor.substring(3, 5), 16);
-        const b = parseInt(bgPrimaryColor.substring(5, 7), 16);
-        DOM.body.style.setProperty('--bg-primary-rgb', `${r}, ${g}, ${b}`);
-    }
-}
+        const getProviderDisplayName = (value) => PROVIDER_METADATA[value] || value;
+        // --- End new provider data ---
 
-// Listen for system theme changes
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    const preference = localStorage.getItem('sanchitflix_theme');
-    // Only change if user has 'system' (null) preference
-    if (!preference) {
-        if (e.matches) {
-            DOM.body.classList.add('theme-dark');
-            DOM.body.classList.remove('theme-light');
-        } else {
-            DOM.body.classList.remove('theme-dark');
-            DOM.body.classList.add('theme-light');
-        }
-        updateThemeIcon();
-        updateRgbVariable();
-    }
-});
-
-function toggleFavorite(itemId) {
-    const index = favorites.indexOf(itemId);
-    if (index > -1) { favorites.splice(index, 1); } else { favorites.push(itemId); }
-    localStorage.setItem('sanchitflix_favorites', JSON.stringify(favorites));
-    return index === -1;
-}
-function isFavorite(itemId) { return favorites.includes(itemId); }
-
-/* -------------- PAGE NAVIGATION -------------- */
-const showPage = (pageId, fromPage = null) => {
-    if (fromPage && fromPage !== pageId) previousPage = fromPage;
-    
-    DOM.allPages.forEach(p => p.style.display = 'none');
-    document.getElementById(pageId).style.display = 'block';
-    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-    
-    if (['home-page', 'category-page', 'detail-page'].includes(pageId)) { 
-        DOM.navHome.classList.add('active'); 
-        startSliderAuto(); 
-    } else if (pageId === 'genres-page') { 
-        DOM.navGenres.classList.add('active'); 
-        clearInterval(sliderInterval); 
-    } else if (pageId === 'about-page') { 
-        DOM.navAbout.classList.add('active'); 
-        clearInterval(sliderInterval); 
-    }
-    // Search page doesn't light up any nav item
-    
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-// --- REVERTED: goBack uses internal history ---
-const goBack = () => { 
-    showPage(previousPage); 
-};
-
-
-/* -------------- SKELETON LOADER -------------- */
-const renderSkeleton = (container, isGrid = false, count = 8) => {
-    let skeletons = '';
-    for (let i = 0; i < count; i++) { 
-        skeletons += `<div class="${isGrid ? 'grid-item' : 'grid-item'}" style="${isGrid ? '' : 'flex: 0 0 calc(33.33% - 12px);'}"><div class="content-card skeleton" style="aspect-ratio: 2/3;"></div><p class="content-caption skeleton" style="height: 14px; width: 85%; margin: 10px auto 0;"></p></div>`; 
-    }
-    container.innerHTML = skeletons;
-};
-
-/* -------------- APP INITIALIZATION & PROVIDER SELECTION -------------- */
-document.addEventListener('DOMContentLoaded', () => {
-    initializeTheme(); // Use new theme function
-    attachEventListeners(); 
-    checkProviderSelection();
-});
-
-function attachEventListeners() {
-    DOM.backBtns.forEach(btn => btn.addEventListener('click', goBack));
-    DOM.themeToggleBtn.addEventListener('click', toggleTheme); // Use new theme function
-    DOM.menuBtn.addEventListener('click', openProviderMenu);
-    DOM.menuBtnGenre.addEventListener('click', openProviderMenu); // RE-ADDED
-    DOM.sideMenuOverlay.addEventListener('click', closeProviderMenu);
-    DOM.sideMenuPanel.addEventListener('click', (e) => e.stopPropagation());
-    
-    // RE-ADDED Search Listeners
-    const debouncedSearch = debounce(doSearch, 400);
-    const searchInputHandler = (e) => {
-        const clearBtn = DOM.clearSearchBtn;
-        if(clearBtn) {
-            clearBtn.style.display = DOM.searchInput.value ? 'block' : 'none';
-        }
-        if (e.key === 'Enter') debouncedSearch();
-        else debouncedSearch();
-    };
-    DOM.searchInput.addEventListener('keydown', searchInputHandler); DOM.searchInput.addEventListener('input', searchInputHandler);
-    if(DOM.clearSearchBtn) {
-        DOM.clearSearchBtn.addEventListener('click', () => {
-            DOM.searchInput.value = ''; DOM.clearSearchBtn.style.display = 'none'; DOM.searchGrid.innerHTML = '';
-            document.getElementById('search-description').style.display = 'block';
-        });
-    }
-
-    const showSearchPage = () => {
-        const activePage = document.querySelector('.page[style*="block"]');
-        showPage('search-page', activePage ? activePage.id : 'home-page');
-    };
-    DOM.headerSearchBtn.addEventListener('click', showSearchPage); // RE-ADDED
-    DOM.headerSearchBtnGenre.addEventListener('click', showSearchPage); // RE-ADDED
-    
-    // RE-ADDED Category Pagination Listeners
-    DOM.categoryPagination.prevBtn.addEventListener('click', () => { if (currentCategory.page > 1) loadCategoryPage(currentCategory.page - 1); });
-    DOM.categoryPagination.nextBtn.addEventListener('click', () => { loadCategoryPage(currentCategory.page + 1); });
-    
-    const getActivePageId = () => {
-        const activePage = document.querySelector('.page[style*="block"]');
-        return activePage ? activePage.id : 'home-page';
-    }
-    
-    DOM.navHome.addEventListener('click', (e) => { e.preventDefault(); showPage('home-page', getActivePageId()); });
-    DOM.navGenres.addEventListener('click', (e) => { e.preventDefault(); showPage('genres-page', getActivePageId()); }); // RE-ADDED
-    DOM.navAbout.addEventListener('click', (e) => { e.preventDefault(); showPage('about-page', getActivePageId()); });
-
-    // --- NEW: Slider Swipe Listeners ---
-    const sliderContainer = document.getElementById('slider-container');
-    sliderContainer.addEventListener('touchstart', handleSliderTouchStart, { passive: true });
-    sliderContainer.addEventListener('touchmove', handleSliderTouchMove, { passive: true });
-    sliderContainer.addEventListener('touchend', handleSliderTouchEnd);
-
-    // --- *** MODIFIED ***: Listen for scroll, removed debounce for faster indicator updates ---
-    sliderContainer.addEventListener('scroll', handleSliderScroll);
-}
-
-function checkProviderSelection() {
-    activeProvider = localStorage.getItem('sanchitflix_provider');
-    if (activeProvider) initializeApp(false); else showProviderSelectionPage();
-}
-
-async function showProviderSelectionPage() {
-    DOM.providerGrid.innerHTML = '<p class="loading-text" style="grid-column: 1 / -1; animation: none; font-size: 16px;">Finding providers...</p>';
-    showPage('provider-page');
-    DOM.loadingScreen.style.display = 'flex';
-
-    const allProviders = await fetchJSON(`${POLY_API_BASE}/providers`);
-    DOM.providerGrid.innerHTML = ''; 
-    
-    if (allProviders) {
-        // *** MODIFIED ***: Use provider list from mock and filter by 'disabled' property
-        const enabledProviders = allProviders.filter(p => !p.disabled);
-        
-        if (enabledProviders.length === 0) {
-            DOM.providerGrid.innerHTML = '<p style="grid-column: 1 / -1; font-size: 16px;">No providers are available right now.</p>';
-        } else {
-            enabledProviders.forEach(provider => {
-                const btn = document.createElement('button'); 
-                btn.className = 'provider-btn'; 
-                // *** MODIFIED ***: Use display_name for text
-                btn.textContent = provider.display_name;
-                btn.onclick = () => { 
-                    // *** MODIFIED ***: Use provider.value to store
-                    localStorage.setItem('sanchitflix_provider', provider.value); 
-                    activeProvider = provider.value;
-                    initializeApp(false);
-                };
-                DOM.providerGrid.appendChild(btn);
-            });
-        }
-    } else {
-        DOM.providerGrid.innerHTML = '<p style="grid-column: 1 / -1; font-size: 16px;">Could not load providers. Please refresh.</p>';
-    }
-    DOM.loadingScreen.style.display = 'none';
-}
-
-async function initializeApp(isSwitching) {
-    if (!isSwitching) {
-        showPage('home-page');
-    }
-    // *** MODIFIED ***: Re-added helper function
-    const displayName = getProviderDisplayName(activeProvider);
-    DOM.providerNameDisplayHome.textContent = displayName; 
-    DOM.providerNameDisplayGenre.textContent = displayName; // RE-ADDED
-    DOM.bottomNav.style.display = 'flex'; DOM.loadingScreen.style.display = 'flex';
-    catalogData = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/catalog`);
-    if (!catalogData) {
-        DOM.homeContent.innerHTML = "<p style='text-align: center; color: var(--text-secondary); padding: 40px;'>This provider is not responding. Please try another.</p>";
-        DOM.loadingScreen.style.display = 'none'; return;
-    }
-    const trendingPosts = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/posts?page=1`);
-    if (trendingPosts && trendingPosts.length > 0) {
-        document.getElementById('slider-container').style.display = 'block';
-        // --- UPDATED: Show 5 cards in slider ---
-        renderSlider(trendingPosts.slice(0, 5));
-    } else {
-        document.getElementById('slider-container').style.display = 'none';
-    }
-    buildHomePage(catalogData.catalog || []); 
-    buildGenresPage(catalogData.genres || []); // RE-ADDED
-}
-
-/* -------------- SLIDER -------------- */
-function renderSlider(items) {
-    DOM.slider.innerHTML = ''; DOM.sliderIndicators.innerHTML = '';
-    items.forEach((item, index) => {
-        const slide = document.createElement('div'); slide.className = 'slide';
-        const itemId = item.link || item.title;
-        const isFav = isFavorite(itemId);
-        slide.innerHTML = `<img src="${item.image || placeholder(item.title)}" alt="${escapeHtml(item.title)}">
-            <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
-                <i class="fas fa-heart"></i>
-            </button>
-            <div class="slide-overlay">
-                <div class="slide-title">${escapeHtml(getCleanTitle(item.title))}</div>
-                <a class="slide-action-btn"><i class="fas fa-play"></i> View Details</a>
-            </div>`;
-        slide.onclick = () => openDetailPage(item, 'home-page');
-        DOM.slider.appendChild(slide);
-        const indicator = document.createElement('div'); indicator.className = 'indicator';
-        indicator.onclick = () => goToSlide(index);
-        DOM.sliderIndicators.appendChild(indicator);
-    });
-    updateSliderTransform();
-}
-function updateSliderTransform() { 
-    if (DOM.slider) { 
-        // --- UPDATED: Use scrollLeft for manual swipe ---
-    const container = document.getElementById('slider-container');
-    const scrollAmount = currentSlideIndex * container.clientWidth;
-    container.scrollTo({ left: scrollAmount, behavior: 'smooth' });
-        
-    // --- *** REMOVED *** ---
-    // We are removing this logic to prevent conflicts.
-    // The 'handleSliderScroll' function will now be the ONLY function
-    // that updates the indicators.
-    // DOM.sliderIndicators.querySelectorAll('.indicator').forEach((ind, i) => ind.classList.toggle('active', i === currentSlideIndex)); 
-    } 
-}
-function goToSlide(index) { currentSlideIndex = index; updateSliderTransform(); startSliderAuto(); }
-function startSliderAuto() {
-    clearInterval(sliderInterval);
-    sliderInterval = setInterval(() => {
-        const slideCount = DOM.slider.querySelectorAll('.slide').length;
-        if (slideCount > 0) { currentSlideIndex = (currentSlideIndex + 1) % slideCount; updateSliderTransform(); }
-    }, 5000);
-}
-
-// --- NEW: Slider Swipe Handlers ---
-function handleSliderTouchStart(e) {
-    clearInterval(sliderInterval); // Stop auto-slide on touch
-    sliderTouchStartX = e.touches[0].clientX;
-    sliderTouchMoveX = sliderTouchStartX;
-    isSliderSwiping = true;
-    // We let the native scroll handle the movement
-}
-
-function handleSliderTouchMove(e) {
-    if (!isSliderSwiping) return;
-    sliderTouchMoveX = e.touches[0].clientX;
-}
-
-function handleSliderTouchEnd(e) {
-    if (!isSliderSwiping) return;
-    isSliderSwiping = false;
-
-    // We no longer need to calculate the index here.
-    // The native scroll snap and the 'scroll' event listener (handleSliderScroll) will handle it.
-    
-    // We just restart the auto-slide, and let the scroll listener update the index.
-    startSliderAuto();
-}
-// --- End Slider Swipe Handlers ---
-
-// --- *** MODIFIED ***: Handle scroll snap index changes ---
-// This function is now the ONLY source of truth for updating the indicators.
-function handleSliderScroll() {
-    const sliderContainer = document.getElementById('slider-container');
-    if (!sliderContainer) return;
-
-    const slideWidth = sliderContainer.clientWidth;
-    if (slideWidth === 0) return;
-
-    // Calculate the current index based on scroll position
-    const newIndex = Math.round(sliderContainer.scrollLeft / slideWidth);
-
-    // --- *** LOGIC SIMPLIFIED *** ---
-    // REMOVED: if (newIndex !== currentSlideIndex) { ... }
-    // The scroll position is the *single source of truth*.
-    // We update the global index AND the indicators directly from it.
-    
-    currentSlideIndex = newIndex; 
-
-    DOM.sliderIndicators.querySelectorAll('.indicator').forEach((ind, i) => {
-        ind.classList.toggle('active', i === currentSlideIndex);
-    });
-}
-
-
-/* -------------- DYNAMIC PAGE BUILDERS -------------- */
-function buildHomePage(catalogItems) {
-    DOM.homeContent.innerHTML = '';
-    catalogItems.forEach(section => {
-        const sectionEl = document.createElement('div'); sectionEl.className = 'category-section';
-        // RE-ADDED see-all-btn
-        sectionEl.innerHTML = `<div class="category-header"><h2 class="category-title">${escapeHtml(section.title)}</h2><a href="#" class="see-all-btn">View More</a></div><div class="content-slider"></div>`;
-        // RE-ADDED see-all-btn onclick
-        sectionEl.querySelector('.see-all-btn').onclick = (e) => { e.preventDefault(); openCategoryPage(section.title, section.filter); };
-        renderSkeleton(sectionEl.querySelector('.content-slider'), false, 8);
-        DOM.homeContent.appendChild(sectionEl);
-    });
-    DOM.loadingScreen.style.display = 'none';
-    const sliderContainers = DOM.homeContent.querySelectorAll('.content-slider');
-    catalogItems.forEach(async (section, index) => {
-        const posts = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/posts?filter=${encodeURIComponent(section.filter)}&page=1`);
-        if (posts && posts.length > 0) renderContentSlider(posts, sliderContainers[index]);
-        else sliderContainers[index].innerHTML = '<p style="padding-left: 16px; color: var(--text-secondary);">No content found here.</p>';
-    });
-}
-// RE-ADDED buildGenresPage
-function buildGenresPage(genreItems) {
-    DOM.genresGrid.innerHTML = '';
-    if (genreItems) genreItems.forEach(genre => {
-        const btn = document.createElement('button'); btn.className = 'genre-btn';
-        btn.textContent = genre.title; btn.onclick = () => openCategoryPage(genre.title, genre.filter);
-        DOM.genresGrid.appendChild(btn);
-    });
-}
-
-/* -------------- CATEGORY & SEARCH PAGES (RE-ADDED) -------------- */
-async function loadCategoryPage(page) {
-    currentCategory.page = page; 
-    const fromPage = currentCategory.filter.includes('genre') ? 'genres-page' : 'home-page';
-    showPage('category-page', fromPage);
-    
-    DOM.categoryPageTitle.textContent = currentCategory.title;
-    renderSkeleton(DOM.categoryGrid, true, 12); 
-    DOM.categoryPagination.controls.style.visibility = 'hidden';
-    
-    const url = `${POLY_API_BASE}/api/${activeProvider}/posts?filter=${encodeURIComponent(currentCategory.filter)}&page=${page}`;
-    const posts = await fetchJSON(url);
-    
-    if (posts && posts.length > 0) {
-        renderGrid(posts, DOM.categoryGrid); 
-        DOM.categoryPagination.controls.style.visibility = 'visible';
-        DOM.categoryPagination.prevBtn.disabled = (page === 1); 
-        DOM.categoryPagination.nextBtn.disabled = posts.length < 10; // Simple check
-    } else {
-        DOM.categoryGrid.innerHTML = `<p style="color: var(--text-secondary); text-align: center; grid-column: 1 / -1; font-size: 16px;">No content found here.</p>`;
-        if(page === 1) DOM.categoryPagination.controls.style.visibility = 'hidden';
-        DOM.categoryPagination.nextBtn.disabled = true;
-    }
-}
-
-async function doSearch() {
-    const query = DOM.searchInput.value.trim(); 
-    if (!query) {
-        DOM.searchGrid.innerHTML = '';
-        document.getElementById('search-description').style.display = 'block';
-        return;
-    }
-    document.getElementById('search-description').style.display = 'none';
-    DOM.searchGrid.innerHTML = ''; 
-    renderSkeleton(DOM.searchGrid, true, 12);
-    
-    const results = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/search?query=${encodeURIComponent(query)}&page=1`);
-    
-    if (results && results.length > 0) renderGrid(results, DOM.searchGrid);
-    else DOM.searchGrid.innerHTML = `<p style="color: var(--text-secondary); text-align: center; grid-column: 1 / -1; font-size: 16px;">No results found for your search.</p>`;
-}
-
-/* -------------- GRID & SLIDER ITEM RENDERING -------------- */
-function renderContentSlider(items, container) {
-  container.innerHTML = '';
-  items.forEach(item => {
-    const gridItem = document.createElement('div'); gridItem.className = 'grid-item';
-    const itemId = item.link || item.title;
-    const isFav = isFavorite(itemId);
-    gridItem.innerHTML = `
-        <div class="content-card">
-            <img src="${item.image || placeholder(item.title)}" onerror="this.src='${placeholder(item.title)}'"/>
-            <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
-                <i class="fas fa-heart"></i>
-            </button>
-        </div>
-        <p class="content-caption">${escapeHtml(getShortTitle(item.title))}</p>`;
-    gridItem.onclick = () => openDetailPage(item, 'home-page');
-    container.appendChild(gridItem);
-  });
-}
-// RE-ADDED renderGrid
-function renderGrid(items, container) {
-  container.innerHTML = '';
-  items.forEach(item => {
-    const gridItem = document.createElement('div'); gridItem.className = 'grid-item';
-    const itemId = item.link || item.title;
-    const isFav = isFavorite(itemId);
-    gridItem.innerHTML = `
-        <div class="content-card">
-            <img src="${item.image || placeholder(item.title)}" onerror="this.src='${placeholder(item.title)}'"/>
-            <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
-                <i class="fas fa-heart"></i>
-            </button>
-        </div>
-        <p class="content-caption">${escapeHtml(getShortTitle(item.title))}</p>`;
-    gridItem.onclick = () => openDetailPage(item, document.querySelector('.page[style*="block"]').id);
-    container.appendChild(gridItem);
-  });
-}
-
-/* -------------- DETAIL PAGE & LINK LOGIC -------------- */
-async function openDetailPage(item, fromPage) {
-    showPage('detail-page', fromPage);
-    const itemId = item.link || item.title;
-    const isFav = isFavorite(itemId);
-    DOM.detailTitle.textContent = item.title;
-    const image = item.image || placeholder(item.title);
-    DOM.detailBackdrop.innerHTML = `<img src="${image}" alt="Backdrop">`;
-    DOM.detailPoster.innerHTML = `<img src="${image}" alt="Poster">`;
-    DOM.detailStoryline.textContent = 'Loading story...'; 
-    DOM.detailLinkList.innerHTML = '<p>Getting links...</p>';
-    DOM.detailMeta.innerHTML = ''; 
-    DOM.downloadSectionTitle.textContent = "Download Links"; // Default title
-    
-    // Clear old favorite button before adding new one
-    const oldFavBtn = DOM.detailPoster.querySelector('.favorite-btn');
-    if (oldFavBtn) oldFavBtn.remove();
-    
-    const favBtn = document.createElement('button'); favBtn.className = `favorite-btn ${isFav ? 'active' : ''}`;
-    favBtn.innerHTML = '<i class="fas fa-heart"></i>';
-    favBtn.onclick = (e) => { e.stopPropagation(); toggleFavorite(itemId); favBtn.classList.toggle('active'); };
-    DOM.detailPoster.appendChild(favBtn);
-    
-    const metaData = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/meta?link=${encodeURIComponent(item.link)}`);
-    if (metaData) {
-        DOM.detailStoryline.textContent = metaData.synopsis || 'Story details are not available.';
-        if (metaData.type) DOM.detailMeta.innerHTML = `<span style="background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;">${metaData.type.toUpperCase()}</span><span>${metaData.year || ''}</span><span>${metaData.runtime || ''}</span>`;
-        DOM.detailLinkList.innerHTML = '';
-        if (!metaData.linkList || metaData.linkList.length === 0) {
-            DOM.detailLinkList.innerHTML = `<p>No links found for this.</p>`; return;
-        }
-
-        // --- NEW LOGIC FOR SERIES ---
-        if (metaData.type === 'series') {
-            DOM.downloadSectionTitle.textContent = "Select Season / Quality";
-            
-            // 1. Create Season Select Dropdown
-            const seasonSelect = document.createElement('select');
-            seasonSelect.className = 'season-select';
-            
-            // 2. Populate dropdown directly from linkList
-            metaData.linkList.forEach((linkItem, index) => { // Added index
-                const option = document.createElement('option');
-                option.value = index; // Store the index of the linkItem
-                option.textContent = linkItem.title;
-                option.dataset.type = metaData.type || 'series'; // Store type for later
-                seasonSelect.appendChild(option);
-            });
-            
-            DOM.detailLinkList.appendChild(seasonSelect);
-
-            // 3. Create a container for quality/episode buttons
-            const episodesListContainer = document.createElement('div');
-            episodesListContainer.id = "episodes-list-container"; // Add ID for the new function
-            episodesListContainer.className = 'link-list'; // Reuse existing class for gap
-            DOM.detailLinkList.appendChild(episodesListContainer);
-
-            // 4. Add event listener to load episodes when dropdown changes
-            seasonSelect.addEventListener('change', (e) => {
-                const selectedIndex = e.target.value;
-                const selectedLinkItem = metaData.linkList[selectedIndex]; // Get the full object
-                const itemType = e.target.options[e.target.selectedIndex].dataset.type;
-                loadEpisodesOntoPage(selectedLinkItem, itemType); // Pass the full object
-            });
-            
-            // 5. Load episodes for the *first* season by default
-            if (metaData.linkList.length > 0) {
-                const firstItem = metaData.linkList[0];
-                loadEpisodesOntoPage(firstItem, metaData.type || 'series'); // Pass the full object
+        const fetchJSON = async (url, retries = 3) => {
+            // --- NEW: Mock provider fetch to use ONLY the user's list ---
+            if (url === `${POLY_API_BASE}/providers`) {
+                return Promise.resolve(ALL_PROVIDERS_LIST);
             }
-
-        } else {
-            // --- ORIGINAL LOGIC FOR MOVIES ---
-            DOM.downloadSectionTitle.textContent = "Stream / Download Links";
-            metaData.linkList.forEach(linkItem => {
-                if (linkItem.directLinks && linkItem.directLinks.length > 0) {
-                    const directLink = linkItem.directLinks[0];
-                    
-                    if (directLink.link.includes('mdrive.today') || directLink.link.includes('gadgetsweb.xyz') || directLink.link.includes('magiclinks.my')) {
-                        const linkBtn = document.createElement('button'); linkBtn.className = 'link-btn';
-                        linkBtn.innerHTML = `<span>${escapeHtml(linkItem.title)}</span><i class="fas fa-play"></i>`;
-                        // MODIFIED: This now correctly opens the modal
-                        linkBtn.onclick = () => {
-                            loadStreamLinksIntoModal(directLink.link, metaData.type || 'movie');
-                            DOM.streamModal.style.display = 'flex';
-                        }
-                        DOM.detailLinkList.appendChild(linkBtn);
-                    } else {
-                        const linkAnchor = document.createElement('a'); linkAnchor.className = 'link-btn';
-                        linkAnchor.href = directLink.link; linkAnchor.target = '_blank';
-                        linkAnchor.innerHTML = `<span>${escapeHtml(linkItem.title)}</span><i class="fas fa-download"></i>`;
-                        DOM.detailLinkList.appendChild(linkAnchor);
+            // --- End mock ---
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    return await res.json();
+                } catch (e) {
+                    if (i === retries - 1) {
+                        console.error(`Fetch failed for ${url}`, e);
+                        return null;
                     }
+                    await new Promise(r => setTimeout(r, 1500 * (i + 1)));
                 }
+            }
+        };
+
+        const placeholder = (t) => `https://placehold.co/500x750/1a1a2e/667eea?text=${encodeURIComponent(t||'SanchitFlix')}`;
+        const escapeHtml = (s) => String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+        
+        const getShortTitle = (t) => {
+            if (!t) return '';
+            // NEW: Clean "Download" text (with . or _) from the beginning
+            let clean = t.replace(/^Download[\s._]+/i, '').trim();
+            // NEW: Replace dots/underscores with spaces
+            clean = clean.replace(/[._]/g, ' ');
+            // NEW: Collapse multiple spaces
+            clean = clean.replace(/\s+/g, ' ').trim();
+            return clean.split(' ').slice(0, 4).join(' ');
+        };
+        
+        const getCleanTitle = (title) => {
+            if (!title) return '';
+            // NEW: Replace dots/underscores with spaces FIRST
+            let clean = title.replace(/[._]/g, ' ');
+            // First, remove ( ) and [ ]
+            clean = clean.replace(/\s*\(.*?\)\s*|\s*\[.*?\]\s*/g, '').trim();
+            // NEW: Remove "Download " (case-insensitive) from the beginning, now catches . and _
+            clean = clean.replace(/^Download[\s._]+/i, '').trim();
+            // NEW: Collapse multiple spaces
+            clean = clean.replace(/\s+/g, ' ').trim();
+            return clean;
+        };
+
+        const debounce = (fn, delay) => {
+            let timer;
+            return (...args) => {
+                clearTimeout(timer);
+                timer = setTimeout(() => fn(...args), delay);
+            };
+        };
+
+        /* -------------- NEW: THEME & FAVORITES -------------- */
+        function initializeTheme() {
+            const preference = localStorage.getItem('sanchitflix_theme');
+            const systemIsDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (preference === 'dark' || (!preference && systemIsDark)) {
+                DOM.body.classList.add('theme-dark');
+            } else {
+                DOM.body.classList.add('theme-light');
+            }
+            updateThemeIcon();
+            updateRgbVariable(); // For backdrop-filter transparency
+        }
+
+        function toggleTheme() {
+            const isDark = DOM.body.classList.contains('theme-dark');
+            if (isDark) {
+                DOM.body.classList.remove('theme-dark');
+                DOM.body.classList.add('theme-light');
+                localStorage.setItem('sanchitflix_theme', 'light');
+            } else {
+                DOM.body.classList.remove('theme-light');
+                DOM.body.classList.add('theme-dark');
+                localStorage.setItem('sanchitflix_theme', 'dark');
+            }
+            updateThemeIcon();
+            updateRgbVariable();
+        }
+
+        function updateThemeIcon() {
+            const isDark = DOM.body.classList.contains('theme-dark');
+            const icon = DOM.themeToggleBtn.querySelector('i');
+            if (isDark) {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            } else {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            }
+        }
+
+        // This helper function sets a CSS variable with the RGB values
+        // of the --bg-primary color. This is needed so the 'rgba(var(--bg-primary-rgb), 0.8)'
+        // backdrop filter can work, as 'rgba(var(--bg-primary), 0.8)' is not valid CSS.
+        function updateRgbVariable() {
+            const bgPrimaryColor = getComputedStyle(DOM.body).getPropertyValue('--bg-primary').trim();
+            // Check if it's a hex color
+            if (bgPrimaryColor.startsWith('#')) {
+                const r = parseInt(bgPrimaryColor.substring(1, 3), 16);
+                const g = parseInt(bgPrimaryColor.substring(3, 5), 16);
+                const b = parseInt(bgPrimaryColor.substring(5, 7), 16);
+                DOM.body.style.setProperty('--bg-primary-rgb', `${r}, ${g}, ${b}`);
+            }
+        }
+
+        // Listen for system theme changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            const preference = localStorage.getItem('sanchitflix_theme');
+            // Only change if user has 'system' (null) preference
+            if (!preference) {
+                if (e.matches) {
+                    DOM.body.classList.add('theme-dark');
+                    DOM.body.classList.remove('theme-light');
+                } else {
+                    DOM.body.classList.remove('theme-dark');
+                    DOM.body.classList.add('theme-light');
+                }
+                updateThemeIcon();
+                updateRgbVariable();
+            }
+        });
+
+        function toggleFavorite(itemId) {
+            const index = favorites.indexOf(itemId);
+            if (index > -1) { favorites.splice(index, 1); } else { favorites.push(itemId); }
+            localStorage.setItem('sanchitflix_favorites', JSON.stringify(favorites));
+            return index === -1;
+        }
+
+        function isFavorite(itemId) { return favorites.includes(itemId); }
+
+        /* -------------- PAGE NAVIGATION -------------- */
+        const showPage = (pageId, fromPage = null) => {
+            if (fromPage && fromPage !== pageId) previousPage = fromPage;
+            
+            DOM.allPages.forEach(p => p.style.display = 'none');
+            document.getElementById(pageId).style.display = 'block';
+
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            if (['home-page', 'category-page', 'detail-page'].includes(pageId)) {
+                DOM.navHome.classList.add('active');
+                startSliderAuto();
+            } else if (pageId === 'genres-page') {
+                DOM.navGenres.classList.add('active');
+                clearInterval(sliderInterval);
+            } else if (pageId === 'about-page') {
+                DOM.navAbout.classList.add('active');
+                clearInterval(sliderInterval);
+            }
+            // Search page doesn't light up any nav item
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        
+        // --- REVERTED: goBack uses internal history ---
+        const goBack = () => {
+            showPage(previousPage);
+        };
+
+        /* -------------- SKELETON LOADER -------------- */
+        const renderSkeleton = (container, isGrid = false, count = 8) => {
+            let skeletons = '';
+            for (let i = 0; i < count; i++) {
+                skeletons += `<div class="${isGrid ? 'grid-item' : 'grid-item'}" style="${isGrid ? '' : 'flex: 0 0 calc(33.33% - 12px);'}"><div class="content-card skeleton" style="aspect-ratio: 2/3;"></div><p class="content-caption skeleton" style="height: 14px; width: 85%; margin: 10px auto 0;"></p></div>`;
+            }
+            container.innerHTML = skeletons;
+        };
+
+        /* -------------- APP INITIALIZATION & PROVIDER SELECTION -------------- */
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeTheme(); // Use new theme function
+            attachEventListeners();
+            checkProviderSelection();
+        });
+
+        function attachEventListeners() {
+            DOM.backBtns.forEach(btn => btn.addEventListener('click', goBack));
+            DOM.themeToggleBtn.addEventListener('click', toggleTheme); // Use new theme function
+            DOM.menuBtn.addEventListener('click', openProviderMenu);
+            DOM.menuBtnGenre.addEventListener('click', openProviderMenu); // RE-ADDED
+            DOM.sideMenuOverlay.addEventListener('click', closeProviderMenu);
+            DOM.sideMenuPanel.addEventListener('click', (e) => e.stopPropagation());
+            
+            // RE-ADDED Search Listeners
+            const debouncedSearch = debounce(doSearch, 400);
+            const searchInputHandler = (e) => {
+                const clearBtn = DOM.clearSearchBtn;
+                if(clearBtn) {
+                    clearBtn.style.display = DOM.searchInput.value ? 'block' : 'none';
+                }
+                if (e.key === 'Enter') debouncedSearch();
+                else debouncedSearch();
+            };
+            DOM.searchInput.addEventListener('keydown', searchInputHandler);
+            DOM.searchInput.addEventListener('input', searchInputHandler);
+
+            if(DOM.clearSearchBtn) {
+                DOM.clearSearchBtn.addEventListener('click', () => {
+                    DOM.searchInput.value = '';
+                    DOM.clearSearchBtn.style.display = 'none';
+                    DOM.searchGrid.innerHTML = '';
+                    document.getElementById('search-description').style.display = 'block';
+                });
+            }
+
+            const showSearchPage = () => {
+                const activePage = document.querySelector('.page[style*="block"]');
+                showPage('search-page', activePage ? activePage.id : 'home-page');
+            };
+            DOM.headerSearchBtn.addEventListener('click', showSearchPage); // RE-ADDED
+            DOM.headerSearchBtnGenre.addEventListener('click', showSearchPage); // RE-ADDED
+            
+            // RE-ADDED Category Pagination Listeners
+            DOM.categoryPagination.prevBtn.addEventListener('click', () => { if (currentCategory.page > 1) loadCategoryPage(currentCategory.page - 1); });
+            DOM.categoryPagination.nextBtn.addEventListener('click', () => { loadCategoryPage(currentCategory.page + 1); });
+            
+            const getActivePageId = () => {
+                const activePage = document.querySelector('.page[style*="block"]');
+                return activePage ? activePage.id : 'home-page';
+            }
+            
+            DOM.navHome.addEventListener('click', (e) => { e.preventDefault(); showPage('home-page', getActivePageId()); });
+            DOM.navGenres.addEventListener('click', (e) => { e.preventDefault(); showPage('genres-page', getActivePageId()); }); // RE-ADDED
+            DOM.navAbout.addEventListener('click', (e) => { e.preventDefault(); showPage('about-page', getActivePageId()); });
+
+            // --- NEW: Slider Swipe Listeners ---
+            const sliderContainer = document.getElementById('slider-container');
+            sliderContainer.addEventListener('touchstart', handleSliderTouchStart, { passive: true });
+            sliderContainer.addEventListener('touchmove', handleSliderTouchMove, { passive: true });
+            sliderContainer.addEventListener('touchend', handleSliderTouchEnd);
+            // --- *** MODIFIED ***: Listen for scroll, removed debounce for faster indicator updates ---
+            sliderContainer.addEventListener('scroll', handleSliderScroll);
+        }
+
+        function checkProviderSelection() {
+            activeProvider = localStorage.getItem('sanchitflix_provider');
+            if (activeProvider) initializeApp(false); else showProviderSelectionPage();
+        }
+
+        async function showProviderSelectionPage() {
+            DOM.providerGrid.innerHTML = '<p class="loading-text" style="grid-column: 1 / -1; animation: none; font-size: 16px;">Finding providers...</p>';
+            showPage('provider-page');
+            DOM.loadingScreen.style.display = 'flex';
+            const allProviders = await fetchJSON(`${POLY_API_BASE}/providers`);
+            DOM.providerGrid.innerHTML = '';
+            
+            if (allProviders) {
+                // *** MODIFIED ***: Use provider list from mock and filter by 'disabled' property
+                const enabledProviders = allProviders.filter(p => !p.disabled);
+                
+                if (enabledProviders.length === 0) {
+                    DOM.providerGrid.innerHTML = '<p style="grid-column: 1 / -1; font-size: 16px;">No providers are available right now.</p>';
+                } else {
+                    enabledProviders.forEach(provider => {
+                        const btn = document.createElement('button');
+                        btn.className = 'provider-btn';
+                        // *** MODIFIED ***: Use display_name for text
+                        btn.textContent = provider.display_name;
+                        btn.onclick = () => {
+                            // *** MODIFIED ***: Use provider.value to store
+                            localStorage.setItem('sanchitflix_provider', provider.value);
+                            activeProvider = provider.value;
+                            initializeApp(false);
+                        };
+                        DOM.providerGrid.appendChild(btn);
+                    });
+                }
+            } else {
+                DOM.providerGrid.innerHTML = '<p style="grid-column: 1 / -1; font-size: 16px;">Could not load providers. Please refresh.</p>';
+            }
+            DOM.loadingScreen.style.display = 'none';
+        }
+
+        async function initializeApp(isSwitching) {
+            if (!isSwitching) {
+                showPage('home-page');
+            }
+            // *** MODIFIED ***: Re-added helper function
+            const displayName = getProviderDisplayName(activeProvider);
+            DOM.providerNameDisplayHome.textContent = displayName;
+            DOM.providerNameDisplayGenre.textContent = displayName; // RE-ADDED
+            DOM.bottomNav.style.display = 'flex';
+            DOM.loadingScreen.style.display = 'flex';
+            catalogData = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/catalog`);
+            
+            if (!catalogData) {
+                DOM.homeContent.innerHTML = "<p style='text-align: center; color: var(--text-secondary); padding: 40px;'>This provider is not responding. Please try another.</p>";
+                DOM.loadingScreen.style.display = 'none'; return;
+            }
+
+            const trendingPosts = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/posts?page=1`);
+            
+            if (trendingPosts && trendingPosts.length > 0) {
+                document.getElementById('slider-container').style.display = 'block';
+                // --- UPDATED: Show 5 cards in slider ---
+                renderSlider(trendingPosts.slice(0, 5));
+            } else {
+                document.getElementById('slider-container').style.display = 'none';
+            }
+            
+            buildHomePage(catalogData.catalog || []);
+            buildGenresPage(catalogData.genres || []); // RE-ADDED
+        }
+
+        /* -------------- SLIDER -------------- */
+        function renderSlider(items) {
+            DOM.slider.innerHTML = '';
+            DOM.sliderIndicators.innerHTML = '';
+            items.forEach((item, index) => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                const itemId = item.link || item.title;
+                const isFav = isFavorite(itemId);
+                slide.innerHTML = `<img src="${item.image || placeholder(item.title)}" alt="${escapeHtml(item.title)}">
+                    <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                    <div class="slide-overlay">
+                        <div class="slide-title">${escapeHtml(getCleanTitle(item.title))}</div>
+                        <a class="slide-action-btn"><i class="fas fa-play"></i> View Details</a>
+                    </div>`;
+                slide.onclick = () => openDetailPage(item, 'home-page');
+                DOM.slider.appendChild(slide);
+
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                indicator.onclick = () => goToSlide(index);
+                DOM.sliderIndicators.appendChild(indicator);
+            });
+            updateSliderTransform();
+        }
+
+        function updateSliderTransform() {
+            if (DOM.slider) {
+                // --- UPDATED: Use scrollLeft for manual swipe ---
+                const container = document.getElementById('slider-container');
+                const scrollAmount = currentSlideIndex * container.clientWidth;
+                container.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+                
+                // --- *** REMOVED *** ---
+                // We are removing this logic to prevent conflicts.
+                // The 'handleSliderScroll' function will now be the ONLY function
+                // that updates the indicators.
+                // DOM.sliderIndicators.querySelectorAll('.indicator').forEach((ind, i) => ind.classList.toggle('active', i === currentSlideIndex));
+            }
+        }
+
+        function goToSlide(index) {
+            currentSlideIndex = index;
+            updateSliderTransform();
+            startSliderAuto();
+        }
+
+        function startSliderAuto() {
+            clearInterval(sliderInterval);
+            sliderInterval = setInterval(() => {
+                const slideCount = DOM.slider.querySelectorAll('.slide').length;
+                if (slideCount > 0) {
+                    currentSlideIndex = (currentSlideIndex + 1) % slideCount;
+                    updateSliderTransform();
+                }
+            }, 5000);
+        }
+        
+        // --- NEW: Slider Swipe Handlers ---
+        function handleSliderTouchStart(e) {
+            clearInterval(sliderInterval); // Stop auto-slide on touch
+            sliderTouchStartX = e.touches[0].clientX;
+            sliderTouchMoveX = sliderTouchStartX;
+            isSliderSwiping = true;
+            // We let the native scroll handle the movement
+        }
+
+        function handleSliderTouchMove(e) {
+            if (!isSliderSwiping) return;
+            sliderTouchMoveX = e.touches[0].clientX;
+        }
+
+        function handleSliderTouchEnd(e) {
+            if (!isSliderSwiping) return;
+            isSliderSwiping = false;
+            
+            // We no longer need to calculate the index here.
+            // The native scroll snap and the 'scroll' event listener (handleSliderScroll) will handle it.
+            
+            // We just restart the auto-slide, and let the scroll listener update the index.
+            startSliderAuto();
+        }
+        // --- End Slider Swipe Handlers ---
+
+        // --- *** MODIFIED ***: Handle scroll snap index changes ---
+        // This function is now the ONLY source of truth for updating the indicators.
+        function handleSliderScroll() {
+            const sliderContainer = document.getElementById('slider-container');
+            if (!sliderContainer) return;
+
+            const slideWidth = sliderContainer.clientWidth;
+            if (slideWidth === 0) return;
+
+            // Calculate the current index based on scroll position
+            const newIndex = Math.round(sliderContainer.scrollLeft / slideWidth);
+
+            // --- *** LOGIC SIMPLIFIED *** ---
+            // REMOVED: if (newIndex !== currentSlideIndex) { ... }
+            // The scroll position is the *single source of truth*.
+            // We update the global index AND the indicators directly from it.
+            
+            currentSlideIndex = newIndex;
+            DOM.sliderIndicators.querySelectorAll('.indicator').forEach((ind, i) => {
+                ind.classList.toggle('active', i === currentSlideIndex);
             });
         }
-        // --- END OF LOGIC ---
 
-        if (DOM.detailLinkList.innerHTML === '') DOM.detailLinkList.innerHTML = `<p>Could not find any links.</p>`;
-    } else {
-        DOM.detailLinkList.innerHTML = `<p>No links found for this.</p>`;
-    }
-}
+        /* -------------- DYNAMIC PAGE BUILDERS -------------- */
+        function buildHomePage(catalogItems) {
+            DOM.homeContent.innerHTML = '';
+            catalogItems.forEach(section => {
+                const sectionEl = document.createElement('div');
+                sectionEl.className = 'category-section';
+                // RE-ADDED see-all-btn
+                sectionEl.innerHTML = `<div class="category-header"><h2 class="category-title">${escapeHtml(section.title)}</h2><a href="#" class="see-all-btn">View More</a></div><div class="content-slider"></div>`;
+                // RE-ADDED see-all-btn onclick
+                sectionEl.querySelector('.see-all-btn').onclick = (e) => { e.preventDefault(); openCategoryPage(section.title, section.filter); };
+                renderSkeleton(sectionEl.querySelector('.content-slider'), false, 8);
+                DOM.homeContent.appendChild(sectionEl);
+            });
 
-/* -------------- MODALS -------------- */
-// THIS FUNCTION IS NO LONGER USED BY THE SERIES DETAIL PAGE, BUT KEPT FOR NOW
-async function getEpisodeLinks(episodesUrl, itemType) { // Added itemType
-    DOM.streamModalTitle.textContent = 'Loading Episodes...'; 
-    DOM.streamList.innerHTML = '<div class="loading-text" style="text-align: center;">Please wait...</div>';
-    DOM.streamModal.style.display = 'flex'; // Open modal
-    
-    const episodes = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/episodes?url=${encodeURIComponent(episodesUrl)}`);
-    
-    DOM.streamModalTitle.textContent = 'Select Episode'; 
-    DOM.streamList.innerHTML = ''; // Clear loading
-    
-    if (episodes && episodes.length > 0) {
-        episodes.forEach(episode => {
-            const episodeBtn = document.createElement('button'); 
-            episodeBtn.className = 'stream-btn';
-            episodeBtn.textContent = episode.title;
+            DOM.loadingScreen.style.display = 'none';
+
+            const sliderContainers = DOM.homeContent.querySelectorAll('.content-slider');
+            catalogItems.forEach(async (section, index) => {
+                const posts = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/posts?filter=${encodeURIComponent(section.filter)}&page=1`);
+                if (posts && posts.length > 0) renderContentSlider(posts, sliderContainers[index]);
+                else sliderContainers[index].innerHTML = '<p style="padding-left: 16px; color: var(--text-secondary);">No content found here.</p>';
+            });
+        }
+
+        // RE-ADDED buildGenresPage
+        function buildGenresPage(genreItems) {
+            DOM.genresGrid.innerHTML = '';
+            if (genreItems) genreItems.forEach(genre => {
+                const btn = document.createElement('button');
+                btn.className = 'genre-btn';
+                btn.textContent = genre.title;
+                btn.onclick = () => openCategoryPage(genre.title, genre.filter);
+                DOM.genresGrid.appendChild(btn);
+            });
+        }
+
+        /* -------------- CATEGORY & SEARCH PAGES (RE-ADDED) -------------- */
+        async function loadCategoryPage(page) {
+            currentCategory.page = page;
+            const fromPage = currentCategory.filter.includes('genre') ? 'genres-page' : 'home-page';
+            showPage('category-page', fromPage);
             
-            // On click, load stream links into the *same* modal
-            episodeBtn.onclick = () => {
-                // Load streams *into* the modal
-                loadStreamLinksIntoModal(episode.link, itemType || 'series');
-                
-                // Add a "Back" button to the stream list
-                const backBtn = document.createElement('button');
-                backBtn.className = 'stream-btn';
-                backBtn.style.cssText = 'background: var(--secondary-gradient); color: white;'; // Style it
-                backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Episodes';
-                backBtn.onclick = () => getEpisodeLinks(episodesUrl, itemType); // Re-call self
-                
-                DOM.streamList.prepend(backBtn); // Add to the top of the stream list
-            };
-            DOM.streamList.appendChild(episodeBtn); // Add episode button
-        });
-    } else {
-        DOM.streamList.innerHTML = `<p>No episodes found.</p>`;
-    } 
-}
-
-// *** NEW FUNCTION TO LOAD EPISODES ONTO THE PAGE ***
-async function loadEpisodesOntoPage(linkItem, itemType) {
-    const container = document.getElementById('episodes-list-container');
-    if (!container) return;
-
-    container.innerHTML = '<p class="loading-text" style="text-align: center; padding: 20px;">Loading episodes...</p>';
-    
-    let episodes = [];
-
-    if (linkItem.directLinks && linkItem.directLinks.length > 0) {
-        // Case 1: The "episodes" are already in directLinks
-        episodes = linkItem.directLinks;
-    } else if (linkItem.episodesLink) {
-        // Case 2: We need to fetch the episodes from episodesLink
-        episodes = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/episodes?url=${encodeURIComponent(linkItem.episodesLink)}`);
-    }
-    
-    container.innerHTML = ''; // Clear loading
-    
-    if (episodes && episodes.length > 0) {
-        episodes.forEach(episode => {
-            // Use episode.link for the final stream modal
-            const episodeOrDirectLink = episode.link || episode; 
-
-            const episodeBtn = document.createElement('button'); 
-            episodeBtn.className = 'link-btn'; // Reuse link-btn style
-            episodeBtn.innerHTML = `<span>${escapeHtml(episode.title || episodeOrDirectLink)}</span><i class="fas fa-play"></i>`;
+            DOM.categoryPageTitle.textContent = currentCategory.title;
+            renderSkeleton(DOM.categoryGrid, true, 12);
+            DOM.categoryPagination.controls.style.visibility = 'hidden';
             
-            // On click, load stream links into the modal and show it
-            episodeBtn.onclick = () => {
-                // Pass the correct link (episode.link) and type
-                loadStreamLinksIntoModal(episodeOrDirectLink, itemType || 'series');
-                DOM.streamModal.style.display = 'flex';
-            };
-            container.appendChild(episodeBtn); // Add episode button
-        });
-    } else {
-        container.innerHTML = `<p>No episodes found for this selection.</p>`;
-    }
-}
-
-
-async function loadStreamLinksIntoModal(link, type) { // Renamed from getStreamLinks
-    DOM.streamModalTitle.textContent = 'Loading Streams...'; 
-    DOM.streamList.innerHTML = '<div class="loading-text" style="text-align: center;">Please wait...</div>';
-    // DO NOT open modal here, it's opened by the caller
-    // --- MODIFICATION: Force 'drive', 'hdhub4u', or 'kmMovies' provider for special links ---
-    let streamApiProvider = activeProvider;
-    if (link.includes('mdrive.today')) {
-        streamApiProvider = 'drive'; // This forces the API call to use /api/drive/stream
-    } else if (link.includes('gadgetsweb.xyz')) {
-        streamApiProvider = 'hdhub4u'; // This forces the API call to use /api/hdhub4a/stream
-    } else if (link.includes('magiclinks.my')) {
-        streamApiProvider = 'kmMovies'; // This forces the API call to use /api/kmMovies/stream
-    }
-    // --- END MODIFICATION ---
-
-    const streamData = await fetchJSON(`${POLY_API_BASE}/api/${streamApiProvider}/stream?link=${encodeURIComponent(link)}&type=${type}`);
-    
-    DOM.streamModalTitle.textContent = 'Select Stream'; 
-    DOM.streamList.innerHTML = '';
-    if (streamData && streamData.length > 0) {
-        streamData.forEach(stream => {
-            const streamBtn = document.createElement('a'); streamBtn.className = 'stream-btn';
-            streamBtn.href = stream.link; streamBtn.target = '_blank';
-            // Added an icon and escapeHtml
-            streamBtn.innerHTML = `${escapeHtml(stream.server) || 'Server'} (${escapeHtml(stream.type)}) <i class="fas fa-external-link-alt" style="font-size: 0.8em; margin-left: 8px;"></i>`;
-            DOM.streamList.appendChild(streamBtn);
-        });
-    } else DOM.streamList.innerHTML = `<p>No stream links found.</p>`;
-}
-
-async function openProviderMenu() {
-    DOM.body.classList.add('menu-open');
-    DOM.providerList.innerHTML = '<div class="loading-text" style="text-align: center; padding: 24px;">Loading...</div>';
-    const allProviders = await fetchJSON(`${POLY_API_BASE}/providers`);
-    DOM.providerList.innerHTML = '';
-    if (allProviders) {
-        // *** MODIFIED ***: Use provider list from mock and filter by 'disabled' property
-        const enabledProviders = allProviders.filter(p => !p.disabled);
-        enabledProviders.forEach(provider => {
-            const btn = document.createElement('button');
-            btn.className = 'provider-menu-btn';
-            let checkMark = '';
-            // *** MODIFIED ***: Compare against provider.value
-            if (provider.value === activeProvider) {
-                btn.classList.add('active');
-                checkMark = `<i class="fas fa-check check-mark"></i>`;
+            const url = `${POLY_API_BASE}/api/${activeProvider}/posts?filter=${encodeURIComponent(currentCategory.filter)}&page=${page}`;
+            const posts = await fetchJSON(url);
+            
+            if (posts && posts.length > 0) {
+                renderGrid(posts, DOM.categoryGrid);
+                DOM.categoryPagination.controls.style.visibility = 'visible';
+                DOM.categoryPagination.prevBtn.disabled = (page === 1);
+                DOM.categoryPagination.nextBtn.disabled = posts.length < 10; // Simple check
+            } else {
+                DOM.categoryGrid.innerHTML = `<p style="color: var(--text-secondary); text-align: center; grid-column: 1 / -1; font-size: 16px;">No content found here.</p>`;
+                if(page === 1) DOM.categoryPagination.controls.style.visibility = 'hidden';
+                DOM.categoryPagination.nextBtn.disabled = true;
             }
-            // *** MODIFIED ***: Use provider.display_name for text
-            btn.innerHTML = `<i class="fas fa-film icon"></i> <span>${provider.display_name}</span> ${checkMark}`;
-            btn.onclick = () => {
-                // *** MODIFIED ***: Compare and set provider.value
-                if (provider.value !== activeProvider) {
-                    localStorage.setItem('sanchitflix_provider', provider.value);
-                    activeProvider = provider.value;
-                    closeProviderMenu();
-                    initializeApp(true); 
-                } else {
-                    closeProviderMenu();
+        }
+
+        async function doSearch() {
+            const query = DOM.searchInput.value.trim();
+            if (!query) {
+                DOM.searchGrid.innerHTML = '';
+                document.getElementById('search-description').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('search-description').style.display = 'none';
+            DOM.searchGrid.innerHTML = '';
+            renderSkeleton(DOM.searchGrid, true, 12);
+            
+            const results = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/search?query=${encodeURIComponent(query)}&page=1`);
+            
+            if (results && results.length > 0) renderGrid(results, DOM.searchGrid);
+            else DOM.searchGrid.innerHTML = `<p style="color: var(--text-secondary); text-align: center; grid-column: 1 / -1; font-size: 16px;">No results found for your search.</p>`;
+        }
+
+        /* -------------- GRID & SLIDER ITEM RENDERING -------------- */
+        function renderContentSlider(items, container) {
+            container.innerHTML = '';
+            items.forEach(item => {
+                const gridItem = document.createElement('div');
+                gridItem.className = 'grid-item';
+                const itemId = item.link || item.title;
+                const isFav = isFavorite(itemId);
+                gridItem.innerHTML = `
+                <div class="content-card">
+                    <img src="${item.image || placeholder(item.title)}" onerror="this.src='${placeholder(item.title)}'"/>
+                    <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+                <p class="content-caption">${escapeHtml(getShortTitle(item.title))}</p>`;
+                gridItem.onclick = () => openDetailPage(item, 'home-page');
+                container.appendChild(gridItem);
+            });
+        }
+        
+        // RE-ADDED renderGrid
+        function renderGrid(items, container) {
+            container.innerHTML = '';
+            items.forEach(item => {
+                const gridItem = document.createElement('div');
+                gridItem.className = 'grid-item';
+                const itemId = item.link || item.title;
+                const isFav = isFavorite(itemId);
+                gridItem.innerHTML = `
+                <div class="content-card">
+                    <img src="${item.image || placeholder(item.title)}" onerror="this.src='${placeholder(item.title)}'"/>
+                    <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
+                <p class="content-caption">${escapeHtml(getShortTitle(item.title))}</p>`;
+                gridItem.onclick = () => openDetailPage(item, document.querySelector('.page[style*="block"]').id);
+                container.appendChild(gridItem);
+            });
+        }
+
+        /* -------------- DETAIL PAGE & LINK LOGIC -------------- */
+        async function openDetailPage(item, fromPage) {
+            showPage('detail-page', fromPage);
+            const itemId = item.link || item.title;
+            const isFav = isFavorite(itemId);
+
+            // NEW: Clean the title for the detail page as well.
+            // We'll use getShortTitle's logic (remove "Download" but keep year)
+            // but we won't shorten it.
+            let detailTitle = item.title;
+            if (detailTitle) {
+                // NEW: Handle ., _, and Download prefix
+                detailTitle = detailTitle.replace(/^Download[\s._]+/i, '').trim();
+                detailTitle = detailTitle.replace(/[._]/g, ' ');
+                detailTitle = detailTitle.replace(/\s+/g, ' ').trim();
+            }
+
+            DOM.detailTitle.textContent = detailTitle; // Use cleaned title
+            const image = item.image || placeholder(item.title); // Placeholder uses original
+            DOM.detailBackdrop.innerHTML = `<img src="${image}" alt="Backdrop">`;
+            DOM.detailPoster.innerHTML = `<img src="${image}" alt="Poster">`;
+            DOM.detailStoryline.textContent = 'Loading story...';
+            DOM.detailLinkList.innerHTML = '<p>Getting links...</p>';
+            DOM.detailMeta.innerHTML = '';
+            DOM.downloadSectionTitle.textContent = "Download Links"; // Default title
+
+            // Clear old favorite button before adding new one
+            const oldFavBtn = DOM.detailPoster.querySelector('.favorite-btn');
+            if (oldFavBtn) oldFavBtn.remove();
+            
+            const favBtn = document.createElement('button');
+            favBtn.className = `favorite-btn ${isFav ? 'active' : ''}`;
+            favBtn.innerHTML = '<i class="fas fa-heart"></i>';
+            favBtn.onclick = (e) => { e.stopPropagation(); toggleFavorite(itemId); favBtn.classList.toggle('active'); };
+            DOM.detailPoster.appendChild(favBtn);
+            
+            const metaData = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/meta?link=${encodeURIComponent(item.link)}`);
+            if (metaData) {
+                DOM.detailStoryline.textContent = metaData.synopsis || 'Story details are not available.';
+                if (metaData.type) DOM.detailMeta.innerHTML = `<span style="background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;">${metaData.type.toUpperCase()}</span><span>${metaData.year || ''}</span><span>${metaData.runtime || ''}</span>`;
+                DOM.detailLinkList.innerHTML = '';
+
+                if (!metaData.linkList || metaData.linkList.length === 0) {
+                    DOM.detailLinkList.innerHTML = `<p>No links found for this.</p>`; return;
                 }
-            };
-            DOM.providerList.appendChild(btn);
-        });
-    } else {
-        DOM.providerList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Could not load providers.</p>';
-    }
-}
-function closeProviderMenu() { DOM.body.classList.remove('menu-open'); }
-function closeStreamModal() { DOM.streamModal.style.display = 'none'; DOM.streamList.innerHTML = ''; }
-// RE-ADDED openCategoryPage
-function openCategoryPage(title, filter) { currentCategory = { title, filter, page: 1 }; loadCategoryPage(1); }
+                
+                // --- NEW LOGIC FOR SERIES ---
+                if (metaData.type === 'series') {
+                    DOM.downloadSectionTitle.textContent = "Select Season / Quality";
+                    
+                    // 1. Create Season Select Dropdown
+                    const seasonSelect = document.createElement('select');
+                    seasonSelect.className = 'season-select';
+                    
+                    // 2. Populate dropdown directly from linkList
+                    metaData.linkList.forEach((linkItem, index) => { // Added index
+                        const option = document.createElement('option');
+                        option.value = index; // Store the index of the linkItem
+                        option.textContent = linkItem.title;
+                        option.dataset.type = metaData.type || 'series'; // Store type for later
+                        seasonSelect.appendChild(option);
+                    });
+                    
+                    DOM.detailLinkList.appendChild(seasonSelect);
+                    
+                    // 3. Create a container for quality/episode buttons
+                    const episodesListContainer = document.createElement('div');
+                    episodesListContainer.id = "episodes-list-container"; // Add ID for the new function
+                    episodesListContainer.className = 'link-list'; // Reuse existing class for gap
+                    DOM.detailLinkList.appendChild(episodesListContainer);
 
-// Global exposure
-window.toggleFavorite = toggleFavorite;
-window.closeStreamModal = closeStreamModal;
+                    // 4. Add event listener to load episodes when dropdown changes
+                    seasonSelect.addEventListener('change', (e) => {
+                        const selectedIndex = e.target.value;
+                        const selectedLinkItem = metaData.linkList[selectedIndex]; // Get the full object
+                        const itemType = e.target.options[e.target.selectedIndex].dataset.type;
+                        loadEpisodesOntoPage(selectedLinkItem, itemType); // Pass the full object
+                    });
+                    
+                    // 5. Load episodes for the *first* season by default
+                    if (metaData.linkList.length > 0) {
+                        const firstItem = metaData.linkList[0];
+                        loadEpisodesOntoPage(firstItem, metaData.type || 'series'); // Pass the full object
+                    }
+                } else {
+                    // --- ORIGINAL LOGIC FOR MOVIES ---
+                    DOM.downloadSectionTitle.textContent = "Stream / Download Links";
+                    metaData.linkList.forEach(linkItem => {
+                        if (linkItem.directLinks && linkItem.directLinks.length > 0) {
+                            const directLink = linkItem.directLinks[0];
+                            
+                            if (directLink.link.includes('mdrive.today') || directLink.link.includes('gadgetsweb.xyz') || directLink.link.includes('magiclinks.my')) {
+                                const linkBtn = document.createElement('button');
+                                linkBtn.className = 'link-btn';
+                                linkBtn.innerHTML = `<span>${escapeHtml(linkItem.title)}</span><i class="fas fa-play"></i>`;
+                                // MODIFIED: This now correctly opens the modal
+                                linkBtn.onclick = () => {
+                                    loadStreamLinksIntoModal(directLink.link, metaData.type || 'movie');
+                                    DOM.streamModal.style.display = 'flex';
+                                }
+                                DOM.detailLinkList.appendChild(linkBtn);
+                            } else {
+                                const linkAnchor = document.createElement('a');
+                                linkAnchor.className = 'link-btn';
+                                linkAnchor.href = directLink.link;
+                                linkAnchor.target = '_blank';
+                                linkAnchor.innerHTML = `<span>${escapeHtml(linkItem.title)}</span><i class="fas fa-download"></i>`;
+                                DOM.detailLinkList.appendChild(linkAnchor);
+                            }
+                        }
+                    });
+                }
+                // --- END OF LOGIC ---
+                if (DOM.detailLinkList.innerHTML === '') DOM.detailLinkList.innerHTML = `<p>Could not find any links.</p>`;
+            } else {
+                DOM.detailLinkList.innerHTML = `<p>No links found for this.</p>`;
+            }
+        }
 
-</script>
+        /* -------------- MODALS -------------- */
+        // THIS FUNCTION IS NO LONGER USED BY THE SERIES DETAIL PAGE, BUT KEPT FOR NOW
+        async function getEpisodeLinks(episodesUrl, itemType) { // Added itemType
+            DOM.streamModalTitle.textContent = 'Loading Episodes...';
+            DOM.streamList.innerHTML = '<div class="loading-text" style="text-align: center;">Please wait...</div>';
+            DOM.streamModal.style.display = 'flex'; // Open modal
+            
+            const episodes = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/episodes?url=${encodeURIComponent(episodesUrl)}`);
+            
+            DOM.streamModalTitle.textContent = 'Select Episode';
+            DOM.streamList.innerHTML = ''; // Clear loading
+            
+            if (episodes && episodes.length > 0) {
+                episodes.forEach(episode => {
+                    const episodeBtn = document.createElement('button');
+                    episodeBtn.className = 'stream-btn';
+                    episodeBtn.textContent = episode.title;
+                    
+                    // On click, load stream links into the *same* modal
+                    episodeBtn.onclick = () => {
+                        // Load streams *into* the modal
+                        loadStreamLinksIntoModal(episode.link, itemType || 'series');
+                        
+                        // Add a "Back" button to the stream list
+                        const backBtn = document.createElement('button');
+                        backBtn.className = 'stream-btn';
+                        backBtn.style.cssText = 'background: var(--secondary-gradient); color: white;'; // Style it
+                        backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Episodes';
+                        backBtn.onclick = () => getEpisodeLinks(episodesUrl, itemType); // Re-call self
+                        
+                        DOM.streamList.prepend(backBtn); // Add to the top of the stream list
+                    };
+                    DOM.streamList.appendChild(episodeBtn); // Add episode button
+                });
+            } else {
+                DOM.streamList.innerHTML = `<p>No episodes found.</p>`;
+            } 
+        }
+
+        // *** NEW FUNCTION TO LOAD EPISODES ONTO THE PAGE ***
+        async function loadEpisodesOntoPage(linkItem, itemType) {
+            const container = document.getElementById('episodes-list-container');
+            if (!container) return;
+            container.innerHTML = '<p class="loading-text" style="text-align: center; padding: 20px;">Loading episodes...</p>';
+            
+            let episodes = [];
+            if (linkItem.directLinks && linkItem.directLinks.length > 0) {
+                // Case 1: The "episodes" are already in directLinks
+                episodes = linkItem.directLinks;
+            } else if (linkItem.episodesLink) {
+                // Case 2: We need to fetch the episodes from episodesLink
+                episodes = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/episodes?url=${encodeURIComponent(linkItem.episodesLink)}`);
+            }
+            
+            container.innerHTML = ''; // Clear loading
+            
+            if (episodes && episodes.length > 0) {
+                episodes.forEach(episode => {
+                    // Use episode.link for the final stream modal
+                    const episodeOrDirectLink = episode.link || episode;
+                    const episodeBtn = document.createElement('button');
+                    episodeBtn.className = 'link-btn'; // Reuse link-btn style
+                    episodeBtn.innerHTML = `<span>${escapeHtml(episode.title || episodeOrDirectLink)}</span><i class="fas fa-play"></i>`;
+                    
+                    // On click, load stream links into the modal and show it
+                    episodeBtn.onclick = () => {
+                        // Pass the correct link (episode.link) and type
+                        loadStreamLinksIntoModal(episodeOrDirectLink, itemType || 'series');
+                        DOM.streamModal.style.display = 'flex';
+                    };
+                    container.appendChild(episodeBtn); // Add episode button
+                });
+            } else {
+                container.innerHTML = `<p>No episodes found for this selection.</p>`;
+            }
+        }
+
+
+        async function loadStreamLinksIntoModal(link, type) { // Renamed from getStreamLinks
+            DOM.streamModalTitle.textContent = 'Loading Streams...';
+            DOM.streamList.innerHTML = '<div class="loading-text" style="text-align: center;">Please wait...</div>';
+            // DO NOT open modal here, it's opened by the caller
+            
+            // --- MODIFICATION: Force 'drive', 'hdhub4u', or 'kmMovies' provider for special links ---
+            let streamApiProvider = activeProvider;
+            if (link.includes('mdrive.today')) {
+                streamApiProvider = 'drive'; // This forces the API call to use /api/drive/stream
+            } else if (link.includes('gadgetsweb.xyz')) {
+                streamApiProvider = 'hdhub4u'; // This forces the API call to use /api/hdhub4a/stream
+            } else if (link.includes('magiclinks.my')) {
+                streamApiProvider = 'kmMovies'; // This forces the API call to use /api/kmMovies/stream
+            }
+            // --- END MODIFICATION ---
+
+            const streamData = await fetchJSON(`${POLY_API_BASE}/api/${streamApiProvider}/stream?link=${encodeURIComponent(link)}&type=${type}`);
+            
+            DOM.streamModalTitle.textContent = 'Select Stream';
+            DOM.streamList.innerHTML = '';
+            if (streamData && streamData.length > 0) {
+                streamData.forEach(stream => {
+                    const streamBtn = document.createElement('a');
+                    streamBtn.className = 'stream-btn';
+                    streamBtn.href = stream.link;
+                    streamBtn.target = '_blank';
+                    // Added an icon and escapeHtml
+                    streamBtn.innerHTML = `${escapeHtml(stream.server) || 'Server'} (${escapeHtml(stream.type)}) <i class="fas fa-external-link-alt" style="font-size: 0.8em; margin-left: 8px;"></i>`;
+                    DOM.streamList.appendChild(streamBtn);
+                });
+            } else DOM.streamList.innerHTML = `<p>No stream links found.</p>`;
+        }
+
+        async function openProviderMenu() {
+            DOM.body.classList.add('menu-open');
+            DOM.providerList.innerHTML = '<div class="loading-text" style="text-align: center; padding: 24px;">Loading...</div>';
+            const allProviders = await fetchJSON(`${POLY_API_BASE}/providers`);
+            DOM.providerList.innerHTML = '';
+            if (allProviders) {
+                // *** MODIFIED ***: Use provider list from mock and filter by 'disabled' property
+                const enabledProviders = allProviders.filter(p => !p.disabled);
+                enabledProviders.forEach(provider => {
+                    const btn = document.createElement('button');
+                    btn.className = 'provider-menu-btn';
+                    let checkMark = '';
+                    // *** MODIFIED ***: Compare against provider.value
+                    if (provider.value === activeProvider) {
+                        btn.classList.add('active');
+                        checkMark = `<i class="fas fa-check check-mark"></i>`;
+                    }
+                    // *** MODIFIED ***: Use provider.display_name for text
+                    btn.innerHTML = `<i class="fas fa-film icon"></i> <span>${provider.display_name}</span> ${checkMark}`;
+                    btn.onclick = () => {
+                        // *** MODIFIED ***: Compare and set provider.value
+                        if (provider.value !== activeProvider) {
+                            localStorage.setItem('sanchitflix_provider', provider.value);
+                            activeProvider = provider.value;
+                            closeProviderMenu();
+                            initializeApp(true);
+                        } else {
+                            closeProviderMenu();
+                        }
+                    };
+                    DOM.providerList.appendChild(btn);
+                });
+            } else {
+                DOM.providerList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Could not load providers.</p>';
+            }
+        }
+
+        function closeProviderMenu() { DOM.body.classList.remove('menu-open'); }
+        function closeStreamModal() { DOM.streamModal.style.display = 'none'; DOM.streamList.innerHTML = ''; }
+        
+        // RE-ADDED openCategoryPage
+        function openCategoryPage(title, filter) {
+            currentCategory = { title, filter, page: 1 };
+            loadCategoryPage(1);
+        }
+
+        // Global exposure
+        window.toggleFavorite = toggleFavorite;
+        window.closeStreamModal = closeStreamModal;
+    </script>
 </body>
 </html>
