@@ -1,0 +1,585 @@
+[
+  {
+    "type": "slider",
+    "title": "Ganesh Chaturthi",
+    "path": "slider_img/37253WhatsApp Image 2024-09-21 at 12.13.40 PM (4).jpeg"
+  },
+  {
+    "type": "slider",
+    "title": "Gandhi Jayanti",
+    "path": "slider_img/17682IMG_20241002_082048.jpg"
+  },
+  {
+    "type": "slider",
+    "title": "Communal Harmony Rally",
+    "path": "slider_img/42075WhatsApp Image 2024-11-27 at 9.38.13 AM.jpeg"
+  },
+  {
+    "type": "slider",
+    "title": "Constitution Day",
+    "path": "slider_img/64992WhatsApp Image 2024-11-26 at 9.12.54 AM (17).jpeg"
+  },
+  {
+    "type": "slider",
+    "title": "Swachh Bharat Abhiyan",
+    "path": "slider_img/77552WhatsApp Image 2024-09-25 at 11.29.30 AM (12).jpeg"
+  },
+  {
+    "type": "slider",
+    "title": "Annual Sports",
+    "path": "slider_img/89529WhatsApp Image 2025-01-08 at 6.27.12 PM (1).jpeg"
+  },
+  {
+    "type": "slider",
+    "title": "Youth Peace Foundation",
+    "path": "slider_img/45636IMG_20240911_082729.jpg"
+  },
+  {
+    "type": "slider",
+    "title": "Swachh Bharat Rally",
+    "path": "slider_img/86799WhatsApp Image 2024-09-20 at 2.57.54 PM.jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Mr Mannu Lal Dhruw",
+    "designation": "PRINCIPAL",
+    "category": "Principal",
+    "path": "faculty/17240pmtr0j4l.png"
+  },
+  {
+    "type": "faculty",
+    "name": "Mr Ajay Kumar Mishra",
+    "designation": "VICE-PRINCIPAL",
+    "category": "Vice Principal",
+    "path": "faculty/228178kzr314f.png"
+  },
+  {
+    "type": "faculty",
+    "name": "Mr J K Gendare",
+    "designation": "Head Master (Section I)",
+    "category": "Head Master",
+    "path": "faculty/7067025q9glii.png"
+  },
+  {
+    "type": "faculty",
+    "name": "Lahiri Kamlesh Amlesh",
+    "designation": "Head Master (Section II)",
+    "category": "Head Master",
+    "path": "faculty/79603Lahiri Kamlesh Amlesh PS-II HM.jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "B L Rathore",
+    "designation": "PGT Geography",
+    "category": "PGT",
+    "path": "faculty/91693B L RATHORE PGT GEOGRAPHY.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "M.K. Chaturvedi",
+    "designation": "PGT Hindi",
+    "category": "PGT",
+    "path": "faculty/68936M.K. CHATURVEDI PGT HINDI.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Y. Meena",
+    "designation": "Sr. PGT English",
+    "category": "PGT",
+    "path": "faculty/62561WhatsApp Image 2025-05-02 at 10..jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Ashok",
+    "designation": "Sr. PGT Pol. Sci.",
+    "category": "PGT",
+    "path": "faculty/66293Ashok (1).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Madhulika Varma",
+    "designation": "Sr. PGT Science",
+    "category": "PGT",
+    "path": "faculty/81944WhatsApp Image 2025-05-02 at 8.4.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Rajkumari Saxena",
+    "designation": "PGT Economics",
+    "category": "PGT",
+    "path": "faculty/96295WhatsApp Image 2025-04-29 at 12..jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Ankita Biswas",
+    "designation": "PGT Physics (Contract)",
+    "category": "PGT",
+    "path": "faculty/17570ANKITA BISWAS PGT PHYSICS (CONTRACT).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Jaya Singh",
+    "designation": "PGT English (Contract)",
+    "category": "PGT",
+    "path": "faculty/40289JAYA SINGH PGT ENGLISH (CONTRACT).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Nagesh Mishra",
+    "designation": "PGT Commerce (Contract)",
+    "category": "PGT",
+    "path": "faculty/13089NAGESH MISHRA PGT COMMERCE (CONTRACT).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "V. Usha Bala",
+    "designation": "PGT History (Contract)",
+    "category": "PGT",
+    "path": "faculty/45811download (1).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Vedita Tiwari",
+    "designation": "PGT Maths (Contract)",
+    "category": "PGT",
+    "path": "faculty/82819download (3).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Poonam Gondane",
+    "designation": "Sr. TGT Maths",
+    "category": "TGT",
+    "path": "faculty/61981POONAM GONDANE TGT MATHS.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Rajkumar Baya",
+    "designation": "Sr. TGT Hindi",
+    "category": "TGT",
+    "path": "faculty/58378RAJKUMAR BAYA Sr. TGT HINDI.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Rashmi Singh",
+    "designation": "Sr. TGT SST",
+    "category": "TGT",
+    "path": "faculty/88132RASHMI SINGH SR TGT SST.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Alka Thakur",
+    "designation": "Sr. TGT Maths",
+    "category": "TGT",
+    "path": "faculty/26275ALKA THAKUR SR TGT MATHS.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Shiv Kumar Khunte",
+    "designation": "Sr. TGT Hindi",
+    "category": "TGT",
+    "path": "faculty/44044SHIV KUMAR KHUNTE TGT HINDI.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Suhel Siddiqui",
+    "designation": "Sr. TGT Science",
+    "category": "TGT",
+    "path": "faculty/15234SUHEL SIDDIQUI SR TGT SCIENCE.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "R.R. David",
+    "designation": "Sr. TGT SST",
+    "category": "TGT",
+    "path": "faculty/14615REENA ROSLIN DAVID SR TGT.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Vikas Kumar Sahu",
+    "designation": "TGT Maths",
+    "category": "TGT",
+    "path": "faculty/9746VIKAS KUMAR SAHU TGT MATHS.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Uttam Kumar Gupta",
+    "designation": "TGT Science",
+    "category": "TGT",
+    "path": "faculty/52715UTTAM KUMAR GUPTA TGT SCIENCE.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Kajal Dwivedi",
+    "designation": "TGT Hindi (Contract)",
+    "category": "TGT",
+    "path": "faculty/95256KAJAL DWIVEDI TGT HINDI (CONTRACT).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Niyon Singh Parihar",
+    "designation": "TGT Hindi (Contract)",
+    "category": "TGT",
+    "path": "faculty/44594NIYON SINGH PARIHAR TGT HINDI (CONTRACT).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Rajvinder Kaur",
+    "designation": "TGT English (Contract)",
+    "category": "TGT",
+    "path": "faculty/71434RAJVINDER KAUR TGT ENGLISH (CONTRACT).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Tulsi Tiwari",
+    "designation": "TGT Sanskrit (Contract)",
+    "category": "TGT",
+    "path": "faculty/13033download.jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Vaidehi Bahirat",
+    "designation": "TGT Science (Contract)",
+    "category": "TGT",
+    "path": "faculty/93064download (2).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Rohit Kumar Verma",
+    "designation": "TGT Computer (Contract)",
+    "category": "TGT",
+    "path": "faculty/10110download (6).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Sanjay Tirkey",
+    "designation": "PET Teacher",
+    "category": "Sports",
+    "path": "faculty/49431SANJAY TIRKEY PET TEACHER.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Kaushilya Sahu",
+    "designation": "Sports Teacher (Contract)",
+    "category": "Sports",
+    "path": "faculty/41887KAUSHILYA SAHU SPORTS TEACHER (CONTRACT).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "P Varsha Rani",
+    "designation": "PET Teacher (Contract)",
+    "category": "Sports",
+    "path": "faculty/41860P VARSHA RANI PET TEACHER (CONTRACT).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Indraveer Singh",
+    "designation": "Music Teacher",
+    "category": "Music",
+    "path": "faculty/48513download (4).jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Rahul Gendare",
+    "designation": "PST Computer (Contract)",
+    "category": "PST",
+    "path": "faculty/64323WhatsApp Image 2025-07-02 at 09.43.19.jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Dhiraj Bhowmik",
+    "designation": "Sr. PST Regular",
+    "category": "PST",
+    "path": "faculty/58478Dhiraj Bhowmik (Sr. PST REGULAR).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Neeta Bade",
+    "designation": "Sr. PST Regular",
+    "category": "PST",
+    "path": "faculty/69912neeta barde (Sr. PST REGULAR).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Chhaya Bhardwaj",
+    "designation": "PST Regular",
+    "category": "PST",
+    "path": "faculty/30495chhaya bhardwaj ( PST REGULAR).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Anurag Pandey",
+    "designation": "Sr. PST",
+    "category": "PST",
+    "path": "faculty/24651ANURAG PANDEY SR PST.jpeg"
+  },
+  {
+    "type": "faculty",
+    "name": "Priyanka Dubey",
+    "designation": "PST Computer",
+    "category": "PST",
+    "path": "faculty/97558PRIYANKA DUBEY PST COMPUTER CONTRACT.jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Deepa Chandra",
+    "designation": "PST Computer",
+    "category": "PST",
+    "path": "faculty/52344deepa (PST COMPUTER GUEST).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Kabir Manikpuri",
+    "designation": "PST Contract",
+    "category": "PST",
+    "path": "faculty/63891kabir manikpuri (PST CONTRACT).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Rajiv Kumar Jha",
+    "designation": "PST Contract",
+    "category": "PST",
+    "path": "faculty/20727Rajiv Kumar Jha (PST CONTRACT).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Chandrabhan Vaishnaw",
+    "designation": "PST Contract",
+    "category": "PST",
+    "path": "faculty/28169chandrabhan vaishnaw (PST CONTRACT).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Kiran Patel",
+    "designation": "PST Contract",
+    "category": "PST",
+    "path": "faculty/75519Kiran Patel (PST CONTRACT).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Kokila Patne",
+    "designation": "PST Contract",
+    "category": "PST",
+    "path": "faculty/50122Kokila Patne (PST CONTRACT).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Osheen Sekhri",
+    "designation": "PST Contract",
+    "category": "PST",
+    "path": "faculty/96189osheen (PST CONTRACT).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Rimjhim Sahu",
+    "designation": "PST Contract",
+    "category": "PST",
+    "path": "faculty/97900Rimjhim (PST CONTRACT).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Sunita Rajak",
+    "designation": "PST Contract",
+    "category": "PST",
+    "path": "faculty/67443sunita rajak (PST CONTRACT).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Shweta Kumari",
+    "designation": "PST Contract",
+    "category": "PST",
+    "path": "faculty/36179sweta  (PST CONTRACT).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Vibha Jaiswal",
+    "designation": "PST Contract",
+    "category": "PST",
+    "path": "faculty/63364vibha jaiswal (PST CONTRACT).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Avelena Joseph",
+    "designation": "NTT Guest",
+    "category": "NTT",
+    "path": "faculty/29913Avelena Joseph (NTT GUEST).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Chandani",
+    "designation": "NTT Guest",
+    "category": "NTT",
+    "path": "faculty/88933Chandani (NTT GUEST).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Priti Pradhan",
+    "designation": "NTT Guest",
+    "category": "NTT",
+    "path": "faculty/86395Priti Pradhan (NTT GUEST).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Sanchita Chakraborty",
+    "designation": "NTT Guest",
+    "category": "NTT",
+    "path": "faculty/32512Sanchita Chakraborty (NTT GUEST).jpg"
+  },
+  {
+    "type": "faculty",
+    "name": "Sujata Manek",
+    "designation": "NTT Guest",
+    "category": "NTT",
+    "path": "faculty/18015sujata manek (NTT GUEST).jpg"
+  },
+  {
+    "type": "gallery",
+    "event": "Annual Sports",
+    "path": "gallery/83897WhatsApp Image 2025-01-08 at 6.27.12 PM (1).jpeg"
+  },
+  {
+    "type": "gallery",
+    "event": "Annual Sports",
+    "path": "gallery/6047_MG_5072.jpeg"
+  },
+  {
+    "type": "gallery",
+    "event": "Annual Sports",
+    "path": "gallery/82207_MG_5069.jpeg"
+  },
+  {
+    "type": "gallery",
+    "event": "Annual Sports",
+    "path": "gallery/34056IMG_4776.jpeg"
+  },
+  {
+    "type": "gallery",
+    "event": "Annual Sports",
+    "path": "gallery/36701IMG_4835.jpeg"
+  },
+  {
+    "type": "gallery",
+    "event": "Childrens Day",
+    "path": "gallery/11252IMG_6111.jpeg"
+  },
+  {
+    "type": "gallery",
+    "event": "Childrens Day",
+    "path": "gallery/89762IMG_6094.jpeg"
+  },
+  {
+    "type": "gallery",
+    "event": "Constitution Day",
+    "path": "gallery/3567WhatsApp Image 2024-11-26 at 9.12.54 AM (11).jpeg"
+  },
+  {
+    "type": "gallery",
+    "event": "Constitution Day",
+    "path": "gallery/94924WhatsApp Image 2024-11-26 at 9.12.56 AM (9).jpeg"
+  },
+  {
+    "type": "gallery",
+    "event": "Gandhi Jayanti",
+    "path": "gallery/17817IMG_20241002_080819.jpg"
+  },
+  {
+    "type": "gallery",
+    "event": "Gandhi Jayanti",
+    "path": "gallery/51530IMG_20241002_082048.jpg"
+  },
+  {
+    "type": "gallery",
+    "event": "Swachh Bharat",
+    "path": "gallery/63659WhatsApp Image 2024-09-20 at 2.58.26 PM (1).jpeg"
+  },
+  {
+    "type": "gallery",
+    "event": "Swachh Bharat",
+    "path": "gallery/61222WhatsApp Image 2024-09-20 at 2.58.25 PM.jpeg"
+  },
+  {
+    "type": "facility",
+    "title": "Computer Lab",
+    "path": "facility/secrmhss_facilities_5.jpg"
+  },
+  {
+    "type": "facility",
+    "title": "Open Air Gathering Hall",
+    "path": "facility/secrmhss_facilities_3.jpg"
+  },
+  {
+    "type": "facility",
+    "title": "Dance and Music Room",
+    "path": "facility/secrmhss_facilities_6.jpg"
+  },
+  {
+    "type": "facility",
+    "title": "Smart Learning",
+    "path": "facility/secrmhss_facilities_8.jpg"
+  },
+  {
+    "type": "facility",
+    "title": "Big Playground",
+    "path": "facility/secrmhss_campus_3.jpg"
+  },
+  {
+    "type": "facility",
+    "title": "Science Labs",
+    "path": "facility/secrmhss_facilities_11.jpg"
+  },
+  {
+    "type": "facility",
+    "title": "School Library",
+    "path": "facility/secrmhss_facilities_12.jpg"
+  },
+  {
+    "type": "facility",
+    "title": "Green Environment",
+    "path": "facility/secrmhss_facilities_9.jpg"
+  },
+  {
+    "type": "facility",
+    "title": "Purified Drinking Water",
+    "path": "facility/secrmhss_facilities_10.jpg"
+  },
+  {
+    "type": "holiday",
+    "title": "School Holiday List 2025-26",
+    "date": "01-04-2025",
+    "path": "holiday/38576SCHOOL HOLIDAY LIST 2025-26.pdf"
+  },
+  {
+    "type": "fee",
+    "title": "Student Strength",
+    "path": "fee/6704673657secrmhssbsp_student_strength.pdf"
+  },
+  {
+    "type": "fee",
+    "title": "Revised Fee Structure 2025",
+    "path": "fee/89124Revised Fee structure w.e.f. 01 April 2025.pdf"
+  },
+  {
+    "type": "fee",
+    "title": "Academic Calendar 24-25",
+    "path": "fee/98433academic calendar 24-25.pdf"
+  },
+  {
+    "type": "fee",
+    "title": "CBSE Form",
+    "path": "fee/CBSE _ FORM.pdf"
+  },
+  {
+    "type": "fee",
+    "title": "Rules and Regulations",
+    "path": "fee/RulesandRegulations..pdf"
+  },
+  {
+    "type": "fee",
+    "title": "Committee",
+    "path": "fee/committee.pdf"
+  },
+  {
+    "type": "fee",
+    "title": "Uniform List",
+    "path": "fee/secrmhssbsp_school_uniform_list.pdf"
+  }
+]
