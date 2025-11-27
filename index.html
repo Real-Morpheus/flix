@@ -3,54 +3,39 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>SanchitFlix - Dreamstream Cinema</title>
-    <!--
-        - Added Font Awesome link for icons.
-        - Added Google Fonts link for 'Inter'.
-        - NEW: Replaced icon with a professional, Netflix-style "S" favicon.
-    -->
+    <title>SanchitFlix - Client Side</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23141414'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='central' text-anchor='middle' font-size='80' font-weight='900' fill='%23E50914' font-family='Arial, sans-serif'%3ES%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        /*
-        --- REFACTOR NOTES --- ...
-        */
         :root {
-            /* Theme Gradients (Kept from original) */
             --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            
-            /* --- NEW LIGHT THEME (DEFAULT) --- */
             --bg-primary: #ffffff;
-            --bg-secondary: #f4f5f7; /* Light gray for contrast */
+            --bg-secondary: #f4f5f7;
             --card-bg: #ffffff;
-            --text-primary: #18181b; /* Near black */
-            --text-secondary: #52525b; /* Medium gray */
+            --text-primary: #18181b;
+            --text-secondary: #52525b;
             --border-color: #e4e4e7;
             --accent-color: #667eea;
-            /* --- NEW SHADOW SYSTEM (Flutter/Material-like) --- */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
         }
 
-        /* --- NEW DARK THEME --- */
         body.theme-dark {
             --bg-primary: #0a0a0a;
-            --bg-secondary: #161a23; /* Darker secondary */
-            --card-bg: #1e2433; /* Dark card */
-            --text-primary: #f8f8f8; /* Off-white */
-            --text-secondary: #a0a0a0; /* Lighter gray */
+            --bg-secondary: #161a23;
+            --card-bg: #1e2433;
+            --text-primary: #f8f8f8;
+            --text-secondary: #a0a0a0;
             --border-color: rgba(255, 255, 255, 0.1);
             --accent-color: #764ba2;
-            /* Dark-mode shadows are slightly stronger */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
             --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
             --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
         }
         
-        /* Auto-dark mode based on system preference */
         @media (prefers-color-scheme: dark) {
             body:not(.theme-light) {
                 --bg-primary: #0a0a0a;
@@ -60,589 +45,175 @@
                 --text-secondary: #a0a0a0;
                 --border-color: rgba(255, 255, 255, 0.1);
                 --accent-color: #764ba2;
-                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
-                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
             }
         }
 
         * { margin:0; padding:0; box-sizing:border-box; font-family: 'Inter', system-ui, sans-serif; }
-        
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
-            background: var(--bg-secondary); /* Use secondary for the "outside" area */
+            background: var(--bg-secondary);
             color: var(--text-primary);
-            max-width:480px; /* Mobile-first constraint */
-            margin:0 auto;
-            overflow-x:hidden;
-            -webkit-font-smoothing:antialiased;
+            max-width: 480px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
             padding-bottom: 70px;
-            transition: background 0.3s ease, color 0.3s ease;
-            will-change: background;
-            position: relative; /* For containing fixed elements */
+            min-height: 100vh;
         }
         
-        /* --- NEW: Desktop/Tablet Responsiveness --- */
-        /* On desktop, frame the app like a native app */
         @media (min-width: 1024px) {
             body {
-                max-width: 480px; /* Keep phone size */
                 margin: 2rem auto;
-                border-radius: 24px; /* Rounded corners for the "phone" */
+                border-radius: 24px;
                 box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
-                height: calc(100vh - 4rem); /* Fit to screen */
-                overflow-y: auto; /* Enable scrolling *within* the frame */
-                overflow-x: hidden;
+                height: calc(100vh - 4rem);
+                overflow-y: auto;
             }
-            /* Adjust fixed elements to be contained by the new body frame */
             .header { border-radius: 24px 24px 0 0; }
             .bottom-nav { border-radius: 0 0 24px 24px; }
-            #side-menu-panel { border-radius: 0 0 24px 0; }
-            #loading-screen { border-radius: 24px; }
-            #stream-modal { border-radius: 24px; }
         }
 
-        /* Ethereal Loading Nebula - Simplified Animations */
+        /* Loading */
         .loading-screen { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; background:var(--bg-primary); z-index:2000; max-width: 480px; margin: 0 auto; }
-        .loading-logo { font-size:52px; font-weight:900; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom:20px; animation: dreamPulse 2s infinite cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-        .loading-text { color:var(--text-secondary); font-size:18px; animation: etherealFade 2s infinite ease-in-out; letter-spacing: 2px; }
+        .loading-logo { font-size:52px; font-weight:900; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom:20px; animation: dreamPulse 2s infinite; }
+        .loading-text { color:var(--text-secondary); font-size:18px; letter-spacing: 2px; }
         @keyframes dreamPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-        @keyframes etherealFade { 0%, 100% { opacity:0.4; } 50% { opacity:1; } }
 
-        /* Header - Uses new shadows */
+        /* Header */
         .header {
-            background: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.8); /* JS will set --bg-primary-rgb */
+            background: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.8);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             padding: 16px; display: flex; gap: 12px; align-items: center;
             position: sticky; top: 0; z-index: 90;
             border-bottom: 1px solid var(--border-color);
-            transition: all 0.4s ease;
-            will-change: backdrop-filter;
             box-shadow: var(--shadow-md);
         }
-        .logo-container { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .logo { font-size:24px; font-weight:900; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -1px; transition: all 0.4s ease; }
-        .logo:hover { transform: scale(1.05); }
-        .provider-name-display {
-            font-size: 12px; font-weight: 700; background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border-color);
-        }
-        .header-actions { margin-left: auto; display: flex; align-items: center; gap: 16px; }
-        .header-icon-btn { background: none; border: 0; color: var(--text-secondary); font-size: 20px; cursor: pointer; transition: all 0.3s ease; position: relative; border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
-        .header-icon-btn:hover { color: var(--text-primary); transform: scale(1.1); background: rgba(0,0,0,0.05); }
-        body.theme-dark .header-icon-btn:hover { background: rgba(255,255,255,0.1); }
+        .logo { font-size:24px; font-weight:900; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: -1px; }
+        .provider-name-display { font-size: 12px; font-weight: 700; background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border-color); margin-left: 8px;}
+        .header-actions { margin-left: auto; display: flex; gap: 16px; }
+        .header-icon-btn { background: none; border: 0; color: var(--text-secondary); font-size: 20px; cursor: pointer; transition: 0.3s; }
+        .header-icon-btn:hover { color: var(--text-primary); transform: scale(1.1); }
 
-        /* Cosmic Slide-Out Menu - Simplified Animation */
-        #side-menu-overlay {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 2000;
-            opacity: 0; pointer-events: none; transition: opacity 0.5s ease;
-            backdrop-filter: blur(10px);
-            max-width: 480px; margin: 0 auto;
-        }
-        #side-menu-panel {
-            position: fixed; top: 0; left: 0; bottom: 0; width: 80%; max-width: 280px;
-            background: var(--bg-secondary);
-            padding: 30px 16px 24px 16px;
-            transform: translateX(-100%); /* Removed 3D rotate */
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
-            display: flex; flex-direction: column; will-change: transform;
-            box-shadow: var(--shadow-lg);
-            border-right: 1px solid var(--border-color);
-        }
-        body.menu-open #side-menu-overlay { opacity: 1; pointer-events: all; }
-        body.menu-open #side-menu-panel { transform: translateX(0); }
-        .side-menu-header { margin-bottom: 20px; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; text-align: center; }
-        .side-menu-header h2 { font-size: 30px; font-weight: 900; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; animation: cosmicEntry 0.8s ease-out; }
-        .side-menu-header p { color: var(--text-secondary); font-size: 14px; margin-top: 6px; animation: cosmicEntry 0.8s ease-out 0.3s both; letter-spacing: 1px; }
-        @keyframes cosmicEntry { from { opacity: 0; transform: translateY(30px) scale(0.8); } to { opacity: 1; transform: translateY(0) scale(1); } }
-        .provider-list { overflow-y: auto; scrollbar-width: none; display: flex; flex-direction: column; gap: 8px; }
-        .provider-list::-webkit-scrollbar { display: none; }
-        .provider-menu-btn {
-            display: flex; align-items: center; gap: 16px; width: 100%; padding: 16px;
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px; color: var(--text-secondary); text-align: left;
-            font-size: 16px; font-weight: 600; cursor: pointer;
-            transition: all 0.4s ease; position: relative;
-            overflow: hidden; will-change: transform, box-shadow;
-            box-shadow: var(--shadow-sm);
-        }
-        .provider-menu-btn i.icon { font-size: 22px; width: 24px; text-align: center; color: var(--accent-color); transition: all 0.3s; }
-        .provider-menu-btn:hover {
-            background: var(--bg-secondary);
-            transform: translateX(10px) scale(1.02);
-            box-shadow: var(--shadow-md);
-            color: var(--text-primary);
-        }
-        .provider-menu-btn:hover i.icon { transform: scale(1.1); color: var(--text-primary); }
-        .provider-menu-btn.active { background: var(--primary-gradient); color: white; font-weight: 800; box-shadow: var(--shadow-md); }
-        .provider-menu-btn.active i.icon { color: white; transform: scale(1.1); }
-        .provider-menu-btn .check-mark { margin-left: auto; color: white; font-size: 18px; animation: starBurst 0.6s ease-out; }
-        @keyframes starBurst { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(1.3); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
-
-        /* --- *** NEW *** --- */
-        /* This new wrapper will hold the slider AND the indicators */
-        .slider-wrapper {
-            position: relative;
-            border-radius: 24px;
-            box-shadow: var(--shadow-lg);
-            margin-bottom: 24px;
-            background: var(--card-bg); /* Moved background here */
-        }
+        /* Slider */
+        .slider-wrapper { position: relative; border-radius: 24px; box-shadow: var(--shadow-lg); margin-bottom: 24px; background: var(--card-bg); overflow: hidden; }
+        .slider-container { width: 100%; height: 240px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; display: flex; }
+        .slider-container::-webkit-scrollbar { display: none; }
+        .slide { min-width: 100%; height: 100%; position: relative; scroll-snap-align: start; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); }
+        .slide-overlay { position: absolute; inset: 0; padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 70%, #000 100%); }
+        .slide-title { font-size: 22px; font-weight: 900; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); margin-bottom: 8px;}
         
-        /* Slider - Removed clip-path for simpler, rounded design */
-        /* --- NEW: Added touch-swipe styles to slider --- */
-        .slider-container {
-            width: 100%; height: 240px; /* margin-bottom/position/shadow moved to wrapper */
-            background: var(--card-bg); border-radius: 24px; /* Keep radius for clipping */
-            will-change: contents;
-            /* Added for touch swipe */
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scrollbar-width: none; /* Firefox */
-            /* Removed overflow: hidden; */
-        }
-        .slider-container::-webkit-scrollbar { display: none; } /* Chrome, Safari */
-        .slider {
-            display: flex; height: 100%;
-            /* Removed transition, will be handled by snap scrolling or JS */
-            will-change: transform;
-        }
-        .slide {
-            min-width: 100%; height: 100%; position: relative; cursor: pointer;
-            transition: all 0.4s ease; border-radius: 24px; overflow: hidden;
-            /* Added for touch swipe */
-            scroll-snap-align: start;
-        }
-        .slide:hover { transform: scale(1.03); }
-        .slide img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.7) contrast(1.1); transition: all 0.4s ease; }
-        .slide:hover img { filter: brightness(1) contrast(1.2); transform: scale(1.05); }
-        .slide-overlay { position: absolute; left: 0; right: 0; bottom: 0; height: 100%; padding: 24px; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 70%, #000 100%); transition: all 0.4s ease; }
-        .slide-title { font-size: 22px; font-weight: 900; margin-bottom: 16px; color: #ffffff; animation: warpIn 0.6s ease-out; letter-spacing: -0.5px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        @keyframes warpIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .slide-action-btn {
-            display: inline-flex; align-items: center; gap: 10px;
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #ffffff; padding: 12px 20px; border-radius: 30px;
-            text-decoration: none; font-weight: 700; font-size: 15px;
-            align-self: flex-start; transition: all 0.4s ease;
-            position: relative; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-        .slide-action-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: var(--shadow-md), 0 8px 25px rgba(0,0,0,0.3); }
-        .slider-indicators { position: absolute; right: 16px; bottom: 16px; display: flex; gap: 10px; z-index: 10; }
-        .indicator { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.4s ease; will-change: transform; position: relative; }
-        .indicator.active { background: var(--primary-gradient); transform: scale(1.3); }
-        .indicator:hover { transform: scale(1.5); }
-
-        /* Category Section - Simplified */
-        .category-section { margin-bottom: 32px; animation: cascadeIn 0.8s ease-out forwards; opacity: 0; }
-        .category-section:nth-child(1) { animation-delay: 0.1s; } .category-section:nth-child(2) { animation-delay: 0.2s; } .category-section:nth-child(3) { animation-delay: 0.3s; }
-        @keyframes cascadeIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        /* Grid & Cards */
+        .category-section { margin-bottom: 32px; }
         .category-header { display: flex; justify-content: space-between; align-items: center; padding: 0 16px 12px; }
-        .category-title { font-size: 20px; font-weight: 900; color: var(--text-primary); position: relative; padding-left: 16px; transition: all 0.4s ease; }
-        .category-title::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 24px; background: var(--primary-gradient); border-radius: 2px; transition: all 0.4s; }
-        .category-title:hover { transform: translateX(8px); }
-        .see-all-btn { color: #ffffff; font-size: 14px; text-decoration: none; background: var(--primary-gradient); padding: 8px 12px; border-radius: 20px; transition: all 0.4s ease; position: relative; overflow: hidden; font-weight: 700; }
-        .see-all-btn:hover { transform: translateY(-3px) scale(1.1); box-shadow: var(--shadow-md); }
+        .category-title { font-size: 20px; font-weight: 900; color: var(--text-primary); padding-left: 10px; border-left: 4px solid var(--accent-color); }
         .content-slider { display: flex; overflow-x: auto; gap: 16px; padding: 8px 16px 12px; scrollbar-width: none; }
         .content-slider::-webkit-scrollbar { display: none; }
-        .grid-item { flex: 0 0 calc(33.33% - 12px); cursor: pointer; transition: all 0.4s ease; will-change: transform; position: relative; border-radius: 12px; }
-        .grid-item:hover { transform: translateY(-8px) scale(1.05); z-index: 2; }
-        .content-card { border-radius: 12px; overflow: hidden; position: relative; background: var(--card-bg); transition: all 0.4s ease; box-shadow: var(--shadow-md); }
-        .content-card:hover { box-shadow: var(--shadow-lg); }
-        .content-card img { width: 100%; aspect-ratio: 2/3; object-fit: cover; display: block; transition: transform 0.4s ease; }
-        .grid-item:hover .content-card img { transform: scale(1.08); }
-        .content-caption { font-size: 14px; color: var(--text-secondary); text-align: center; margin-top: 10px; font-weight: 700; height: 32px; overflow: hidden; transition: all 0.4s ease; letter-spacing: 0.5px; }
-        .grid-item:hover .content-caption { color: var(--text-primary); }
+        .grid-item { flex: 0 0 calc(33.33% - 12px); cursor: pointer; transition: transform 0.3s; }
+        .grid-item:hover { transform: translateY(-5px); }
+        .content-card { border-radius: 12px; overflow: hidden; position: relative; background: var(--card-bg); box-shadow: var(--shadow-md); aspect-ratio: 2/3; }
+        .content-card img { width: 100%; height: 100%; object-fit: cover; }
+        .content-caption { font-size: 13px; color: var(--text-secondary); text-align: center; margin-top: 8px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* Page Transitions - Simplified */
-        .page { display: none; animation: portalOpen 0.6s ease forwards; background: var(--bg-primary); min-height: 100vh; }
-        @keyframes portalOpen { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
-        .back-btn { background: none; border: 0; color: var(--text-primary); font-size: 22px; cursor: pointer; transition: all 0.3s ease; position: relative; border-radius: 50%; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; }
-        .back-btn:hover { transform: scale(1.2); background: rgba(0,0,0,0.05); }
-        body.theme-dark .back-btn:hover { background: rgba(255,255,255,0.1); }
-
-        /* Provider Page - Simplified */
-        #provider-page { display: block; padding: 40px 20px 20px; text-align: center; animation: starfieldIn 1s ease-out; }
-        @keyframes starfieldIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        #provider-page h2 { background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 28px; font-size: 26px; }
-        .provider-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 20px; }
-        .provider-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-secondary); padding: 16px; border-radius: 16px;
-            font-weight: 700; cursor: pointer; transition: all 0.4s ease;
-            font-size: 14px; box-shadow: var(--shadow-md); position: relative; overflow: hidden;
-        }
-        .provider-btn:hover {
-            border-color: var(--accent-color);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            color: var(--text-primary);
-        }
-        .provider-notice { margin-top: 32px; padding: 18px; background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color); color: var(--text-secondary); font-size: 14px; text-align: center; display: flex; align-items: center; justify-content: center; gap: 12px; transition: all 0.4s ease; }
-        .provider-notice:hover { box-shadow: var(--shadow-md); transform: scale(1.03); }
-        .provider-notice i { color: var(--accent-color); font-size: 18px; animation: twinkle 1.5s infinite; }
-        @keyframes twinkle { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.2); } }
-        .provider-notice p { margin: 0; line-height: 1.6; }
-
-        /* Detail Page - Simplified */
-        .detail-page { padding-top: 60px; }
-        .detail-backdrop { width: 100%; height: 260px; position: relative; overflow: hidden; border-radius: 0 0 30px 30px; }
-        .detail-backdrop img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.6) contrast(1.2); transition: all 0.4s ease; }
-        .detail-backdrop:hover img { filter: brightness(0.8) contrast(1.3); }
-        .detail-backdrop::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 140px; background: linear-gradient(to top, var(--bg-primary), transparent); transition: all 0.4s ease; }
-        .detail-content { padding: 16px; display: flex; gap: 16px; margin-top: -90px; position: relative; z-index: 10; }
-        .detail-poster { width: 130px; height: 195px; border-radius: 16px; overflow: hidden; border: 2px solid var(--border-color); box-shadow: var(--shadow-lg); flex-shrink: 0; transition: all 0.4s ease; will-change: transform; position: relative; }
-        .detail-poster:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
-        .detail-poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .detail-info { flex: 1; }
-        .detail-title { font-size: 22px; font-weight: 900; margin-bottom: 10px; line-height: 1.2; color: var(--text-primary); transition: all 0.4s ease; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
-        .detail-meta { display: flex; flex-wrap: wrap; gap: 12px; color: var(--text-secondary); font-size: 14px; margin-bottom: 14px; }
-        #detail-storyline { background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 16px; border-radius: 16px; margin: 16px 0 28px; color: var(--text-secondary); font-size: 16px; line-height: 1.7; text-align: justify; transition: all 0.4s ease; box-shadow: inset 0 2px 8px rgba(0,0,0,0.05); }
-        body.theme-dark #detail-storyline { box-shadow: inset 0 4px 20px rgba(0,0,0,0.5); }
-        #detail-storyline:hover { box-shadow: var(--shadow-md); }
-        #download-section-title { font-size: 20px; margin-bottom: 18px; background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; position: relative; padding-left: 18px; transition: all 0.4s ease; }
-        #download-section-title::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 4px; height: 20px; background: var(--primary-gradient); border-radius: 2px; transition: all 0.4s; }
-        .download-links-section { padding: 0 16px; margin-bottom: 28px; }
-        .link-list { display: flex; flex-direction: column; gap: 14px; }
-        .link-btn {
-            text-decoration: none; background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary); padding: 14px; border-radius: 16px;
-            font-weight: 700; cursor: pointer; text-align: left;
-            display: flex; justify-content: space-between; align-items: center;
-            position: relative; overflow: hidden; transition: all 0.4s ease;
-            will-change: transform; box-shadow: var(--shadow-md);
-        }
-        .link-btn:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--accent-color);
-        }
-        .link-btn span { flex-grow: 1; }
+        /* Detail Page */
+        .detail-page { padding-top: 0; }
+        .detail-backdrop { width: 100%; height: 260px; position: relative; }
+        .detail-backdrop img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.6); }
+        .detail-content { padding: 16px; display: flex; gap: 16px; margin-top: -80px; position: relative; z-index: 10; }
+        .detail-poster { width: 120px; height: 180px; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-lg); flex-shrink: 0; border: 2px solid white;}
+        .detail-poster img { width: 100%; height: 100%; object-fit: cover; }
+        .detail-info { flex: 1; padding-top: 85px; } /* Pushed down to clear backdrop overlap */
+        .detail-title { font-size: 20px; font-weight: 900; color: var(--text-primary); margin-bottom: 8px; line-height: 1.2; }
+        .detail-meta { font-size: 13px; color: var(--text-secondary); display: flex; gap: 10px; }
+        #detail-storyline { background: var(--bg-secondary); padding: 16px; border-radius: 16px; margin: 16px 0; color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
         
-        /* --- NEW: CSS for Season Dropdown --- */
-        .season-select {
-            width: 100%;
-            padding: 14px;
-            border-radius: 16px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 16px;
-            appearance: none; /* Hide default arrow */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='currentColor'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            background-size: 20px;
-            cursor: pointer;
+        .link-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px;}
+        .link-btn {
+            background: var(--bg-secondary); border: 1px solid var(--border-color);
+            color: var(--text-primary); padding: 14px; border-radius: 12px;
+            font-weight: 600; text-align: left; display: flex; justify-content: space-between;
+            align-items: center; cursor: pointer; transition: 0.2s; text-decoration: none;
         }
-        body.theme-dark .season-select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23f8f8f8'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
-        }
-        /* --- End of New CSS --- */
+        .link-btn:hover { border-color: var(--accent-color); background: var(--card-bg); }
+        .season-select { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-weight: 600; margin-bottom: 12px; }
 
-        /* Stream Modal - Simplified */
-        #stream-modal {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1500;
-            display: none; justify-content: center; align-items: center;
-            backdrop-filter: blur(15px); animation: vortexOpen 0.6s ease;
-            max-width: 480px; margin: 0 auto;
-        }
-        @keyframes vortexOpen { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .stream-modal-content {
-            background: var(--bg-primary);
-            padding: 24px; border-radius: 20px; border: 1px solid var(--border-color);
-            width: 90%; max-width: 400px; position: relative;
-            box-shadow: var(--shadow-lg);
-            transition: all 0.4s ease;
-        }
-        .modal-close-btn {
-            position: absolute; right: 12px; top: 12px; background: none; border: none;
-            color: var(--text-secondary); font-size: 22px; cursor: pointer;
-            transition: all 0.3s ease; border-radius: 50%;
-            width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-        }
-        .modal-close-btn:hover {
-            color: var(--text-primary);
-            transform: scale(1.2);
-            background: var(--bg-secondary);
-        }
-        .stream-list { display: flex; flex-direction: column; gap: 14px; max-height: 70vh; overflow-y: auto; }
-        .stream-btn {
-            display: block; width: 100%; padding: 16px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary); text-decoration: none; text-align: center;
-            border-radius: 12px; font-weight: 700; transition: all 0.4s ease;
-            cursor: pointer; position: relative; overflow: hidden;
-        }
-        .stream-btn:hover {
-            background: var(--primary-gradient);
-            border-color: transparent;
-            transform: translateX(8px);
-            box-shadow: var(--shadow-md);
-            color: white;
-        }
-        .category-grid { padding: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 24px 16px; animation: matrixRain 0.8s ease-out; }
-        @keyframes matrixRain { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
-        .category-grid .grid-item { flex: unset; }
+        /* Provider Menu */
+        #side-menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 2000; display: none; backdrop-filter: blur(5px); }
+        #side-menu-panel { position: fixed; top: 0; left: 0; bottom: 0; width: 80%; max-width: 280px; background: var(--bg-secondary); padding: 20px; transform: translateX(-100%); transition: transform 0.3s ease; display: flex; flex-direction: column; z-index: 2001; box-shadow: var(--shadow-lg); }
+        body.menu-open #side-menu-overlay { display: block; }
+        body.menu-open #side-menu-panel { transform: translateX(0); }
+        .provider-btn { width: 100%; padding: 14px; background: var(--card-bg); border: 1px solid var(--border-color); margin-bottom: 10px; border-radius: 12px; text-align: left; font-weight: 600; color: var(--text-secondary); cursor: pointer; }
+        .provider-btn.active { background: var(--primary-gradient); color: white; border: none; }
 
-        /* Pagination Controls - Simplified */
-        .pagination-controls { display: flex; justify-content: space-between; padding: 16px; }
-        .pagination-btn {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border: 1px solid var(--border-color);
-            padding: 12px 20px; border-radius: 25px; cursor: pointer;
-            font-weight: 700; transition: all 0.4s ease;
-            position: relative; overflow: hidden;
-        }
-        .pagination-btn:hover:not(:disabled) {
-            transform: translateY(-3px) scale(1.1);
-            box-shadow: var(--shadow-md);
-            background: var(--primary-gradient);
-            color: white;
-            border-color: transparent;
-        }
-        .pagination-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        /* Modal */
+        #stream-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 3000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .stream-modal-content { background: var(--bg-primary); padding: 24px; border-radius: 20px; width: 90%; max-width: 400px; max-height: 80vh; overflow-y: auto; position: relative; }
+        .stream-item { display: block; padding: 12px; border-bottom: 1px solid var(--border-color); color: var(--text-primary); text-decoration: none; font-weight: 600; }
+        .stream-item:last-child { border-bottom: none; }
+        .stream-item:hover { background: var(--bg-secondary); color: var(--accent-color); }
 
-        /* Bottom Nav - Simplified */
-        .bottom-nav {
-            position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto;
-            background: rgba(var(--bg-primary-rgb, 255, 255, 255), 0.9);
-            backdrop-filter: blur(15px);
-            border-top: 1px solid var(--border-color);
-            display: none; justify-content: space-around; padding: 12px 0; z-index: 999;
-            transition: all 0.4s ease; box-shadow: 0 -8px 30px rgba(0,0,0,0.1);
-        }
-        body.theme-dark .bottom-nav { box-shadow: 0 -8px 30px rgba(0,0,0,0.4); }
-        .nav-item {
-            flex: 1; text-align: center; color: var(--text-secondary); text-decoration: none;
-            display: flex; flex-direction: column; align-items: center;
-            gap: 6px; font-size: 12px; transition: all 0.4s ease;
-            position: relative;
-        }
-        .nav-item i { font-size: 22px; transition: transform 0.4s ease; }
-        .nav-item:hover { color: var(--text-primary); transform: translateY(-5px); }
+        /* Bottom Nav */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; background: var(--bg-primary); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 12px 0; z-index: 100; }
+        .nav-item { flex: 1; text-align: center; color: var(--text-secondary); text-decoration: none; font-size: 11px; display: flex; flex-direction: column; gap: 4px; }
+        .nav-item i { font-size: 20px; }
         .nav-item.active { color: var(--accent-color); }
-        .nav-item.active i { animation: supernova 0.8s ease-out; }
-        @keyframes supernova { 0% { transform: scale(1); } 50% { transform: scale(1.5); } 100% { transform: scale(1); } }
 
-        /* Genres Grid - Simplified */
-        .genres-grid { padding: 16px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; animation: quantumLeap 0.8s ease-out; }
-        @keyframes quantumLeap { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .genre-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary); padding: 20px; border-radius: 16px;
-            font-weight: 800; cursor: pointer; text-align: center;
-            transition: all 0.4s ease;
-            position: relative; overflow: hidden; box-shadow: var(--shadow-md);
-        }
-        .genre-btn:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--accent-color);
-        }
-
-        /* Search Page - Simplified */
-        #search-page .search-container { position: relative; animation: echoLocate 0.6s ease-out; }
-        @keyframes echoLocate { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        #search-page .search-input {
-            color: var(--text-primary); padding: 16px 50px 16px 50px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            box-shadow: var(--shadow-md);
-            transition: all 0.4s ease;
-            border-radius: 30px; width: 100%; font-size: 16px;
-        }
-        #search-page .search-input:focus {
-            border-color: var(--accent-color);
-            box-shadow: var(--shadow-lg);
-            outline: none; transform: scale(1.02);
-        }
-        #search-page .search-btn-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); font-size: 20px; color: var(--accent-color); transition: all 0.3s; }
-        #search-page .clear-btn {
-            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
-            font-size: 18px; color: var(--text-secondary); background: none; border: 0;
-            cursor: pointer; display: none; transition: all 0.3s ease;
-            border-radius: 50%; width: 32px; height: 32px;
-            display: flex; align-items: center; justify-content: center;
-        }
-        #search-page .clear-btn:hover { color: var(--text-primary); transform: translateY(-50%) scale(1.2); background: var(--bg-secondary); }
-        #search-description { text-align: center; padding: 40px 20px; color: var(--text-secondary); animation: holographicFade 0.8s ease-out; }
-        #search-description h3 { font-size: 20px; color: var(--text-primary); margin-bottom: 10px; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        @keyframes holographicFade { from { opacity: 0; } to { opacity: 1; } }
-
-        /* About Page - Simplified */
-        #about-page { padding: 16px; animation: originStory 0.8s ease-out; }
-        @keyframes originStory { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        #about-page h2 { background: var(--secondary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 14px; transition: all 0.4s ease; }
-        #about-page p { color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px; transition: all 0.4s ease; letter-spacing: 0.5px; }
-        #about-page p:hover { color: var(--text-primary); }
-        .developer-info {
-            margin-top: 28px; padding: 20px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 20px; text-align: center;
-            transition: all 0.4s ease; box-shadow: var(--shadow-md);
-        }
-        .developer-info:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
-        .developer-info h3 { background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 20px; font-size: 20px; transition: all 0.4s ease; }
-        .social-links { display: flex; flex-direction: column; gap: 14px; }
-        .social-btn {
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            padding: 14px; border-radius: 16px; text-decoration: none;
-            font-weight: 700; transition: all 0.4s ease;
-            position: relative; overflow: hidden; box-shadow: var(--shadow-sm);
-        }
-        .social-btn:hover { transform: translateY(-4px) scale(1.05); box-shadow: var(--shadow-md); }
-        .social-btn i { font-size: 22px; transition: transform 0.4s ease; }
-        .social-btn:hover i { transform: scale(1.2); }
-        .social-btn.instagram { background: linear-gradient(45deg, #e4405f, #f77737); color: white; }
-        .social-btn.github { background: #24292e; color: white; }
-        body.theme-light .social-btn.github { background: #24292e; color: white; }
-        body.theme-dark .social-btn.github { background: #39414a; color: white; }
-        .social-btn.telegram { background: linear-gradient(45deg, #0088cc, #00aaff); color: white; }
-
-        /* Skeleton Loader - Updated for new theme */
-        .skeleton {
-            background: linear-gradient(90deg, var(--bg-secondary), var(--card-bg), var(--bg-secondary));
-            background-size: 200% 100%; border-radius: 12px;
-            animation: skeleton-wave 1.5s linear infinite alternate;
-            will-change: background-position;
-        }
-        @keyframes skeleton-wave { from { background-position: 200% center; } to { background-position: 0% center; } }
-
-        /* Favorites Button - Simplified */
-        .favorite-btn {
-            position: absolute; top: 10px; right: 10px;
-            background: rgba(0,0,0,0.6); border: none;
-            color: var(--text-secondary); font-size: 16px; cursor: pointer;
-            border-radius: 50%; width: 36px; height: 36px;
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.4s ease; z-index: 2;
-            border-radius: 50%; box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        .favorite-btn:hover { background: var(--secondary-gradient); transform: scale(1.3); color: white; }
-        .favorite-btn.active { color: #ff6b6b; background: rgba(255, 107, 107, 0.3); animation: cosmicHeart 0.8s ease-out; }
-        /* Simplified heart pulse */
-        @keyframes cosmicHeart { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.4); } }
-
-        /* Reduced Motion Accessibility */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                transform: none !important;
-                animation: none !important;
-                transition: none !important;
-            }
-        }
+        .page { display: none; min-height: 100vh; }
+        #home-page { display: block; }
     </style>
 </head>
-<body>
-    <!-- App content moves inside the body -->
+<body class="theme-dark">
+
+    <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="loading-logo">SanchitFlix</div>
-        <div class="loading-text">Loading...</div>
+        <div class="loading-text">Initializing Core...</div>
     </div>
 
-    <div id="provider-page" class="page">
-        <h2>Choose Your Provider</h2>
-        <div id="provider-grid" class="provider-grid"></div>
-        <div class="provider-notice">
-            <i class="fas fa-info-circle"></i>
-            <p>You can change providers any time from the menu.</p>
+    <!-- Provider Selection (Side Menu) -->
+    <div id="side-menu-overlay"></div>
+    <div id="side-menu-panel">
+        <h2 style="margin-bottom: 20px; font-weight: 900; background: var(--primary-gradient); -webkit-background-clip: text; color: transparent;">Select Source</h2>
+        <div id="provider-list"></div>
+    </div>
+
+    <!-- Stream Modal -->
+    <div id="stream-modal">
+        <div class="stream-modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h3 style="margin: 0;">Select Stream</h3>
+                <button onclick="closeStreamModal()" style="background: none; border: none; font-size: 20px; color: var(--text-secondary); cursor: pointer;"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="stream-list"></div>
         </div>
     </div>
 
+    <!-- MAIN PAGES -->
+
+    <!-- 1. Home Page -->
     <div id="home-page" class="page">
         <div class="header">
             <button id="menu-btn" class="header-icon-btn"><i class="fas fa-bars"></i></button>
-            <div class="logo-container">
-                <div class="logo">SanchitFlix</div>
-                <span id="provider-name-display-home" class="provider-name-display"></span>
-            </div>
+            <div class="logo">SanchitFlix</div>
+            <span id="provider-badge" class="provider-name-display">Vega</span>
             <div class="header-actions">
-                <!-- Updated theme-toggle-btn with an icon that will change -->
-                <button id="theme-toggle-btn" class="header-icon-btn"><i class="fas fa-sun"></i></button>
-                <button id="header-search-btn" class="header-icon-btn"><i class="fas fa-search"></i></button>
+                <button onclick="toggleTheme()" class="header-icon-btn"><i class="fas fa-moon"></i></button>
+                <button onclick="showPage('search-page')" class="header-icon-btn"><i class="fas fa-search"></i></button>
             </div>
         </div>
-        <!--
-        *** MODIFICATION ***
-        - Added a .slider-wrapper to hold both the container and indicators.
-        - This prevents the indicators from scrolling with the overflow.
-        - #slider-indicators is now a sibling of #slider-container, not a child.
-        -->
+
         <div class="slider-wrapper">
-            <div id="slider-container" class="slider-container">
-                <div id="slider" class="slider"></div>
-                <!-- Indicators moved out -->
-            </div>
-            <div id="slider-indicators" class="slider-indicators"></div>
+            <div id="slider-container" class="slider-container"></div>
         </div>
+
         <div id="home-content"></div>
     </div>
-    
-    <!-- RE-ADDED GENRES PAGE -->
-    <div id="genres-page" class="page">
-        <div class="header">
-            <button id="menu-btn-genre" class="header-icon-btn"><i class="fas fa-bars"></i></button>
-            <div class="logo-container">
-                <div class="logo">Genres</div>
-                <span id="provider-name-display-genre" class="provider-name-display"></span>
-            </div>
-            <div class="header-actions">
-                <button id="header-search-btn-genre" class="header-icon-btn"><i class="fas fa-search"></i></button>
-            </div>
-        </div>
-        <div id="genres-grid" class="genres-grid"></div>
-    </div>
 
-    <!-- RE-ADDED CATEGORY PAGE -->
-    <div id="category-page" class="page">
-        <div class="header">
-            <button id="back-btn-category" class="back-btn"><i class="fas fa-arrow-left"></i></button>
-            <div id="category-page-title" class="logo">Category</div>
-        </div>
-        <div id="category-grid" class="category-grid"></div>
-        <div id="category-pagination-controls" class="pagination-controls">
-            <button id="category-prev-btn" class="pagination-btn">Prev</button>
-            <button id="category-next-btn" class="pagination-btn">Next</button>
-        </div>
-    </div>
-
-    <!-- RE-ADDED SEARCH PAGE -->
-    <div id="search-page" class="page">
-        <div class="header">
-            <button id="search-back-btn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
-            <div class="logo">Search</div>
-        </div>
-        <div class="search-container" style="padding: 16px;">
-            <i class="fas fa-search search-btn-icon"></i>
-            <input id="search-input" class="search-input" placeholder="Search for movies or shows..."/>
-            <button id="clear-search-btn" class="clear-btn"><i class="fas fa-times"></i></button>
-        </div>
-        <div id="search-description">
-            <h3>Find Your Favorite</h3>
-            <p>Search for any movie or show you can think of.</p>
-        </div>
-        <div id="search-grid" class="category-grid"></div>
-    </div>
-    
-    <div id="detail-page" class="page detail-page"> <!-- Added detail-page class for padding -->
-        <div class="header" style="background: transparent; border: none; box-shadow: none;">
-            <button id="detail-back-btn" class="back-btn" style="position: static; display: block;"><i class="fas fa-arrow-left"></i></button>
+    <!-- 2. Detail Page -->
+    <div id="detail-page" class="page">
+        <div class="header" style="position: absolute; background: transparent; border: none; box-shadow: none;">
+            <button onclick="goBack()" class="header-icon-btn" style="background: rgba(0,0,0,0.3); color: white; width: 36px; height: 36px; border-radius: 50%;"><i class="fas fa-arrow-left"></i></button>
         </div>
         <div id="detail-backdrop" class="detail-backdrop"></div>
         <div class="detail-content">
@@ -653,967 +224,538 @@
             </div>
         </div>
         <div style="padding: 0 16px;">
-            <div id="detail-storyline" class="detail-storyline"></div>
-            <div class="download-links-section">
-                <h3 id="download-section-title">Download Links</h3>
-                <div id="detail-link-list" class="link-list"></div>
-            </div>
+            <div id="detail-storyline"></div>
+            <h3 style="margin: 24px 0 12px; font-size: 18px; font-weight: 800;">Download / Watch</h3>
+            <div id="detail-links" class="link-list"></div>
         </div>
     </div>
 
-    <div id="about-page" class="page">
+    <!-- 3. Search Page -->
+    <div id="search-page" class="page">
         <div class="header">
-            <button id="about-back-btn" class="back-btn"><i class="fas fa-arrow-left"></i></button>
-            <div class="logo">SanchitFlix Origin</div>
+            <button onclick="goBack()" class="header-icon-btn"><i class="fas fa-arrow-left"></i></button>
+            <div class="logo">Search</div>
         </div>
         <div style="padding: 16px;">
-            <h2>A Dream Forged in Code</h2>
-            <p>Where pixels dance with stories untold, SanchitFlix crafts portals to cinematic universes. Trends pulse like stars, genres unfold as galaxies—your command shapes the narrative.</p>
-            <p>Built for the dreamers: swift, immersive, boundless. Every interaction a spark in the dev's eternal forge.</p>
-            <div class="developer-info">
-                <h3>Link to the Architect</h3>
-                <div class="social-links">
-                    <a href="https://www.instagram.com/sanch1t_/" target="_blank" class="social-btn instagram"><i class="fab fa-instagram"></i> Instagram</a>
-                    <a href="https://github.com/real-morpehus" target="_blank" class="social-btn github"><i class="fab fa-github"></i> GitHub</a>
-                    <a href="https://t.me/S4NCHITT" target="_blank" class="social-btn telegram"><i class="fab fa-telegram-plane"></i> S4NCHITT</a>
-                </div>
-            </div>
+            <input type="text" id="search-input" placeholder="Search movies..." style="width: 100%; padding: 14px; border-radius: 30px; border: 1px solid var(--border-color); background: var(--bg-secondary); color: var(--text-primary); font-size: 16px; outline: none;">
         </div>
-    </div>
-    
-    <div id="stream-modal" class="stream-modal">
-        <div class="stream-modal-content">
-            <button class="modal-close-btn" onclick="closeStreamModal()"><i class="fas fa-times"></i></button>
-            <h3 id="stream-modal-title">Gateway Choices</h3>
-            <div id="stream-list" class="stream-list"></div>
-        </div>
+        <div id="search-results" class="category-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 16px;"></div>
     </div>
 
-    <div id="side-menu-overlay">
-        <div id="side-menu-panel">
-            <div class="side-menu-header">
-                <h2>Change Provider</h2>
-                <p>Select a source</p>
-            </div>
-            <div id="provider-list" class="provider-list"></div>
-        </div>
-    </div>
-
+    <!-- Bottom Nav -->
     <nav class="bottom-nav">
-        <a href="#" id="nav-home" class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
-        <a href="#" id="nav-genres" class="nav-item"><i class="fas fa-th-large"></i><span>Genres</span></a>
-        <a href="#" id="nav-about" class="nav-item"><i class="fas fa-info-circle"></i><span>Origin</span></a>
+        <a href="#" onclick="showPage('home-page')" class="nav-item active"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="#" class="nav-item"><i class="fas fa-heart"></i><span>Favorites</span></a>
+        <a href="#" class="nav-item"><i class="fas fa-cog"></i><span>Settings</span></a>
     </nav>
-    
+
+    <!-- LOGIC SCRIPT -->
     <script>
-        /* -------------- CONFIG & STATE -------------- */
-        const POLY_API_BASE = "https://polymovies.onrender.com";
-        let activeProvider = null;
-        let catalogData = null;
-        let currentCategory = { title: '', filter: '', page: 1 };
-        let currentSlideIndex = 0;
-        let sliderInterval = null;
-        let previousPage = 'home-page';
-        let favorites = JSON.parse(localStorage.getItem('sanchitflix_favorites') || '[]');
-        // --- NEW: State for slider swipe ---
-        let sliderTouchStartX = 0;
-        let sliderTouchMoveX = 0;
-        let isSliderSwiping = false;
+        /* ================= CONFIGURATION ================= */
+        // Using AllOrigins as a CORS proxy since we are completely client-side
+        const CORS_PROXY = "https://api.allorigins.win/raw?url=";
+        let activeProviderId = 'vega';
+        let pageHistory = [];
 
-        /* -------------- DOM ELEMENTS (RE-POPULATED) -------------- */
-        const DOM = {
-            body: document.body,
-            loadingScreen: document.getElementById('loading-screen'),
-            allPages: document.querySelectorAll('.page'),
-            backBtns: document.querySelectorAll('.back-btn'),
-            bottomNav: document.querySelector('.bottom-nav'),
+        /* ================= UTILITIES ================= */
+        const $ = (sel) => document.querySelector(sel);
+        const $$ = (sel) => document.querySelectorAll(sel);
+        
+        const fetchHtml = async (url) => {
+            try {
+                // If url is already proxied or relative, handle it
+                const targetUrl = url.startsWith('http') ? url : ''; 
+                if (!targetUrl) return null;
 
-            providerPage: document.getElementById('provider-page'),
-            providerGrid: document.getElementById('provider-grid'),
+                const response = await fetch(CORS_PROXY + encodeURIComponent(targetUrl));
+                const text = await response.text();
+                const parser = new DOMParser();
+                return parser.parseFromString(text, 'text/html');
+            } catch (e) {
+                console.error("Fetch Error:", e);
+                return null;
+            }
+        };
 
-            homePage: document.getElementById('home-page'),
-            homeContent: document.getElementById('home-content'),
-            providerNameDisplayHome: document.getElementById('provider-name-display-home'),
-            providerNameDisplayGenre: document.getElementById('provider-name-display-genre'),
-            headerSearchBtn: document.getElementById('header-search-btn'),
-            headerSearchBtnGenre: document.getElementById('header-search-btn-genre'),
-            themeToggleBtn: document.getElementById('theme-toggle-btn'),
-            menuBtn: document.getElementById('menu-btn'),
-            menuBtnGenre: document.getElementById('menu-btn-genre'),
+        const showLoading = (show) => $('#loading-screen').style.display = show ? 'flex' : 'none';
 
-            slider: document.getElementById('slider'),
-            sliderIndicators: document.getElementById('slider-indicators'),
+        /* ================= PROVIDER LOGIC (Client-Side) ================= */
+        
+        // --- 1. VegaMovies Provider (Ported to JS) ---
+        const VegaProvider = {
+            baseUrl: "https://vegamovies.ist", // Base URL might change, update if needed
+            
+            catalog: [
+                { title: "Latest Updates", filter: "" },
+                { title: "Netflix", filter: "/web-series/netflix" },
+                { title: "Amazon Prime", filter: "/web-series/amazon-prime-video" },
+                { title: "4K Movies", filter: "/movies-by-quality/2160p" }
+            ],
 
-            genresPage: document.getElementById('genres-page'),
-            genresGrid: document.getElementById('genres-grid'),
-            categoryPage: document.getElementById('category-page'),
-            categoryPageTitle: document.getElementById('category-page-title'),
-            categoryGrid: document.getElementById('category-grid'),
-            categoryPagination: {
-                controls: document.getElementById('category-pagination-controls'),
-                prevBtn: document.getElementById('category-prev-btn'),
-                nextBtn: document.getElementById('category-next-btn'),
+            async getPosts(filter, page = 1) {
+                const url = filter ? `${this.baseUrl}${filter}/page/${page}/` : `${this.baseUrl}/page/${page}/`;
+                const doc = await fetchHtml(url);
+                if (!doc) return [];
+
+                const posts = [];
+                const articles = doc.querySelectorAll(".blog-items article, .post-item");
+                
+                articles.forEach(el => {
+                    const linkEl = el.querySelector("a");
+                    const imgEl = el.querySelector("img");
+                    if (linkEl && imgEl) {
+                        let title = linkEl.getAttribute("title") || linkEl.textContent;
+                        title = title.replace("Download", "").trim();
+                        // Extract cleaner title
+                        const match = title.match(/^(.*?)\s*\((\d{4})\)/);
+                        if (match) title = match[0];
+
+                        posts.push({
+                            title: title,
+                            link: linkEl.getAttribute("href"),
+                            image: imgEl.getAttribute("data-src") || imgEl.getAttribute("src")
+                        });
+                    }
+                });
+                return posts;
             },
 
-            searchPage: document.getElementById('search-page'),
-            searchGrid: document.getElementById('search-grid'),
-            searchInput: document.getElementById('search-input'),
-            clearSearchBtn: document.getElementById('clear-search-btn'),
-
-            detailPage: document.getElementById('detail-page'),
-            detailBackdrop: document.getElementById('detail-backdrop'),
-            detailPoster: document.getElementById('detail-poster'),
-            detailTitle: document.getElementById('detail-title'),
-            detailMeta: document.getElementById('detail-meta'),
-            detailStoryline: document.getElementById('detail-storyline'),
-            downloadSectionTitle: document.getElementById('download-section-title'),
-            detailLinkList: document.getElementById('detail-link-list'),
-
-            streamModal: document.getElementById('stream-modal'),
-            streamList: document.getElementById('stream-list'),
-            streamModalTitle: document.getElementById('stream-modal-title'),
-
-            sideMenuOverlay: document.getElementById('side-menu-overlay'),
-            sideMenuPanel: document.getElementById('side-menu-panel'),
-            providerList: document.getElementById('provider-list'),
-
-            navHome: document.getElementById('nav-home'),
-            navGenres: document.getElementById('nav-genres'),
-            navAbout: document.getElementById('nav-about'),
-        };
-
-        /* -------------- HELPERS -------------- */
-        // --- NEW: Added back provider list and metadata based on user's JSON ---
-        const ALL_PROVIDERS_LIST = [{"display_name":"MoviesDrive","value":"drive","version":"1.4","icon":"","type":"global","disabled":false},{"display_name":"World4uFree","value":"world4u","version":"1.4","icon":"","type":"global","disabled":false},{"display_name":"MoviesMod","value":"mod","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"UHDMovies","value":"uhd","version":"1.1","icon":"","type":"global","disabled":false},{"display_name":"FilmyFly","value":"filmyfly","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"HdHub4u","value":"hdhub4u","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"VegaMovies","value":"vega","version":"1.0","icon":"","type":"global","disabled":false},{"display_name":"A.111477","value":"a111477","version":"1.2","icon":"","type":"english","disabled":false},{"display_name":"Animetsu","value":"animetsu","version":"1.1","icon":"","type":"english","disabled":false},{"display_name":"TokyoInsider","value":"tokyoInsider","version":"1.0","icon":"","type":"english","disabled":false},{"display_name":"KissKh","value":"kissKh","version":"1.2","icon":"","type":"english","disabled":false},{"display_name":"RogMovies","value":"luxMovies","version":"1.6","icon":"","type":"india","disabled":false},{"display_name":"TopMovies","value":"topmovies","version":"1.0","icon":"","type":"india","disabled":false},{"display_name":"GuardaHD","value":"guardahd","version":"1.3","icon":"","type":"global","disabled":false}];
-
-        const PROVIDER_METADATA = ALL_PROVIDERS_LIST.reduce((acc, provider) => {
-            acc[provider.value] = provider.display_name;
-            return acc;
-        }, {});
-
-        const getProviderDisplayName = (value) => PROVIDER_METADATA[value] || value;
-        // --- End new provider data ---
-
-        const fetchJSON = async (url, retries = 3) => {
-            // --- NEW: Mock provider fetch to use ONLY the user's list ---
-            if (url === `${POLY_API_BASE}/providers`) {
-                return Promise.resolve(ALL_PROVIDERS_LIST);
-            }
-            // --- End mock ---
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const res = await fetch(url);
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                    return await res.json();
-                } catch (e) {
-                    if (i === retries - 1) {
-                        console.error(`Fetch failed for ${url}`, e);
-                        return null;
+            async getSearch(query) {
+                const url = `${this.baseUrl}/?s=${encodeURIComponent(query)}`;
+                const doc = await fetchHtml(url);
+                if (!doc) return [];
+                
+                const posts = [];
+                // Vega search results structure
+                const articles = doc.querySelectorAll("article.post-item, article");
+                articles.forEach(el => {
+                    const linkEl = el.querySelector("a");
+                    const imgEl = el.querySelector("img");
+                    if (linkEl && imgEl) {
+                        posts.push({
+                            title: (linkEl.getAttribute("title") || "").replace("Download", "").trim(),
+                            link: linkEl.getAttribute("href"),
+                            image: imgEl.getAttribute("data-src") || imgEl.getAttribute("src")
+                        });
                     }
-                    await new Promise(r => setTimeout(r, 1500 * (i + 1)));
-                }
-            }
-        };
-
-        const placeholder = (t) => `https://placehold.co/500x750/1a1a2e/667eea?text=${encodeURIComponent(t||'SanchitFlix')}`;
-        const escapeHtml = (s) => String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-        
-        const getShortTitle = (t) => {
-            if (!t) return '';
-            // NEW: Clean "Download" text (with . or _) from the beginning
-            let clean = t.replace(/^Download[\s._]+/i, '').trim();
-            // NEW: Replace dots/underscores with spaces
-            clean = clean.replace(/[._]/g, ' ');
-            // NEW: Collapse multiple spaces
-            clean = clean.replace(/\s+/g, ' ').trim();
-            return clean.split(' ').slice(0, 4).join(' ');
-        };
-        
-        const getCleanTitle = (title) => {
-            if (!title) return '';
-            // NEW: Replace dots/underscores with spaces FIRST
-            let clean = title.replace(/[._]/g, ' ');
-            // First, remove ( ) and [ ]
-            clean = clean.replace(/\s*\(.*?\)\s*|\s*\[.*?\]\s*/g, '').trim();
-            // NEW: Remove "Download " (case-insensitive) from the beginning, now catches . and _
-            clean = clean.replace(/^Download[\s._]+/i, '').trim();
-            // NEW: Collapse multiple spaces
-            clean = clean.replace(/\s+/g, ' ').trim();
-            return clean;
-        };
-
-        const debounce = (fn, delay) => {
-            let timer;
-            return (...args) => {
-                clearTimeout(timer);
-                timer = setTimeout(() => fn(...args), delay);
-            };
-        };
-
-        /* -------------- NEW: THEME & FAVORITES -------------- */
-        function initializeTheme() {
-            const preference = localStorage.getItem('sanchitflix_theme');
-            const systemIsDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-            if (preference === 'dark' || (!preference && systemIsDark)) {
-                DOM.body.classList.add('theme-dark');
-            } else {
-                DOM.body.classList.add('theme-light');
-            }
-            updateThemeIcon();
-            updateRgbVariable(); // For backdrop-filter transparency
-        }
-
-        function toggleTheme() {
-            const isDark = DOM.body.classList.contains('theme-dark');
-            if (isDark) {
-                DOM.body.classList.remove('theme-dark');
-                DOM.body.classList.add('theme-light');
-                localStorage.setItem('sanchitflix_theme', 'light');
-            } else {
-                DOM.body.classList.remove('theme-light');
-                DOM.body.classList.add('theme-dark');
-                localStorage.setItem('sanchitflix_theme', 'dark');
-            }
-            updateThemeIcon();
-            updateRgbVariable();
-        }
-
-        function updateThemeIcon() {
-            const isDark = DOM.body.classList.contains('theme-dark');
-            const icon = DOM.themeToggleBtn.querySelector('i');
-            if (isDark) {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            } else {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            }
-        }
-
-        // This helper function sets a CSS variable with the RGB values
-        // of the --bg-primary color. This is needed so the 'rgba(var(--bg-primary-rgb), 0.8)'
-        // backdrop filter can work, as 'rgba(var(--bg-primary), 0.8)' is not valid CSS.
-        function updateRgbVariable() {
-            const bgPrimaryColor = getComputedStyle(DOM.body).getPropertyValue('--bg-primary').trim();
-            // Check if it's a hex color
-            if (bgPrimaryColor.startsWith('#')) {
-                const r = parseInt(bgPrimaryColor.substring(1, 3), 16);
-                const g = parseInt(bgPrimaryColor.substring(3, 5), 16);
-                const b = parseInt(bgPrimaryColor.substring(5, 7), 16);
-                DOM.body.style.setProperty('--bg-primary-rgb', `${r}, ${g}, ${b}`);
-            }
-        }
-
-        // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            const preference = localStorage.getItem('sanchitflix_theme');
-            // Only change if user has 'system' (null) preference
-            if (!preference) {
-                if (e.matches) {
-                    DOM.body.classList.add('theme-dark');
-                    DOM.body.classList.remove('theme-light');
-                } else {
-                    DOM.body.classList.remove('theme-dark');
-                    DOM.body.classList.add('theme-light');
-                }
-                updateThemeIcon();
-                updateRgbVariable();
-            }
-        });
-
-        function toggleFavorite(itemId) {
-            const index = favorites.indexOf(itemId);
-            if (index > -1) { favorites.splice(index, 1); } else { favorites.push(itemId); }
-            localStorage.setItem('sanchitflix_favorites', JSON.stringify(favorites));
-            return index === -1;
-        }
-
-        function isFavorite(itemId) { return favorites.includes(itemId); }
-
-        /* -------------- PAGE NAVIGATION -------------- */
-        const showPage = (pageId, fromPage = null) => {
-            if (fromPage && fromPage !== pageId) previousPage = fromPage;
-            
-            DOM.allPages.forEach(p => p.style.display = 'none');
-            document.getElementById(pageId).style.display = 'block';
-
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            
-            if (['home-page', 'category-page', 'detail-page'].includes(pageId)) {
-                DOM.navHome.classList.add('active');
-                startSliderAuto();
-            } else if (pageId === 'genres-page') {
-                DOM.navGenres.classList.add('active');
-                clearInterval(sliderInterval);
-            } else if (pageId === 'about-page') {
-                DOM.navAbout.classList.add('active');
-                clearInterval(sliderInterval);
-            }
-            // Search page doesn't light up any nav item
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-        
-        // --- REVERTED: goBack uses internal history ---
-        const goBack = () => {
-            showPage(previousPage);
-        };
-
-        /* -------------- SKELETON LOADER -------------- */
-        const renderSkeleton = (container, isGrid = false, count = 8) => {
-            let skeletons = '';
-            for (let i = 0; i < count; i++) {
-                skeletons += `<div class="${isGrid ? 'grid-item' : 'grid-item'}" style="${isGrid ? '' : 'flex: 0 0 calc(33.33% - 12px);'}"><div class="content-card skeleton" style="aspect-ratio: 2/3;"></div><p class="content-caption skeleton" style="height: 14px; width: 85%; margin: 10px auto 0;"></p></div>`;
-            }
-            container.innerHTML = skeletons;
-        };
-
-        /* -------------- APP INITIALIZATION & PROVIDER SELECTION -------------- */
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeTheme(); // Use new theme function
-            attachEventListeners();
-            checkProviderSelection();
-        });
-
-        function attachEventListeners() {
-            DOM.backBtns.forEach(btn => btn.addEventListener('click', goBack));
-            DOM.themeToggleBtn.addEventListener('click', toggleTheme); // Use new theme function
-            DOM.menuBtn.addEventListener('click', openProviderMenu);
-            DOM.menuBtnGenre.addEventListener('click', openProviderMenu); // RE-ADDED
-            DOM.sideMenuOverlay.addEventListener('click', closeProviderMenu);
-            DOM.sideMenuPanel.addEventListener('click', (e) => e.stopPropagation());
-            
-            // RE-ADDED Search Listeners
-            const debouncedSearch = debounce(doSearch, 400);
-            const searchInputHandler = (e) => {
-                const clearBtn = DOM.clearSearchBtn;
-                if(clearBtn) {
-                    clearBtn.style.display = DOM.searchInput.value ? 'block' : 'none';
-                }
-                if (e.key === 'Enter') debouncedSearch();
-                else debouncedSearch();
-            };
-            DOM.searchInput.addEventListener('keydown', searchInputHandler);
-            DOM.searchInput.addEventListener('input', searchInputHandler);
-
-            if(DOM.clearSearchBtn) {
-                DOM.clearSearchBtn.addEventListener('click', () => {
-                    DOM.searchInput.value = '';
-                    DOM.clearSearchBtn.style.display = 'none';
-                    DOM.searchGrid.innerHTML = '';
-                    document.getElementById('search-description').style.display = 'block';
                 });
-            }
+                return posts;
+            },
 
-            const showSearchPage = () => {
-                const activePage = document.querySelector('.page[style*="block"]');
-                showPage('search-page', activePage ? activePage.id : 'home-page');
-            };
-            DOM.headerSearchBtn.addEventListener('click', showSearchPage); // RE-ADDED
-            DOM.headerSearchBtnGenre.addEventListener('click', showSearchPage); // RE-ADDED
-            
-            // RE-ADDED Category Pagination Listeners
-            DOM.categoryPagination.prevBtn.addEventListener('click', () => { if (currentCategory.page > 1) loadCategoryPage(currentCategory.page - 1); });
-            DOM.categoryPagination.nextBtn.addEventListener('click', () => { loadCategoryPage(currentCategory.page + 1); });
-            
-            const getActivePageId = () => {
-                const activePage = document.querySelector('.page[style*="block"]');
-                return activePage ? activePage.id : 'home-page';
-            }
-            
-            DOM.navHome.addEventListener('click', (e) => { e.preventDefault(); showPage('home-page', getActivePageId()); });
-            DOM.navGenres.addEventListener('click', (e) => { e.preventDefault(); showPage('genres-page', getActivePageId()); }); // RE-ADDED
-            DOM.navAbout.addEventListener('click', (e) => { e.preventDefault(); showPage('about-page', getActivePageId()); });
+            async getMeta(link) {
+                const doc = await fetchHtml(link);
+                if (!doc) return null;
 
-            // --- NEW: Slider Swipe Listeners ---
-            const sliderContainer = document.getElementById('slider-container');
-            sliderContainer.addEventListener('touchstart', handleSliderTouchStart, { passive: true });
-            sliderContainer.addEventListener('touchmove', handleSliderTouchMove, { passive: true });
-            sliderContainer.addEventListener('touchend', handleSliderTouchEnd);
-            // --- *** MODIFIED ***: Listen for scroll, removed debounce for faster indicator updates ---
-            sliderContainer.addEventListener('scroll', handleSliderScroll);
-        }
+                const content = doc.querySelector(".entry-content, .post-inner");
+                if (!content) return null;
 
-        function checkProviderSelection() {
-            activeProvider = localStorage.getItem('sanchitflix_provider');
-            if (activeProvider) initializeApp(false); else showProviderSelectionPage();
-        }
-
-        async function showProviderSelectionPage() {
-            DOM.providerGrid.innerHTML = '<p class="loading-text" style="grid-column: 1 / -1; animation: none; font-size: 16px;">Finding providers...</p>';
-            showPage('provider-page');
-            DOM.loadingScreen.style.display = 'flex';
-            const allProviders = await fetchJSON(`${POLY_API_BASE}/providers`);
-            DOM.providerGrid.innerHTML = '';
-            
-            if (allProviders) {
-                // *** MODIFIED ***: Use provider list from mock and filter by 'disabled' property
-                const enabledProviders = allProviders.filter(p => !p.disabled);
+                // Extract Info
+                const title = doc.querySelector("h1.entry-title")?.textContent.replace("Download", "").trim();
+                let image = content.querySelector("img")?.getAttribute("src");
                 
-                if (enabledProviders.length === 0) {
-                    DOM.providerGrid.innerHTML = '<p style="grid-column: 1 / -1; font-size: 16px;">No providers are available right now.</p>';
-                } else {
-                    enabledProviders.forEach(provider => {
-                        const btn = document.createElement('button');
-                        btn.className = 'provider-btn';
-                        // *** MODIFIED ***: Use display_name for text
-                        btn.textContent = provider.display_name;
-                        btn.onclick = () => {
-                            // *** MODIFIED ***: Use provider.value to store
-                            localStorage.setItem('sanchitflix_provider', provider.value);
-                            activeProvider = provider.value;
-                            initializeApp(false);
-                        };
-                        DOM.providerGrid.appendChild(btn);
-                    });
-                }
-            } else {
-                DOM.providerGrid.innerHTML = '<p style="grid-column: 1 / -1; font-size: 16px;">Could not load providers. Please refresh.</p>';
-            }
-            DOM.loadingScreen.style.display = 'none';
-        }
-
-        async function initializeApp(isSwitching) {
-            if (!isSwitching) {
-                showPage('home-page');
-            }
-            // *** MODIFIED ***: Re-added helper function
-            const displayName = getProviderDisplayName(activeProvider);
-            DOM.providerNameDisplayHome.textContent = displayName;
-            DOM.providerNameDisplayGenre.textContent = displayName; // RE-ADDED
-            DOM.bottomNav.style.display = 'flex';
-            DOM.loadingScreen.style.display = 'flex';
-            catalogData = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/catalog`);
-            
-            if (!catalogData) {
-                DOM.homeContent.innerHTML = "<p style='text-align: center; color: var(--text-secondary); padding: 40px;'>This provider is not responding. Please try another.</p>";
-                DOM.loadingScreen.style.display = 'none'; return;
-            }
-
-            const trendingPosts = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/posts?page=1`);
-            
-            if (trendingPosts && trendingPosts.length > 0) {
-                document.getElementById('slider-container').style.display = 'block';
-                // --- UPDATED: Show 5 cards in slider ---
-                renderSlider(trendingPosts.slice(0, 5));
-            } else {
-                document.getElementById('slider-container').style.display = 'none';
-            }
-            
-            buildHomePage(catalogData.catalog || []);
-            buildGenresPage(catalogData.genres || []); // RE-ADDED
-        }
-
-        /* -------------- SLIDER -------------- */
-        function renderSlider(items) {
-            DOM.slider.innerHTML = '';
-            DOM.sliderIndicators.innerHTML = '';
-            items.forEach((item, index) => {
-                const slide = document.createElement('div');
-                slide.className = 'slide';
-                const itemId = item.link || item.title;
-                const isFav = isFavorite(itemId);
-                slide.innerHTML = `<img src="${item.image || placeholder(item.title)}" alt="${escapeHtml(item.title)}">
-                    <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                    <div class="slide-overlay">
-                        <div class="slide-title">${escapeHtml(getCleanTitle(item.title))}</div>
-                        <a class="slide-action-btn"><i class="fas fa-play"></i> View Details</a>
-                    </div>`;
-                slide.onclick = () => openDetailPage(item, 'home-page');
-                DOM.slider.appendChild(slide);
-
-                const indicator = document.createElement('div');
-                indicator.className = 'indicator';
-                indicator.onclick = () => goToSlide(index);
-                DOM.sliderIndicators.appendChild(indicator);
-            });
-            updateSliderTransform();
-        }
-
-        function updateSliderTransform() {
-            if (DOM.slider) {
-                // --- UPDATED: Use scrollLeft for manual swipe ---
-                const container = document.getElementById('slider-container');
-                const scrollAmount = currentSlideIndex * container.clientWidth;
-                container.scrollTo({ left: scrollAmount, behavior: 'smooth' });
-                
-                // --- *** REMOVED *** ---
-                // We are removing this logic to prevent conflicts.
-                // The 'handleSliderScroll' function will now be the ONLY function
-                // that updates the indicators.
-                // DOM.sliderIndicators.querySelectorAll('.indicator').forEach((ind, i) => ind.classList.toggle('active', i === currentSlideIndex));
-            }
-        }
-
-        function goToSlide(index) {
-            currentSlideIndex = index;
-            updateSliderTransform();
-            startSliderAuto();
-        }
-
-        function startSliderAuto() {
-            clearInterval(sliderInterval);
-            sliderInterval = setInterval(() => {
-                const slideCount = DOM.slider.querySelectorAll('.slide').length;
-                if (slideCount > 0) {
-                    currentSlideIndex = (currentSlideIndex + 1) % slideCount;
-                    updateSliderTransform();
-                }
-            }, 5000);
-        }
-        
-        // --- NEW: Slider Swipe Handlers ---
-        function handleSliderTouchStart(e) {
-            clearInterval(sliderInterval); // Stop auto-slide on touch
-            sliderTouchStartX = e.touches[0].clientX;
-            sliderTouchMoveX = sliderTouchStartX;
-            isSliderSwiping = true;
-            // We let the native scroll handle the movement
-        }
-
-        function handleSliderTouchMove(e) {
-            if (!isSliderSwiping) return;
-            sliderTouchMoveX = e.touches[0].clientX;
-        }
-
-        function handleSliderTouchEnd(e) {
-            if (!isSliderSwiping) return;
-            isSliderSwiping = false;
-            
-            // We no longer need to calculate the index here.
-            // The native scroll snap and the 'scroll' event listener (handleSliderScroll) will handle it.
-            
-            // We just restart the auto-slide, and let the scroll listener update the index.
-            startSliderAuto();
-        }
-        // --- End Slider Swipe Handlers ---
-
-        // --- *** MODIFIED ***: Handle scroll snap index changes ---
-        // This function is now the ONLY source of truth for updating the indicators.
-        function handleSliderScroll() {
-            const sliderContainer = document.getElementById('slider-container');
-            if (!sliderContainer) return;
-
-            const slideWidth = sliderContainer.clientWidth;
-            if (slideWidth === 0) return;
-
-            // Calculate the current index based on scroll position
-            const newIndex = Math.round(sliderContainer.scrollLeft / slideWidth);
-
-            // --- *** LOGIC SIMPLIFIED *** ---
-            // REMOVED: if (newIndex !== currentSlideIndex) { ... }
-            // The scroll position is the *single source of truth*.
-            // We update the global index AND the indicators directly from it.
-            
-            currentSlideIndex = newIndex;
-            DOM.sliderIndicators.querySelectorAll('.indicator').forEach((ind, i) => {
-                ind.classList.toggle('active', i === currentSlideIndex);
-            });
-        }
-
-        /* -------------- DYNAMIC PAGE BUILDERS -------------- */
-        function buildHomePage(catalogItems) {
-            DOM.homeContent.innerHTML = '';
-            catalogItems.forEach(section => {
-                const sectionEl = document.createElement('div');
-                sectionEl.className = 'category-section';
-                // RE-ADDED see-all-btn
-                sectionEl.innerHTML = `<div class="category-header"><h2 class="category-title">${escapeHtml(section.title)}</h2><a href="#" class="see-all-btn">View More</a></div><div class="content-slider"></div>`;
-                // RE-ADDED see-all-btn onclick
-                sectionEl.querySelector('.see-all-btn').onclick = (e) => { e.preventDefault(); openCategoryPage(section.title, section.filter); };
-                renderSkeleton(sectionEl.querySelector('.content-slider'), false, 8);
-                DOM.homeContent.appendChild(sectionEl);
-            });
-
-            DOM.loadingScreen.style.display = 'none';
-
-            const sliderContainers = DOM.homeContent.querySelectorAll('.content-slider');
-            catalogItems.forEach(async (section, index) => {
-                const posts = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/posts?filter=${encodeURIComponent(section.filter)}&page=1`);
-                if (posts && posts.length > 0) renderContentSlider(posts, sliderContainers[index]);
-                else sliderContainers[index].innerHTML = '<p style="padding-left: 16px; color: var(--text-secondary);">No content found here.</p>';
-            });
-        }
-
-        // RE-ADDED buildGenresPage
-        function buildGenresPage(genreItems) {
-            DOM.genresGrid.innerHTML = '';
-            if (genreItems) genreItems.forEach(genre => {
-                const btn = document.createElement('button');
-                btn.className = 'genre-btn';
-                btn.textContent = genre.title;
-                btn.onclick = () => openCategoryPage(genre.title, genre.filter);
-                DOM.genresGrid.appendChild(btn);
-            });
-        }
-
-        /* -------------- CATEGORY & SEARCH PAGES (RE-ADDED) -------------- */
-        async function loadCategoryPage(page) {
-            currentCategory.page = page;
-            const fromPage = currentCategory.filter.includes('genre') ? 'genres-page' : 'home-page';
-            showPage('category-page', fromPage);
-            
-            DOM.categoryPageTitle.textContent = currentCategory.title;
-            renderSkeleton(DOM.categoryGrid, true, 12);
-            DOM.categoryPagination.controls.style.visibility = 'hidden';
-            
-            const url = `${POLY_API_BASE}/api/${activeProvider}/posts?filter=${encodeURIComponent(currentCategory.filter)}&page=${page}`;
-            const posts = await fetchJSON(url);
-            
-            if (posts && posts.length > 0) {
-                renderGrid(posts, DOM.categoryGrid);
-                DOM.categoryPagination.controls.style.visibility = 'visible';
-                DOM.categoryPagination.prevBtn.disabled = (page === 1);
-                DOM.categoryPagination.nextBtn.disabled = posts.length < 10; // Simple check
-            } else {
-                DOM.categoryGrid.innerHTML = `<p style="color: var(--text-secondary); text-align: center; grid-column: 1 / -1; font-size: 16px;">No content found here.</p>`;
-                if(page === 1) DOM.categoryPagination.controls.style.visibility = 'hidden';
-                DOM.categoryPagination.nextBtn.disabled = true;
-            }
-        }
-
-        async function doSearch() {
-            const query = DOM.searchInput.value.trim();
-            if (!query) {
-                DOM.searchGrid.innerHTML = '';
-                document.getElementById('search-description').style.display = 'block';
-                return;
-            }
-            
-            document.getElementById('search-description').style.display = 'none';
-            DOM.searchGrid.innerHTML = '';
-            renderSkeleton(DOM.searchGrid, true, 12);
-            
-            const results = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/search?query=${encodeURIComponent(query)}&page=1`);
-            
-            if (results && results.length > 0) renderGrid(results, DOM.searchGrid);
-            else DOM.searchGrid.innerHTML = `<p style="color: var(--text-secondary); text-align: center; grid-column: 1 / -1; font-size: 16px;">No results found for your search.</p>`;
-        }
-
-        /* -------------- GRID & SLIDER ITEM RENDERING -------------- */
-        function renderContentSlider(items, container) {
-            container.innerHTML = '';
-            items.forEach(item => {
-                const gridItem = document.createElement('div');
-                gridItem.className = 'grid-item';
-                const itemId = item.link || item.title;
-                const isFav = isFavorite(itemId);
-                gridItem.innerHTML = `
-                <div class="content-card">
-                    <img src="${item.image || placeholder(item.title)}" onerror="this.src='${placeholder(item.title)}'"/>
-                    <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                </div>
-                <p class="content-caption">${escapeHtml(getShortTitle(item.title))}</p>`;
-                gridItem.onclick = () => openDetailPage(item, 'home-page');
-                container.appendChild(gridItem);
-            });
-        }
-        
-        // RE-ADDED renderGrid
-        function renderGrid(items, container) {
-            container.innerHTML = '';
-            items.forEach(item => {
-                const gridItem = document.createElement('div');
-                gridItem.className = 'grid-item';
-                const itemId = item.link || item.title;
-                const isFav = isFavorite(itemId);
-                gridItem.innerHTML = `
-                <div class="content-card">
-                    <img src="${item.image || placeholder(item.title)}" onerror="this.src='${placeholder(item.title)}'"/>
-                    <button class="favorite-btn ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escapeHtml(itemId)}'); this.classList.toggle('active');">
-                        <i class="fas fa-heart"></i>
-                    </button>
-                </div>
-                <p class="content-caption">${escapeHtml(getShortTitle(item.title))}</p>`;
-                gridItem.onclick = () => openDetailPage(item, document.querySelector('.page[style*="block"]').id);
-                container.appendChild(gridItem);
-            });
-        }
-
-        /* -------------- DETAIL PAGE & LINK LOGIC -------------- */
-        async function openDetailPage(item, fromPage) {
-            showPage('detail-page', fromPage);
-            const itemId = item.link || item.title;
-            const isFav = isFavorite(itemId);
-
-            // NEW: Clean the title for the detail page as well.
-            // We'll use getShortTitle's logic (remove "Download" but keep year)
-            // but we won't shorten it.
-            let detailTitle = item.title;
-            if (detailTitle) {
-                // NEW: Handle ., _, and Download prefix
-                detailTitle = detailTitle.replace(/^Download[\s._]+/i, '').trim();
-                detailTitle = detailTitle.replace(/[._]/g, ' ');
-                detailTitle = detailTitle.replace(/\s+/g, ' ').trim();
-            }
-
-            DOM.detailTitle.textContent = detailTitle; // Use cleaned title
-            const image = item.image || placeholder(item.title); // Placeholder uses original
-            DOM.detailBackdrop.innerHTML = `<img src="${image}" alt="Backdrop">`;
-            DOM.detailPoster.innerHTML = `<img src="${image}" alt="Poster">`;
-            DOM.detailStoryline.textContent = 'Loading story...';
-            DOM.detailLinkList.innerHTML = '<p>Getting links...</p>';
-            DOM.detailMeta.innerHTML = '';
-            DOM.downloadSectionTitle.textContent = "Download Links"; // Default title
-
-            // Clear old favorite button before adding new one
-            const oldFavBtn = DOM.detailPoster.querySelector('.favorite-btn');
-            if (oldFavBtn) oldFavBtn.remove();
-            
-            const favBtn = document.createElement('button');
-            favBtn.className = `favorite-btn ${isFav ? 'active' : ''}`;
-            favBtn.innerHTML = '<i class="fas fa-heart"></i>';
-            favBtn.onclick = (e) => { e.stopPropagation(); toggleFavorite(itemId); favBtn.classList.toggle('active'); };
-            DOM.detailPoster.appendChild(favBtn);
-            
-            const metaData = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/meta?link=${encodeURIComponent(item.link)}`);
-            if (metaData) {
-                DOM.detailStoryline.textContent = metaData.synopsis || 'Story details are not available.';
-                if (metaData.type) DOM.detailMeta.innerHTML = `<span style="background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: 700;">${metaData.type.toUpperCase()}</span><span>${metaData.year || ''}</span><span>${metaData.runtime || ''}</span>`;
-                DOM.detailLinkList.innerHTML = '';
-
-                if (!metaData.linkList || metaData.linkList.length === 0) {
-                    DOM.detailLinkList.innerHTML = `<p>No links found for this.</p>`; return;
-                }
-                
-                // --- NEW LOGIC FOR SERIES ---
-                if (metaData.type === 'series') {
-                    DOM.downloadSectionTitle.textContent = "Select Season / Quality";
-                    
-                    // 1. Create Season Select Dropdown
-                    const seasonSelect = document.createElement('select');
-                    seasonSelect.className = 'season-select';
-                    
-                    // 2. Populate dropdown directly from linkList
-                    metaData.linkList.forEach((linkItem, index) => { // Added index
-                        const option = document.createElement('option');
-                        option.value = index; // Store the index of the linkItem
-                        option.textContent = linkItem.title;
-                        option.dataset.type = metaData.type || 'series'; // Store type for later
-                        seasonSelect.appendChild(option);
-                    });
-                    
-                    DOM.detailLinkList.appendChild(seasonSelect);
-                    
-                    // 3. Create a container for quality/episode buttons
-                    const episodesListContainer = document.createElement('div');
-                    episodesListContainer.id = "episodes-list-container"; // Add ID for the new function
-                    episodesListContainer.className = 'link-list'; // Reuse existing class for gap
-                    DOM.detailLinkList.appendChild(episodesListContainer);
-
-                    // 4. Add event listener to load episodes when dropdown changes
-                    seasonSelect.addEventListener('change', (e) => {
-                        const selectedIndex = e.target.value;
-                        const selectedLinkItem = metaData.linkList[selectedIndex]; // Get the full object
-                        const itemType = e.target.options[e.target.selectedIndex].dataset.type;
-                        loadEpisodesOntoPage(selectedLinkItem, itemType); // Pass the full object
-                    });
-                    
-                    // 5. Load episodes for the *first* season by default
-                    if (metaData.linkList.length > 0) {
-                        const firstItem = metaData.linkList[0];
-                        loadEpisodesOntoPage(firstItem, metaData.type || 'series'); // Pass the full object
+                // Synopsis fallback
+                let synopsis = "";
+                const pTags = content.querySelectorAll("p");
+                for (let p of pTags) {
+                    if (p.textContent.length > 50 && !p.textContent.includes("Download")) {
+                        synopsis = p.textContent;
+                        break;
                     }
-                } else {
-                    // --- ORIGINAL LOGIC FOR MOVIES ---
-                    DOM.downloadSectionTitle.textContent = "Stream / Download Links";
-                    metaData.linkList.forEach(linkItem => {
-                        if (linkItem.directLinks && linkItem.directLinks.length > 0) {
-                            const directLink = linkItem.directLinks[0];
-                            
-                            if (directLink.link.includes('mdrive.today') || directLink.link.includes('gadgetsweb.xyz') || directLink.link.includes('magiclinks.my')) {
-                                const linkBtn = document.createElement('button');
-                                linkBtn.className = 'link-btn';
-                                linkBtn.innerHTML = `<span>${escapeHtml(linkItem.title)}</span><i class="fas fa-play"></i>`;
-                                // MODIFIED: This now correctly opens the modal
-                                linkBtn.onclick = () => {
-                                    loadStreamLinksIntoModal(directLink.link, metaData.type || 'movie');
-                                    DOM.streamModal.style.display = 'flex';
+                }
+
+                // Determine Type
+                const isSeries = title.includes("Season") || content.textContent.includes("Episode");
+
+                // Extract Links
+                const links = [];
+                
+                if (isSeries) {
+                    // Series Logic: Find V-Cloud/G-Drive Links per header
+                    const headers = content.querySelectorAll("h3, h4, h5");
+                    headers.forEach(header => {
+                        const label = header.textContent.trim();
+                        // Naive check for quality headers like "720p" or "Season 1"
+                        if (label.includes("p") || label.includes("Season")) {
+                            // Look for next V-Cloud/Download button
+                            let next = header.nextElementSibling;
+                            while(next && next.tagName !== 'H3' && next.tagName !== 'H4') {
+                                const btn = next.querySelector("a[href*='vcloud'], a[href*='robot'], a.dwd-button");
+                                if (btn) {
+                                    links.push({
+                                        title: label,
+                                        link: btn.getAttribute("href"),
+                                        type: "series" // Needs extraction page
+                                    });
+                                    break; // Found one for this header
                                 }
-                                DOM.detailLinkList.appendChild(linkBtn);
-                            } else {
-                                const linkAnchor = document.createElement('a');
-                                linkAnchor.className = 'link-btn';
-                                linkAnchor.href = directLink.link;
-                                linkAnchor.target = '_blank';
-                                linkAnchor.innerHTML = `<span>${escapeHtml(linkItem.title)}</span><i class="fas fa-download"></i>`;
-                                DOM.detailLinkList.appendChild(linkAnchor);
+                                next = next.nextElementSibling;
                             }
                         }
                     });
-                }
-                // --- END OF LOGIC ---
-                if (DOM.detailLinkList.innerHTML === '') DOM.detailLinkList.innerHTML = `<p>Could not find any links.</p>`;
-            } else {
-                DOM.detailLinkList.innerHTML = `<p>No links found for this.</p>`;
-            }
-        }
-
-        /* -------------- MODALS -------------- */
-        // THIS FUNCTION IS NO LONGER USED BY THE SERIES DETAIL PAGE, BUT KEPT FOR NOW
-        async function getEpisodeLinks(episodesUrl, itemType) { // Added itemType
-            DOM.streamModalTitle.textContent = 'Loading Episodes...';
-            DOM.streamList.innerHTML = '<div class="loading-text" style="text-align: center;">Please wait...</div>';
-            DOM.streamModal.style.display = 'flex'; // Open modal
-            
-            const episodes = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/episodes?url=${encodeURIComponent(episodesUrl)}`);
-            
-            DOM.streamModalTitle.textContent = 'Select Episode';
-            DOM.streamList.innerHTML = ''; // Clear loading
-            
-            if (episodes && episodes.length > 0) {
-                episodes.forEach(episode => {
-                    const episodeBtn = document.createElement('button');
-                    episodeBtn.className = 'stream-btn';
-                    episodeBtn.textContent = episode.title;
-                    
-                    // On click, load stream links into the *same* modal
-                    episodeBtn.onclick = () => {
-                        // Load streams *into* the modal
-                        loadStreamLinksIntoModal(episode.link, itemType || 'series');
-                        
-                        // Add a "Back" button to the stream list
-                        const backBtn = document.createElement('button');
-                        backBtn.className = 'stream-btn';
-                        backBtn.style.cssText = 'background: var(--secondary-gradient); color: white;'; // Style it
-                        backBtn.innerHTML = '<i class="fas fa-arrow-left"></i> Back to Episodes';
-                        backBtn.onclick = () => getEpisodeLinks(episodesUrl, itemType); // Re-call self
-                        
-                        DOM.streamList.prepend(backBtn); // Add to the top of the stream list
-                    };
-                    DOM.streamList.appendChild(episodeBtn); // Add episode button
-                });
-            } else {
-                DOM.streamList.innerHTML = `<p>No episodes found.</p>`;
-            } 
-        }
-
-        // *** NEW FUNCTION TO LOAD EPISODES ONTO THE PAGE ***
-        async function loadEpisodesOntoPage(linkItem, itemType) {
-            const container = document.getElementById('episodes-list-container');
-            if (!container) return;
-            container.innerHTML = '<p class="loading-text" style="text-align: center; padding: 20px;">Loading episodes...</p>';
-            
-            let episodes = [];
-            if (linkItem.directLinks && linkItem.directLinks.length > 0) {
-                // Case 1: The "episodes" are already in directLinks
-                episodes = linkItem.directLinks;
-            } else if (linkItem.episodesLink) {
-                // Case 2: We need to fetch the episodes from episodesLink
-                episodes = await fetchJSON(`${POLY_API_BASE}/api/${activeProvider}/episodes?url=${encodeURIComponent(linkItem.episodesLink)}`);
-            }
-            
-            container.innerHTML = ''; // Clear loading
-            
-            if (episodes && episodes.length > 0) {
-                episodes.forEach(episode => {
-                    // Use episode.link for the final stream modal
-                    const episodeOrDirectLink = episode.link || episode;
-                    const episodeBtn = document.createElement('button');
-                    episodeBtn.className = 'link-btn'; // Reuse link-btn style
-                    episodeBtn.innerHTML = `<span>${escapeHtml(episode.title || episodeOrDirectLink)}</span><i class="fas fa-play"></i>`;
-                    
-                    // On click, load stream links into the modal and show it
-                    episodeBtn.onclick = () => {
-                        // Pass the correct link (episode.link) and type
-                        loadStreamLinksIntoModal(episodeOrDirectLink, itemType || 'series');
-                        DOM.streamModal.style.display = 'flex';
-                    };
-                    container.appendChild(episodeBtn); // Add episode button
-                });
-            } else {
-                container.innerHTML = `<p>No episodes found for this selection.</p>`;
-            }
-        }
-
-
-        async function loadStreamLinksIntoModal(link, type) { // Renamed from getStreamLinks
-            DOM.streamModalTitle.textContent = 'Loading Streams...';
-            DOM.streamList.innerHTML = '<div class="loading-text" style="text-align: center;">Please wait...</div>';
-            // DO NOT open modal here, it's opened by the caller
-            
-            // --- MODIFICATION: Force 'drive', 'hdhub4u', or 'kmMovies' provider for special links ---
-            let streamApiProvider = activeProvider;
-            if (link.includes('mdrive.today')) {
-                streamApiProvider = 'drive'; // This forces the API call to use /api/drive/stream
-            } else if (link.includes('gadgetsweb.xyz')) {
-                streamApiProvider = 'hdhub4u'; // This forces the API call to use /api/hdhub4a/stream
-            } else if (link.includes('magiclinks.my')) {
-                streamApiProvider = 'kmMovies'; // This forces the API call to use /api/kmMovies/stream
-            }
-            // --- END MODIFICATION ---
-
-            const streamData = await fetchJSON(`${POLY_API_BASE}/api/${streamApiProvider}/stream?link=${encodeURIComponent(link)}&type=${type}`);
-            
-            DOM.streamModalTitle.textContent = 'Select Stream';
-            DOM.streamList.innerHTML = '';
-            if (streamData && streamData.length > 0) {
-                streamData.forEach(stream => {
-                    const streamBtn = document.createElement('a');
-                    streamBtn.className = 'stream-btn';
-                    streamBtn.href = stream.link;
-                    streamBtn.target = '_blank';
-                    // Added an icon and escapeHtml
-                    streamBtn.innerHTML = `${escapeHtml(stream.server) || 'Server'} (${escapeHtml(stream.type)}) <i class="fas fa-external-link-alt" style="font-size: 0.8em; margin-left: 8px;"></i>`;
-                    DOM.streamList.appendChild(streamBtn);
-                });
-            } else DOM.streamList.innerHTML = `<p>No stream links found.</p>`;
-        }
-
-        async function openProviderMenu() {
-            DOM.body.classList.add('menu-open');
-            DOM.providerList.innerHTML = '<div class="loading-text" style="text-align: center; padding: 24px;">Loading...</div>';
-            const allProviders = await fetchJSON(`${POLY_API_BASE}/providers`);
-            DOM.providerList.innerHTML = '';
-            if (allProviders) {
-                // *** MODIFIED ***: Use provider list from mock and filter by 'disabled' property
-                const enabledProviders = allProviders.filter(p => !p.disabled);
-                enabledProviders.forEach(provider => {
-                    const btn = document.createElement('button');
-                    btn.className = 'provider-menu-btn';
-                    let checkMark = '';
-                    // *** MODIFIED ***: Compare against provider.value
-                    if (provider.value === activeProvider) {
-                        btn.classList.add('active');
-                        checkMark = `<i class="fas fa-check check-mark"></i>`;
-                    }
-                    // *** MODIFIED ***: Use provider.display_name for text
-                    btn.innerHTML = `<i class="fas fa-film icon"></i> <span>${provider.display_name}</span> ${checkMark}`;
-                    btn.onclick = () => {
-                        // *** MODIFIED ***: Compare and set provider.value
-                        if (provider.value !== activeProvider) {
-                            localStorage.setItem('sanchitflix_provider', provider.value);
-                            activeProvider = provider.value;
-                            closeProviderMenu();
-                            initializeApp(true);
-                        } else {
-                            closeProviderMenu();
+                } else {
+                    // Movie Logic
+                    const btns = content.querySelectorAll("a.dwd-button, a[href*='vcloud'], a[href*='archives']");
+                    btns.forEach(btn => {
+                        const txt = btn.textContent.trim();
+                        if (txt.includes("Download") || txt.includes("Link")) {
+                            // Try to find the quality label from previous element
+                            let prev = btn.parentElement.previousElementSibling;
+                            let quality = "Unknown Quality";
+                            if (prev && (prev.tagName === 'H3' || prev.tagName === 'H5')) {
+                                quality = prev.textContent.trim();
+                            }
+                            
+                            links.push({
+                                title: quality + " - " + txt,
+                                link: btn.getAttribute("href"),
+                                type: "movie"
+                            });
                         }
-                    };
-                    DOM.providerList.appendChild(btn);
+                    });
+                }
+
+                return { title, image, synopsis, type: isSeries ? "series" : "movie", links };
+            },
+
+            async getEpisodes(url) {
+                // For series, Vega usually redirects to a page with episode lists
+                const doc = await fetchHtml(url);
+                if (!doc) return [];
+                
+                const episodes = [];
+                const headers = doc.querySelectorAll("h4, h5");
+                
+                headers.forEach(h => {
+                    const title = h.textContent.trim();
+                    // Look for link in next p
+                    const link = h.nextElementSibling?.querySelector("a")?.getAttribute("href");
+                    if (link) {
+                        episodes.push({ title, link });
+                    }
+                });
+                
+                // Fallback: Check all buttons if headers fail
+                if (episodes.length === 0) {
+                    const buttons = doc.querySelectorAll("a.dwd-button, .btn-outline");
+                    buttons.forEach(btn => {
+                        episodes.push({ title: btn.textContent.trim(), link: btn.getAttribute("href") });
+                    });
+                }
+
+                return episodes;
+            },
+
+            async getStream(url) {
+                // Vega often leads to V-Cloud/HubCloud. We need to scrape that landing page.
+                // Note: Actual streaming extraction often requires token generation which is hard purely client side.
+                // We will try to find the "Download" or "Instant" link on the destination.
+                
+                const doc = await fetchHtml(url);
+                if (!doc) return null;
+
+                // Simple Extractor: Look for "HubCloud" or "Drive" links
+                // This is a simplified version. Real logic is complex.
+                const hubLink = doc.querySelector("a.btn-success")?.getAttribute("href");
+                if (hubLink) return hubLink;
+
+                const directLink = doc.querySelector("a[href$='.mkv'], a[href$='.mp4']");
+                if (directLink) return directLink.getAttribute("href");
+
+                // If it's a V-Cloud page, return the url itself for the user to visit
+                return url; 
+            }
+        };
+
+        // --- 2. MoviesMod Provider ---
+        const ModProvider = {
+            baseUrl: "https://moviesmod.vip", // Check actual domain
+            catalog: [
+                { title: "Latest", filter: "" },
+                { title: "Netflix", filter: "/ott/netflix" },
+                { title: "Amazon Prime", filter: "/ott/amazon-prime-video" }
+            ],
+            async getPosts(filter, page=1) {
+                const url = filter ? `${this.baseUrl}${filter}/page/${page}/` : `${this.baseUrl}/page/${page}/`;
+                const doc = await fetchHtml(url);
+                if(!doc) return [];
+                const posts = [];
+                doc.querySelectorAll("article").forEach(el => {
+                    const a = el.querySelector("a");
+                    const img = el.querySelector("img");
+                    if(a && img) {
+                        posts.push({
+                            title: a.getAttribute("title").replace("Download", "").trim(),
+                            link: a.getAttribute("href"),
+                            image: img.getAttribute("src")
+                        });
+                    }
+                });
+                return posts;
+            },
+            async getMeta(link) {
+                const doc = await fetchHtml(link);
+                if(!doc) return null;
+                
+                const content = doc.querySelector(".thecontent, .entry-content");
+                const title = doc.querySelector("h1")?.textContent.replace("Download", "").trim();
+                const image = content.querySelector("img")?.getAttribute("src");
+                const synopsis = content.querySelectorAll("p")[2]?.textContent || ""; // Approximation
+                
+                const links = [];
+                // MoviesMod usually has "Download Links" buttons
+                content.querySelectorAll("a[href*='links'], a.maxbutton").forEach(btn => {
+                    links.push({
+                        title: btn.textContent.trim() || "Download Link",
+                        link: btn.getAttribute("href"),
+                        type: "series" // Often treats everything as a pack/series link structure
+                    });
+                });
+
+                return { title, image, synopsis, type: "series", links };
+            }
+        };
+
+        // --- Provider Manager ---
+        const Providers = {
+            'vega': VegaProvider,
+            'mod': ModProvider
+        };
+
+        /* ================= APP LOGIC ================= */
+
+        function getActiveProvider() {
+            return Providers[activeProviderId];
+        }
+
+        async function loadHome() {
+            showLoading(true);
+            const provider = getActiveProvider();
+            
+            // Set Provider Badge
+            $('#provider-badge').textContent = activeProviderId.toUpperCase();
+
+            // Load Slider (Latest Posts)
+            try {
+                const latest = await provider.getPosts("", 1);
+                renderSlider(latest.slice(0, 5));
+                
+                // Load Catalog Sections
+                const contentDiv = $('#home-content');
+                contentDiv.innerHTML = ''; // Clear
+                
+                for (let section of provider.catalog) {
+                    const secDiv = document.createElement('div');
+                    secDiv.className = 'category-section';
+                    secDiv.innerHTML = `<div class="category-header"><h2 class="category-title">${section.title}</h2></div><div class="content-slider" id="cat-${section.title.replace(/\s/g,'')}"></div>`;
+                    contentDiv.appendChild(secDiv);
+                    
+                    // Fetch content for this section
+                    // Don't await loop to load parallel
+                    provider.getPosts(section.filter, 1).then(posts => {
+                        const slider = document.getElementById(`cat-${section.title.replace(/\s/g,'')}`);
+                        renderGrid(posts, slider);
+                    });
+                }
+            } catch (e) {
+                alert("Error loading provider. Try another.");
+            }
+            showLoading(false);
+        }
+
+        function renderSlider(posts) {
+            const container = $('#slider-container');
+            container.innerHTML = '';
+            posts.forEach(post => {
+                const slide = document.createElement('div');
+                slide.className = 'slide';
+                slide.onclick = () => openDetail(post.link);
+                slide.innerHTML = `
+                    <img src="${post.image}" alt="${post.title}">
+                    <div class="slide-overlay">
+                        <div class="slide-title">${post.title}</div>
+                    </div>
+                `;
+                container.appendChild(slide);
+            });
+        }
+
+        function renderGrid(posts, container) {
+            container.innerHTML = '';
+            posts.forEach(post => {
+                const card = document.createElement('div');
+                card.className = 'grid-item';
+                card.onclick = () => openDetail(post.link);
+                card.innerHTML = `
+                    <div class="content-card">
+                        <img src="${post.image}" loading="lazy">
+                    </div>
+                    <p class="content-caption">${post.title}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        async function openDetail(link) {
+            showLoading(true);
+            const provider = getActiveProvider();
+            const meta = await provider.getMeta(link); // Need to implement getMeta
+            if (!meta) {
+                showLoading(false);
+                alert("Failed to load details.");
+                return;
+            }
+
+            // Populate UI
+            $('#detail-title').textContent = meta.title;
+            $('#detail-poster').innerHTML = `<img src="${meta.image}">`;
+            $('#detail-backdrop').innerHTML = `<img src="${meta.image}">`;
+            $('#detail-storyline').textContent = meta.synopsis || "No description available.";
+            
+            const linkList = $('#detail-links');
+            linkList.innerHTML = '';
+
+            // Handle Links
+            if (meta.type === 'series') {
+                // Show links as buttons that open episode list
+                meta.links.forEach((l, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'link-btn';
+                    btn.innerHTML = `<span>${l.title}</span><i class="fas fa-chevron-right"></i>`;
+                    btn.onclick = () => loadEpisodes(l.link);
+                    linkList.appendChild(btn);
                 });
             } else {
-                DOM.providerList.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Could not load providers.</p>';
+                // Movies
+                meta.links.forEach(l => {
+                    const btn = document.createElement('button');
+                    btn.className = 'link-btn';
+                    btn.innerHTML = `<span>${l.title}</span><i class="fas fa-play"></i>`;
+                    btn.onclick = () => window.open(l.link, '_blank'); // Direct open for now
+                    linkList.appendChild(btn);
+                });
             }
+
+            showPage('detail-page');
+            showLoading(false);
         }
 
-        function closeProviderMenu() { DOM.body.classList.remove('menu-open'); }
-        function closeStreamModal() { DOM.streamModal.style.display = 'none'; DOM.streamList.innerHTML = ''; }
+        async function loadEpisodes(url) {
+            showLoading(true);
+            const provider = getActiveProvider();
+            
+            // If the provider is Vega, getEpisodes logic handles scraping the intermediate page
+            let episodes = [];
+            if (provider.getEpisodes) {
+                episodes = await provider.getEpisodes(url);
+            }
+
+            // Show in Modal
+            const list = $('#stream-list');
+            list.innerHTML = '';
+            
+            if (episodes.length === 0) {
+                list.innerHTML = '<p style="text-align:center">No direct episodes found. Opening link...</p>';
+                setTimeout(() => window.open(url, '_blank'), 1500);
+            } else {
+                episodes.forEach(ep => {
+                    const btn = document.createElement('a');
+                    btn.className = 'stream-item';
+                    btn.textContent = ep.title;
+                    btn.href = ep.link; // Direct link
+                    btn.target = "_blank"; // Open in new tab because of CORS/Sandbox issues with players
+                    list.appendChild(btn);
+                });
+            }
+            
+            $('#stream-modal').style.display = 'flex';
+            showLoading(false);
+        }
+
+        async function performSearch() {
+            const query = $('#search-input').value;
+            if(!query) return;
+            
+            showLoading(true);
+            const provider = getActiveProvider();
+            const results = await provider.getSearch(query);
+            
+            const container = $('#search-results');
+            container.innerHTML = '';
+            
+            if(results.length === 0) {
+                container.innerHTML = '<p style="grid-column:1/-1; text-align:center">No results found.</p>';
+            } else {
+                results.forEach(post => {
+                    const card = document.createElement('div');
+                    card.className = 'grid-item';
+                    card.onclick = () => openDetail(post.link);
+                    card.innerHTML = `
+                        <div class="content-card">
+                            <img src="${post.image}" loading="lazy">
+                        </div>
+                        <p class="content-caption">${post.title}</p>
+                    `;
+                    container.appendChild(card);
+                });
+            }
+            showLoading(false);
+        }
+
+        /* ================= UI HELPERS ================= */
         
-        // RE-ADDED openCategoryPage
-        function openCategoryPage(title, filter) {
-            currentCategory = { title, filter, page: 1 };
-            loadCategoryPage(1);
+        function showPage(pageId) {
+            if(pageId !== 'home-page' && !pageHistory.includes(pageId)) {
+                // simple history implementation
+            }
+            $$('.page').forEach(p => p.style.display = 'none');
+            $('#' + pageId).style.display = 'block';
+            window.scrollTo(0,0);
         }
 
-        // Global exposure
-        window.toggleFavorite = toggleFavorite;
-        window.closeStreamModal = closeStreamModal;
+        function goBack() {
+            showPage('home-page');
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('theme-light');
+            document.body.classList.toggle('theme-dark');
+        }
+
+        // Side Menu Logic
+        $('#menu-btn').onclick = () => document.body.classList.add('menu-open');
+        $('#side-menu-overlay').onclick = () => document.body.classList.remove('menu-open');
+
+        // Populate Provider List
+        const pList = $('#provider-list');
+        Object.keys(Providers).forEach(key => {
+            const btn = document.createElement('button');
+            btn.className = `provider-btn ${activeProviderId === key ? 'active' : ''}`;
+            btn.textContent = key === 'vega' ? 'VegaMovies' : 'MoviesMod';
+            btn.onclick = () => {
+                activeProviderId = key;
+                document.body.classList.remove('menu-open');
+                loadHome();
+                // Update UI
+                $$('.provider-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            };
+            pList.appendChild(btn);
+        });
+
+        function closeStreamModal() {
+            $('#stream-modal').style.display = 'none';
+        }
+
+        // Search Input Listener
+        $('#search-input').addEventListener('keypress', (e) => {
+            if(e.key === 'Enter') performSearch();
+        });
+
+        /* ================= INITIALIZATION ================= */
+        window.onload = () => {
+            loadHome();
+        };
+
     </script>
 </body>
 </html>
